@@ -29,7 +29,7 @@ import (
 
 type ServiceAccountInitParameters struct {
 
-	// Only) (String). The resource description.
+	// 256 characters long.
 	// Description of the service account. 0-256 characters long.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -37,7 +37,7 @@ type ServiceAccountInitParameters struct {
 	// Timestamp when the service account expires.
 	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
 
-	// id is used.
+	// (String). ID of the folder that the service account belongs to.
 	// ID of the folder that the service account belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -51,16 +51,17 @@ type ServiceAccountInitParameters struct {
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
-	// Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
+	// Resource labels as `` key:value `` pairs. Maximum of 64 per resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// 63 characters long.
 	// Name of the service account.
 	// The name is unique within the cloud. 3-63 characters long.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). ID of a specific service account.
+	// (String). ID of the ServiceAccount resource to return.
+	// To get the service account ID, use a [ServiceAccountService.List] request.
 	// ID of the ServiceAccount resource to return.
 	// To get the service account ID, use a [ServiceAccountService.List] request.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
@@ -68,11 +69,11 @@ type ServiceAccountInitParameters struct {
 
 type ServiceAccountObservation struct {
 
-	// Only) (String). The creation timestamp of the resource.
+	// Only) (String). Creation timestamp.
 	// Creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Only) (String). The resource description.
+	// 256 characters long.
 	// Description of the service account. 0-256 characters long.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -80,24 +81,26 @@ type ServiceAccountObservation struct {
 	// Timestamp when the service account expires.
 	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
 
-	// id is used.
+	// (String). ID of the folder that the service account belongs to.
 	// ID of the folder that the service account belongs to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String).
+	// (String). ID of the ServiceAccount resource to return.
+	// To get the service account ID, use a [ServiceAccountService.List] request.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
-	// Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
+	// Resource labels as `` key:value `` pairs. Maximum of 64 per resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// 63 characters long.
 	// Name of the service account.
 	// The name is unique within the cloud. 3-63 characters long.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). ID of a specific service account.
+	// (String). ID of the ServiceAccount resource to return.
+	// To get the service account ID, use a [ServiceAccountService.List] request.
 	// ID of the ServiceAccount resource to return.
 	// To get the service account ID, use a [ServiceAccountService.List] request.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
@@ -111,7 +114,7 @@ type ServiceAccountObservation struct {
 
 type ServiceAccountParameters struct {
 
-	// Only) (String). The resource description.
+	// 256 characters long.
 	// Description of the service account. 0-256 characters long.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -121,7 +124,7 @@ type ServiceAccountParameters struct {
 	// +kubebuilder:validation:Optional
 	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
 
-	// id is used.
+	// (String). ID of the folder that the service account belongs to.
 	// ID of the folder that the service account belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
@@ -136,18 +139,19 @@ type ServiceAccountParameters struct {
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
-	// Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
+	// Resource labels as `` key:value `` pairs. Maximum of 64 per resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// 63 characters long.
 	// Name of the service account.
 	// The name is unique within the cloud. 3-63 characters long.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). ID of a specific service account.
+	// (String). ID of the ServiceAccount resource to return.
+	// To get the service account ID, use a [ServiceAccountService.List] request.
 	// ID of the ServiceAccount resource to return.
 	// To get the service account ID, use a [ServiceAccountService.List] request.
 	// +kubebuilder:validation:Optional

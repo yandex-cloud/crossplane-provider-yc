@@ -169,8 +169,8 @@ spec:
                     type: string
                   passwordSecretRef:
                     description: |-
-                      (String). The password of the user. Required for users with PASSWORD authentication and must be omitted for users with IAM authentication.
-                      The password of the user. Required for users with `PASSWORD` authentication and must be omitted for users with `IAM` authentication.
+                      (String). The password of the user. Either password or password_wo is required for users with PASSWORD authentication and both must be omitted for users with IAM authentication.
+                      The password of the user. Either `password` or `password_wo` is required for users with `PASSWORD` authentication and both must be omitted for users with `IAM` authentication.
                     properties:
                       key:
                         description: The key to select.
@@ -186,6 +186,30 @@ spec:
                     - name
                     - namespace
                     type: object
+                  passwordWoSecretRef:
+                    description: |-
+                      only and is not stored in state. Requires password_wo_version to trigger updates.11 and later. Must be omitted for users with IAM authentication.
+                      The password of the user. This attribute is write-only and is not stored in state. Requires `password_wo_version` to trigger updates.11 and later. Must be omitted for users with `IAM` authentication.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  passwordWoVersion:
+                    description: |-
+                      only password. Increment this to trigger a password update.
+                      A version number for the write-only password. Increment this to trigger a password update.
+                    type: number
                   permission:
                     description: |-
                       [Block]. Set of permissions granted to the user.
@@ -336,8 +360,8 @@ spec:
                     type: string
                   passwordSecretRef:
                     description: |-
-                      (String). The password of the user. Required for users with PASSWORD authentication and must be omitted for users with IAM authentication.
-                      The password of the user. Required for users with `PASSWORD` authentication and must be omitted for users with `IAM` authentication.
+                      (String). The password of the user. Either password or password_wo is required for users with PASSWORD authentication and both must be omitted for users with IAM authentication.
+                      The password of the user. Either `password` or `password_wo` is required for users with `PASSWORD` authentication and both must be omitted for users with `IAM` authentication.
                     properties:
                       key:
                         description: The key to select.
@@ -353,6 +377,30 @@ spec:
                     - name
                     - namespace
                     type: object
+                  passwordWoSecretRef:
+                    description: |-
+                      only and is not stored in state. Requires password_wo_version to trigger updates.11 and later. Must be omitted for users with IAM authentication.
+                      The password of the user. This attribute is write-only and is not stored in state. Requires `password_wo_version` to trigger updates.11 and later. Must be omitted for users with `IAM` authentication.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  passwordWoVersion:
+                    description: |-
+                      only password. Increment this to trigger a password update.
+                      A version number for the write-only password. Increment this to trigger a password update.
+                    type: number
                   permission:
                     description: |-
                       [Block]. Set of permissions granted to the user.
@@ -513,6 +561,11 @@ spec:
                       (String). The name of the user.
                       The name of the user.
                     type: string
+                  passwordWoVersion:
+                    description: |-
+                      only password. Increment this to trigger a password update.
+                      A version number for the write-only password. Increment this to trigger a password update.
+                    type: number
                   permission:
                     description: |-
                       [Block]. Set of permissions granted to the user.

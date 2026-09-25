@@ -176,6 +176,30 @@ spec:
                     - name
                     - namespace
                     type: object
+                  passwordWoSecretRef:
+                    description: |-
+                      only and is not stored in state. Requires password_wo_version to trigger updates.11 or higher.
+                      The password of the user. This attribute is write-only and is not stored in state. Requires `password_wo_version` to trigger updates.11 or higher.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  passwordWoVersion:
+                    description: |-
+                      only password. Increment this to trigger a password update.
+                      A version number for the write-only password. Increment this to trigger a password update.
+                    type: number
                   permission:
                     description: |-
                       [Block]. Set of permissions granted to the user.
@@ -319,6 +343,30 @@ spec:
                     - name
                     - namespace
                     type: object
+                  passwordWoSecretRef:
+                    description: |-
+                      only and is not stored in state. Requires password_wo_version to trigger updates.11 or higher.
+                      The password of the user. This attribute is write-only and is not stored in state. Requires `password_wo_version` to trigger updates.11 or higher.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  passwordWoVersion:
+                    description: |-
+                      only password. Increment this to trigger a password update.
+                      A version number for the write-only password. Increment this to trigger a password update.
+                    type: number
                   permission:
                     description: |-
                       [Block]. Set of permissions granted to the user.
@@ -345,8 +393,6 @@ spec:
                           type: string
                       type: object
                     type: array
-                required:
-                - passwordSecretRef
                 type: object
               managementPolicies:
                 default:
@@ -439,9 +485,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
                 || (has(self.initProvider) && has(self.initProvider.name))'
-            - message: spec.forProvider.passwordSecretRef is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.passwordSecretRef)'
           status:
             description: KafkaUserStatus defines the observed state of KafkaUser.
             properties:
@@ -460,6 +503,11 @@ spec:
                       (String). The resource name.
                       The resource name.
                     type: string
+                  passwordWoVersion:
+                    description: |-
+                      only password. Increment this to trigger a password update.
+                      A version number for the write-only password. Increment this to trigger a password update.
+                    type: number
                   permission:
                     description: |-
                       [Block]. Set of permissions granted to the user.

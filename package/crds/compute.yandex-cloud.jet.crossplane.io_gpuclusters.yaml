@@ -75,12 +75,12 @@ spec:
                 properties:
                   description:
                     description: |-
-                      Only) (String). The resource description.
+                      (String). Description of the GPU cluster.
                       Description of the GPU cluster.
                     type: string
                   folderId:
                     description: |-
-                      id is used.
+                      (String). ID of the folder that the GPU cluster belongs to.
                       ID of the folder that the GPU cluster belongs to.
                     type: string
                   folderIdRef:
@@ -161,32 +161,39 @@ spec:
                     type: object
                   gpuClusterId:
                     description: |-
-                      (String). ID of the GPU cluster.
+                      (String). ID of the GPU cluster to return.
+                      To get a GPU cluster ID, make a [GpuClusterService.List] request.
                       ID of the GPU cluster to return.
                       To get a GPU cluster ID, make a [GpuClusterService.List] request.
                     type: string
                   interconnectType:
                     description: |-
-                      Only) (String). Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
+                      (String). Type of interconnect used for this GPU cluster.
                       Type of interconnect used for this GPU cluster.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+                      (Map Of String). GPU cluster labels as key:value pairs.
                       GPU cluster labels as `key:value` pairs.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      (String). Name of the GPU cluster.
+                      The name is unique within the folder.
                       Name of the GPU cluster.
                       The name is unique within the folder.
                     type: string
+                  subnets:
+                    description: |-
+                      (Number). Number of subnets in the GPU cluster.
+                      Number of subnets in the GPU cluster.
+                    type: number
                   zone:
                     description: |-
-                      Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). ID of the availability zone where the GPU cluster resides.
                       ID of the availability zone where the GPU cluster resides.
                     type: string
                 type: object
@@ -205,12 +212,12 @@ spec:
                 properties:
                   description:
                     description: |-
-                      Only) (String). The resource description.
+                      (String). Description of the GPU cluster.
                       Description of the GPU cluster.
                     type: string
                   folderId:
                     description: |-
-                      id is used.
+                      (String). ID of the folder that the GPU cluster belongs to.
                       ID of the folder that the GPU cluster belongs to.
                     type: string
                   folderIdRef:
@@ -291,32 +298,39 @@ spec:
                     type: object
                   gpuClusterId:
                     description: |-
-                      (String). ID of the GPU cluster.
+                      (String). ID of the GPU cluster to return.
+                      To get a GPU cluster ID, make a [GpuClusterService.List] request.
                       ID of the GPU cluster to return.
                       To get a GPU cluster ID, make a [GpuClusterService.List] request.
                     type: string
                   interconnectType:
                     description: |-
-                      Only) (String). Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
+                      (String). Type of interconnect used for this GPU cluster.
                       Type of interconnect used for this GPU cluster.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+                      (Map Of String). GPU cluster labels as key:value pairs.
                       GPU cluster labels as `key:value` pairs.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      (String). Name of the GPU cluster.
+                      The name is unique within the folder.
                       Name of the GPU cluster.
                       The name is unique within the folder.
                     type: string
+                  subnets:
+                    description: |-
+                      (Number). Number of subnets in the GPU cluster.
+                      Number of subnets in the GPU cluster.
+                    type: number
                   zone:
                     description: |-
-                      Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). ID of the availability zone where the GPU cluster resides.
                       ID of the availability zone where the GPU cluster resides.
                     type: string
                 type: object
@@ -413,60 +427,64 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      Only) (String). The creation timestamp of the resource.
+                      Only) (String). Creation timestamp.
                       Creation timestamp.
                     type: string
                   description:
                     description: |-
-                      Only) (String). The resource description.
+                      (String). Description of the GPU cluster.
                       Description of the GPU cluster.
                     type: string
                   folderId:
                     description: |-
-                      id is used.
+                      (String). ID of the folder that the GPU cluster belongs to.
                       ID of the folder that the GPU cluster belongs to.
                     type: string
                   gpuClusterId:
                     description: |-
-                      (String). ID of the GPU cluster.
+                      (String). ID of the GPU cluster to return.
+                      To get a GPU cluster ID, make a [GpuClusterService.List] request.
                       ID of the GPU cluster to return.
                       To get a GPU cluster ID, make a [GpuClusterService.List] request.
                     type: string
                   id:
-                    description: (String).
+                    description: |-
+                      (String). ID of the GPU cluster to return.
+                      To get a GPU cluster ID, make a [GpuClusterService.List] request.
                     type: string
                   interconnectType:
                     description: |-
-                      Only) (String). Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
+                      (String). Type of interconnect used for this GPU cluster.
                       Type of interconnect used for this GPU cluster.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+                      (Map Of String). GPU cluster labels as key:value pairs.
                       GPU cluster labels as `key:value` pairs.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      (String). Name of the GPU cluster.
+                      The name is unique within the folder.
                       Name of the GPU cluster.
                       The name is unique within the folder.
                     type: string
                   status:
                     description: |-
-                      Only) (String). The status of the GPU cluster.
+                      Only) (String). Status of the GPU cluster.
                       Status of the GPU cluster.
                     type: string
                   subnets:
                     description: |-
-                      Only) (Number). Number of subnets in the GPU cluster.
+                      (Number). Number of subnets in the GPU cluster.
                       Number of subnets in the GPU cluster.
                     type: number
                   zone:
                     description: |-
-                      Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). ID of the availability zone where the GPU cluster resides.
                       ID of the availability zone where the GPU cluster resides.
                     type: string
                 type: object

@@ -85,8 +85,8 @@ type PostgresqlDatabaseInitParameters struct {
 	// The name of the PostgreSQL database.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
-	// Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+	// (String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
+	// Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
 	Owner *string `json:"owner,omitempty" tf:"owner,omitempty"`
 
 	// (String). Name of the template database.
@@ -123,8 +123,8 @@ type PostgresqlDatabaseObservation struct {
 	// The name of the PostgreSQL database.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
-	// Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+	// (String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
+	// Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
 	Owner *string `json:"owner,omitempty" tf:"owner,omitempty"`
 
 	// (String). Name of the template database.
@@ -173,8 +173,8 @@ type PostgresqlDatabaseParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
-	// Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+	// (String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
+	// Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
 	// +kubebuilder:validation:Optional
 	Owner *string `json:"owner,omitempty" tf:"owner,omitempty"`
 

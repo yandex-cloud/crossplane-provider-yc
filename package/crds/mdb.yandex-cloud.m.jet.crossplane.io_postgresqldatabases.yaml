@@ -179,8 +179,8 @@ spec:
                     type: string
                   owner:
                     description: |-
-                      (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
-                      Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                      (String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
+                      Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
                     type: string
                   templateDb:
                     description: |-
@@ -321,8 +321,8 @@ spec:
                     type: string
                   owner:
                     description: |-
-                      (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
-                      Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                      (String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
+                      Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
                     type: string
                   templateDb:
                     description: |-
@@ -445,8 +445,8 @@ spec:
                     type: string
                   owner:
                     description: |-
-                      (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
-                      Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                      (String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
+                      Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
                     type: string
                   templateDb:
                     description: |-

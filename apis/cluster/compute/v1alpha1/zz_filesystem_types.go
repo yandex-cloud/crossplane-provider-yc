@@ -29,22 +29,25 @@ import (
 
 type FilesystemInitParameters struct {
 
-	// Only) (Number). Block size of the filesystem, specified in bytes.
+	// (Number). Block size used for the filesystem, specified in bytes.
 	// Block size used for the filesystem, specified in bytes.
 	BlockSize *float64 `json:"blockSize,omitempty" tf:"block_size,omitempty"`
 
-	// Only) (String). The resource description.
+	// (String). Description of the filesystem.
 	// Description of the filesystem.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String). ID of the filesystem.
+	// (String). ID of the filesystem to return.
+	// To get the filesystem ID, make a [FilesystemService.List] request.
+	// The length must be less than or equal to 50.
+	// This field is required.
 	// ID of the filesystem to return.
 	// To get the filesystem ID, make a [FilesystemService.List] request.
 	// The length must be less than or equal to 50.
 	// This field is required.
 	FilesystemID *string `json:"filesystemId,omitempty" tf:"filesystem_id,omitempty"`
 
-	// id is used.
+	// (String). ID of the folder that the filesystem belongs to.
 	// ID of the folder that the filesystem belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -57,26 +60,29 @@ type FilesystemInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+	// (Map Of String). Filesystem labels as key:value pairs.
+	// For details about the concept, see documentation.
 	// Filesystem labels as `key:value` pairs.
 	// For details about the concept, see [documentation](/docs/overview/concepts/services#labels).
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// (String). Name of the filesystem. The name is unique within the folder.
 	// Name of the filesystem. The name is unique within the folder.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Only) (Number). Size of the filesystem, specified in GB.
+	// (Number). Size of the filesystem, specified in bytes.
 	// Size of the filesystem, specified in bytes.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
-	// Only) (String). Type of filesystem to create. Type network-hdd is set by default.
+	// (String). ID of the filesystem type.
+	// To get a list of available filesystem types, make a [yandex.cloud.compute.v1.DiskTypeService.List] request.
 	// ID of the filesystem type.
 	// To get a list of available filesystem types, make a [yandex.cloud.compute.v1.DiskTypeService.List] request.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (String). ID of the availability zone where the filesystem resides.
+	// A filesystem can be attached only to instances residing in the same availability zone.
 	// ID of the availability zone where the filesystem resides.
 	// A filesystem can be attached only to instances residing in the same availability zone.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
@@ -84,56 +90,65 @@ type FilesystemInitParameters struct {
 
 type FilesystemObservation struct {
 
-	// Only) (Number). Block size of the filesystem, specified in bytes.
+	// (Number). Block size used for the filesystem, specified in bytes.
 	// Block size used for the filesystem, specified in bytes.
 	BlockSize *float64 `json:"blockSize,omitempty" tf:"block_size,omitempty"`
 
-	// Only) (String). The creation timestamp of the resource.
+	// Only) (String). Creation timestamp.
 	// Creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Only) (String). The resource description.
+	// (String). Description of the filesystem.
 	// Description of the filesystem.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String). ID of the filesystem.
+	// (String). ID of the filesystem to return.
+	// To get the filesystem ID, make a [FilesystemService.List] request.
+	// The length must be less than or equal to 50.
+	// This field is required.
 	// ID of the filesystem to return.
 	// To get the filesystem ID, make a [FilesystemService.List] request.
 	// The length must be less than or equal to 50.
 	// This field is required.
 	FilesystemID *string `json:"filesystemId,omitempty" tf:"filesystem_id,omitempty"`
 
-	// id is used.
+	// (String). ID of the folder that the filesystem belongs to.
 	// ID of the folder that the filesystem belongs to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String).
+	// (String). ID of the filesystem to return.
+	// To get the filesystem ID, make a [FilesystemService.List] request.
+	// The length must be less than or equal to 50.
+	// This field is required.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+	// (Map Of String). Filesystem labels as key:value pairs.
+	// For details about the concept, see documentation.
 	// Filesystem labels as `key:value` pairs.
 	// For details about the concept, see [documentation](/docs/overview/concepts/services#labels).
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// (String). Name of the filesystem. The name is unique within the folder.
 	// Name of the filesystem. The name is unique within the folder.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Only) (Number). Size of the filesystem, specified in GB.
+	// (Number). Size of the filesystem, specified in bytes.
 	// Size of the filesystem, specified in bytes.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
-	// Only) (String). The status of the filesystem.
+	// Only) (String). Current status of the filesystem.
 	// Current status of the filesystem.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// Only) (String). Type of filesystem to create. Type network-hdd is set by default.
+	// (String). ID of the filesystem type.
+	// To get a list of available filesystem types, make a [yandex.cloud.compute.v1.DiskTypeService.List] request.
 	// ID of the filesystem type.
 	// To get a list of available filesystem types, make a [yandex.cloud.compute.v1.DiskTypeService.List] request.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (String). ID of the availability zone where the filesystem resides.
+	// A filesystem can be attached only to instances residing in the same availability zone.
 	// ID of the availability zone where the filesystem resides.
 	// A filesystem can be attached only to instances residing in the same availability zone.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
@@ -141,17 +156,20 @@ type FilesystemObservation struct {
 
 type FilesystemParameters struct {
 
-	// Only) (Number). Block size of the filesystem, specified in bytes.
+	// (Number). Block size used for the filesystem, specified in bytes.
 	// Block size used for the filesystem, specified in bytes.
 	// +kubebuilder:validation:Optional
 	BlockSize *float64 `json:"blockSize,omitempty" tf:"block_size,omitempty"`
 
-	// Only) (String). The resource description.
+	// (String). Description of the filesystem.
 	// Description of the filesystem.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String). ID of the filesystem.
+	// (String). ID of the filesystem to return.
+	// To get the filesystem ID, make a [FilesystemService.List] request.
+	// The length must be less than or equal to 50.
+	// This field is required.
 	// ID of the filesystem to return.
 	// To get the filesystem ID, make a [FilesystemService.List] request.
 	// The length must be less than or equal to 50.
@@ -159,7 +177,7 @@ type FilesystemParameters struct {
 	// +kubebuilder:validation:Optional
 	FilesystemID *string `json:"filesystemId,omitempty" tf:"filesystem_id,omitempty"`
 
-	// id is used.
+	// (String). ID of the folder that the filesystem belongs to.
 	// ID of the folder that the filesystem belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
@@ -173,30 +191,33 @@ type FilesystemParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+	// (Map Of String). Filesystem labels as key:value pairs.
+	// For details about the concept, see documentation.
 	// Filesystem labels as `key:value` pairs.
 	// For details about the concept, see [documentation](/docs/overview/concepts/services#labels).
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// (String). Name of the filesystem. The name is unique within the folder.
 	// Name of the filesystem. The name is unique within the folder.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Only) (Number). Size of the filesystem, specified in GB.
+	// (Number). Size of the filesystem, specified in bytes.
 	// Size of the filesystem, specified in bytes.
 	// +kubebuilder:validation:Optional
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
-	// Only) (String). Type of filesystem to create. Type network-hdd is set by default.
+	// (String). ID of the filesystem type.
+	// To get a list of available filesystem types, make a [yandex.cloud.compute.v1.DiskTypeService.List] request.
 	// ID of the filesystem type.
 	// To get a list of available filesystem types, make a [yandex.cloud.compute.v1.DiskTypeService.List] request.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (String). ID of the availability zone where the filesystem resides.
+	// A filesystem can be attached only to instances residing in the same availability zone.
 	// ID of the availability zone where the filesystem resides.
 	// A filesystem can be attached only to instances residing in the same availability zone.
 	// +kubebuilder:validation:Optional

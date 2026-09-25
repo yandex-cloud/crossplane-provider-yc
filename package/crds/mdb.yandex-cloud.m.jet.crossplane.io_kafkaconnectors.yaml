@@ -181,8 +181,8 @@ spec:
                                 type: string
                               transactionalPrefix:
                                 description: |-
-                                  (String). Prefix for transactional operations. Default: ”
-                                  Prefix for transactional operations. Default: ”
+                                  (String). Prefix for transactional operations. Default: ''
+                                  Prefix for transactional operations. Default: ''
                                 type: string
                             type: object
                           type: array
@@ -383,6 +383,26 @@ spec:
                                       - key
                                       - name
                                       type: object
+                                    saslPasswordWoSecretRef:
+                                      description: |-
+                                        only and is not stored in state. Requires sasl_password_wo_version to trigger updates.11 or higher.
+                                        Password to use in SASL authentification mechanism. This attribute is write-only and is not stored in state. Requires `sasl_password_wo_version` to trigger updates.11 or higher.
+                                      properties:
+                                        key:
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      type: object
+                                    saslPasswordWoVersion:
+                                      description: |-
+                                        only SASL password. Increment this to trigger a password update.
+                                        A version number for the write-only SASL password. Increment this to trigger a password update.
+                                      format: int64
+                                      type: integer
                                     saslUsername:
                                       description: |-
                                         (String). Username to use in SASL authentification mechanism.
@@ -445,6 +465,26 @@ spec:
                                       - key
                                       - name
                                       type: object
+                                    saslPasswordWoSecretRef:
+                                      description: |-
+                                        only and is not stored in state. Requires sasl_password_wo_version to trigger updates.11 or higher.
+                                        Password to use in SASL authentification mechanism. This attribute is write-only and is not stored in state. Requires `sasl_password_wo_version` to trigger updates.11 or higher.
+                                      properties:
+                                        key:
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      type: object
+                                    saslPasswordWoVersion:
+                                      description: |-
+                                        only SASL password. Increment this to trigger a password update.
+                                        A version number for the write-only SASL password. Increment this to trigger a password update.
+                                      format: int64
+                                      type: integer
                                     saslUsername:
                                       description: |-
                                         (String). Username to use in SASL authentification mechanism.
@@ -702,8 +742,8 @@ spec:
                                 type: string
                               transactionalPrefix:
                                 description: |-
-                                  (String). Prefix for transactional operations. Default: ”
-                                  Prefix for transactional operations. Default: ”
+                                  (String). Prefix for transactional operations. Default: ''
+                                  Prefix for transactional operations. Default: ''
                                 type: string
                             type: object
                           type: array
@@ -904,6 +944,26 @@ spec:
                                       - key
                                       - name
                                       type: object
+                                    saslPasswordWoSecretRef:
+                                      description: |-
+                                        only and is not stored in state. Requires sasl_password_wo_version to trigger updates.11 or higher.
+                                        Password to use in SASL authentification mechanism. This attribute is write-only and is not stored in state. Requires `sasl_password_wo_version` to trigger updates.11 or higher.
+                                      properties:
+                                        key:
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      type: object
+                                    saslPasswordWoVersion:
+                                      description: |-
+                                        only SASL password. Increment this to trigger a password update.
+                                        A version number for the write-only SASL password. Increment this to trigger a password update.
+                                      format: int64
+                                      type: integer
                                     saslUsername:
                                       description: |-
                                         (String). Username to use in SASL authentification mechanism.
@@ -966,6 +1026,26 @@ spec:
                                       - key
                                       - name
                                       type: object
+                                    saslPasswordWoSecretRef:
+                                      description: |-
+                                        only and is not stored in state. Requires sasl_password_wo_version to trigger updates.11 or higher.
+                                        Password to use in SASL authentification mechanism. This attribute is write-only and is not stored in state. Requires `sasl_password_wo_version` to trigger updates.11 or higher.
+                                      properties:
+                                        key:
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      type: object
+                                    saslPasswordWoVersion:
+                                      description: |-
+                                        only SASL password. Increment this to trigger a password update.
+                                        A version number for the write-only SASL password. Increment this to trigger a password update.
+                                      format: int64
+                                      type: integer
                                     saslUsername:
                                       description: |-
                                         (String). Username to use in SASL authentification mechanism.
@@ -1198,8 +1278,8 @@ spec:
                                 type: string
                               transactionalPrefix:
                                 description: |-
-                                  (String). Prefix for transactional operations. Default: ”
-                                  Prefix for transactional operations. Default: ”
+                                  (String). Prefix for transactional operations. Default: ''
+                                  Prefix for transactional operations. Default: ''
                                 type: string
                             type: object
                           type: array
@@ -1372,6 +1452,12 @@ spec:
                                         (String). Type of SASL authentification mechanism to use.
                                         Type of SASL authentification mechanism to use.
                                       type: string
+                                    saslPasswordWoVersion:
+                                      description: |-
+                                        only SASL password. Increment this to trigger a password update.
+                                        A version number for the write-only SASL password. Increment this to trigger a password update.
+                                      format: int64
+                                      type: integer
                                     saslUsername:
                                       description: |-
                                         (String). Username to use in SASL authentification mechanism.
@@ -1420,6 +1506,12 @@ spec:
                                         (String). Type of SASL authentification mechanism to use.
                                         Type of SASL authentification mechanism to use.
                                       type: string
+                                    saslPasswordWoVersion:
+                                      description: |-
+                                        only SASL password. Increment this to trigger a password update.
+                                        A version number for the write-only SASL password. Increment this to trigger a password update.
+                                      format: int64
+                                      type: integer
                                     saslUsername:
                                       description: |-
                                         (String). Username to use in SASL authentification mechanism.

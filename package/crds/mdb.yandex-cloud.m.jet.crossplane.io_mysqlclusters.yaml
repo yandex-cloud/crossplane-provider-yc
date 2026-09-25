@@ -568,19 +568,24 @@ spec:
                     type: array
                   restore:
                     description: |-
-                      [Block]. The cluster will be created from the specified backup.
-                      The cluster will be created from the specified backup.
+                      [Block]. The cluster will be created from the specified backup or source cluster.
+                      The cluster will be created from the specified backup or source cluster.
                     items:
                       properties:
                         backupId:
                           description: |-
-                            (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
-                            Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups).
+                            (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups. Should not be used together with source_cluster_id.
+                            Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups). Should not be used together with `source_cluster_id`.
+                          type: string
+                        sourceClusterId:
+                          description: |-
+                            (String). ID of the source cluster to restore from. The latest backup suitable for time will be used for the restore. time is required. Should not be used together with backup_id.
+                            ID of the source cluster to restore from. The latest backup suitable for `time` will be used for the restore. `time` is required. Should not be used together with `backup_id`.
                           type: string
                         time:
                           description: |-
-                            01-02T15:04:05 - UTC). When not set, current time is used.
-                            Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). When not set, current time is used.
+                            01-02T15:04:05 - UTC). Required when source_cluster_id is used.
+                            Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). Required when `source_cluster_id` is used.
                           type: string
                       type: object
                     type: array
@@ -1292,19 +1297,24 @@ spec:
                     type: array
                   restore:
                     description: |-
-                      [Block]. The cluster will be created from the specified backup.
-                      The cluster will be created from the specified backup.
+                      [Block]. The cluster will be created from the specified backup or source cluster.
+                      The cluster will be created from the specified backup or source cluster.
                     items:
                       properties:
                         backupId:
                           description: |-
-                            (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
-                            Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups).
+                            (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups. Should not be used together with source_cluster_id.
+                            Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups). Should not be used together with `source_cluster_id`.
+                          type: string
+                        sourceClusterId:
+                          description: |-
+                            (String). ID of the source cluster to restore from. The latest backup suitable for time will be used for the restore. time is required. Should not be used together with backup_id.
+                            ID of the source cluster to restore from. The latest backup suitable for `time` will be used for the restore. `time` is required. Should not be used together with `backup_id`.
                           type: string
                         time:
                           description: |-
-                            01-02T15:04:05 - UTC). When not set, current time is used.
-                            Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). When not set, current time is used.
+                            01-02T15:04:05 - UTC). Required when source_cluster_id is used.
+                            Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). Required when `source_cluster_id` is used.
                           type: string
                       type: object
                     type: array
@@ -1870,19 +1880,24 @@ spec:
                     type: array
                   restore:
                     description: |-
-                      [Block]. The cluster will be created from the specified backup.
-                      The cluster will be created from the specified backup.
+                      [Block]. The cluster will be created from the specified backup or source cluster.
+                      The cluster will be created from the specified backup or source cluster.
                     items:
                       properties:
                         backupId:
                           description: |-
-                            (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
-                            Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups).
+                            (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups. Should not be used together with source_cluster_id.
+                            Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups). Should not be used together with `source_cluster_id`.
+                          type: string
+                        sourceClusterId:
+                          description: |-
+                            (String). ID of the source cluster to restore from. The latest backup suitable for time will be used for the restore. time is required. Should not be used together with backup_id.
+                            ID of the source cluster to restore from. The latest backup suitable for `time` will be used for the restore. `time` is required. Should not be used together with `backup_id`.
                           type: string
                         time:
                           description: |-
-                            01-02T15:04:05 - UTC). When not set, current time is used.
-                            Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). When not set, current time is used.
+                            01-02T15:04:05 - UTC). Required when source_cluster_id is used.
+                            Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). Required when `source_cluster_id` is used.
                           type: string
                       type: object
                     type: array

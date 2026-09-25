@@ -30,11 +30,12 @@ import (
 
 type GroupInitParameters struct {
 
-	// Only) (String). The resource description.
+	// (String). Description of the group.
 	// Description of the group.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String). ID of a Group.
+	// (String). ID of the Group resource to return.
+	// To get the group ID, use a [GroupService.List] request.
 	// ID of the Group resource to return.
 	// To get the group ID, use a [GroupService.List] request.
 	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
@@ -44,31 +45,33 @@ type GroupInitParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// (String). Name of the group.
 	// Name of the group.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). Organization that the Group belongs to. If value is omitted, the default provider organization is used.
+	// (String). ID of the organization that the group belongs to.
 	// ID of the organization that the group belongs to.
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 }
 
 type GroupObservation struct {
 
-	// Only) (String). The creation timestamp of the resource.
+	// Only) (String). Creation timestamp.
 	// Creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Only) (String). The resource description.
+	// (String). Description of the group.
 	// Description of the group.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String). ID of a Group.
+	// (String). ID of the Group resource to return.
+	// To get the group ID, use a [GroupService.List] request.
 	// ID of the Group resource to return.
 	// To get the group ID, use a [GroupService.List] request.
 	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
 
-	// (String).
+	// (String). ID of the Group resource to return.
+	// To get the group ID, use a [GroupService.List] request.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Map Of String). Resource labels as key:value pairs.
@@ -76,23 +79,24 @@ type GroupObservation struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// (String). Name of the group.
 	// Name of the group.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). Organization that the Group belongs to. If value is omitted, the default provider organization is used.
+	// (String). ID of the organization that the group belongs to.
 	// ID of the organization that the group belongs to.
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 }
 
 type GroupParameters struct {
 
-	// Only) (String). The resource description.
+	// (String). Description of the group.
 	// Description of the group.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String). ID of a Group.
+	// (String). ID of the Group resource to return.
+	// To get the group ID, use a [GroupService.List] request.
 	// ID of the Group resource to return.
 	// To get the group ID, use a [GroupService.List] request.
 	// +kubebuilder:validation:Optional
@@ -104,12 +108,12 @@ type GroupParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// (String). Name of the group.
 	// Name of the group.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). Organization that the Group belongs to. If value is omitted, the default provider organization is used.
+	// (String). ID of the organization that the group belongs to.
 	// ID of the organization that the group belongs to.
 	// +kubebuilder:validation:Optional
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`

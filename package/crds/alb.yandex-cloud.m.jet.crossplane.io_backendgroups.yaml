@@ -249,6 +249,48 @@ spec:
                               timeout:
                                 description: Time to wait for a health check response.
                                 type: string
+                              tls:
+                                description: |-
+                                  [Block]. TLS specification that will be used by this backend.
+                                  TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+
+                                  ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                                items:
+                                  properties:
+                                    clientCertificate:
+                                      description: Client certificate specification.
+                                        Used to establish mTLS connections with the
+                                        backend.
+                                      items:
+                                        properties:
+                                          certificateId:
+                                            description: |-
+                                              (String).
+                                              Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    sni:
+                                      description: SNI string for TLS connections.
+                                      type: string
+                                    validationContext:
+                                      description: Validation context for backend
+                                        TLS connections.
+                                      items:
+                                        properties:
+                                          trustedCaBytes:
+                                            description: PEM-encoded trusted CA certificate
+                                              chain.
+                                            type: string
+                                          trustedCaId:
+                                            description: |-
+                                              (String).
+                                              Trusted CA certificate ID in the Certificate Manager.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               unhealthyThreshold:
                                 description: Number of consecutive failed health checks
                                   required to demote endpoint into the unhealthy state.
@@ -394,6 +436,18 @@ spec:
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
+                              clientCertificate:
+                                description: Client certificate specification. Used
+                                  to establish mTLS connections with the backend.
+                                items:
+                                  properties:
+                                    certificateId:
+                                      description: |-
+                                        (String).
+                                        Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                      type: string
+                                  type: object
+                                type: array
                               sni:
                                 description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
                                   string for TLS connections.'
@@ -522,6 +576,48 @@ spec:
                               timeout:
                                 description: Time to wait for a health check response.
                                 type: string
+                              tls:
+                                description: |-
+                                  [Block]. TLS specification that will be used by this backend.
+                                  TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+
+                                  ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                                items:
+                                  properties:
+                                    clientCertificate:
+                                      description: Client certificate specification.
+                                        Used to establish mTLS connections with the
+                                        backend.
+                                      items:
+                                        properties:
+                                          certificateId:
+                                            description: |-
+                                              (String).
+                                              Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    sni:
+                                      description: SNI string for TLS connections.
+                                      type: string
+                                    validationContext:
+                                      description: Validation context for backend
+                                        TLS connections.
+                                      items:
+                                        properties:
+                                          trustedCaBytes:
+                                            description: PEM-encoded trusted CA certificate
+                                              chain.
+                                            type: string
+                                          trustedCaId:
+                                            description: |-
+                                              (String).
+                                              Trusted CA certificate ID in the Certificate Manager.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               unhealthyThreshold:
                                 description: Number of consecutive failed health checks
                                   required to demote endpoint into the unhealthy state.
@@ -677,6 +773,18 @@ spec:
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
+                              clientCertificate:
+                                description: Client certificate specification. Used
+                                  to establish mTLS connections with the backend.
+                                items:
+                                  properties:
+                                    certificateId:
+                                      description: |-
+                                        (String).
+                                        Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                      type: string
+                                  type: object
+                                type: array
                               sni:
                                 description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
                                   string for TLS connections.'
@@ -880,6 +988,48 @@ spec:
                               timeout:
                                 description: Time to wait for a health check response.
                                 type: string
+                              tls:
+                                description: |-
+                                  [Block]. TLS specification that will be used by this backend.
+                                  TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+
+                                  ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                                items:
+                                  properties:
+                                    clientCertificate:
+                                      description: Client certificate specification.
+                                        Used to establish mTLS connections with the
+                                        backend.
+                                      items:
+                                        properties:
+                                          certificateId:
+                                            description: |-
+                                              (String).
+                                              Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    sni:
+                                      description: SNI string for TLS connections.
+                                      type: string
+                                    validationContext:
+                                      description: Validation context for backend
+                                        TLS connections.
+                                      items:
+                                        properties:
+                                          trustedCaBytes:
+                                            description: PEM-encoded trusted CA certificate
+                                              chain.
+                                            type: string
+                                          trustedCaId:
+                                            description: |-
+                                              (String).
+                                              Trusted CA certificate ID in the Certificate Manager.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               unhealthyThreshold:
                                 description: Number of consecutive failed health checks
                                   required to demote endpoint into the unhealthy state.
@@ -1030,6 +1180,18 @@ spec:
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
+                              clientCertificate:
+                                description: Client certificate specification. Used
+                                  to establish mTLS connections with the backend.
+                                items:
+                                  properties:
+                                    certificateId:
+                                      description: |-
+                                        (String).
+                                        Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                      type: string
+                                  type: object
+                                type: array
                               sni:
                                 description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
                                   string for TLS connections.'
@@ -1262,6 +1424,48 @@ spec:
                               timeout:
                                 description: Time to wait for a health check response.
                                 type: string
+                              tls:
+                                description: |-
+                                  [Block]. TLS specification that will be used by this backend.
+                                  TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+
+                                  ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                                items:
+                                  properties:
+                                    clientCertificate:
+                                      description: Client certificate specification.
+                                        Used to establish mTLS connections with the
+                                        backend.
+                                      items:
+                                        properties:
+                                          certificateId:
+                                            description: |-
+                                              (String).
+                                              Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    sni:
+                                      description: SNI string for TLS connections.
+                                      type: string
+                                    validationContext:
+                                      description: Validation context for backend
+                                        TLS connections.
+                                      items:
+                                        properties:
+                                          trustedCaBytes:
+                                            description: PEM-encoded trusted CA certificate
+                                              chain.
+                                            type: string
+                                          trustedCaId:
+                                            description: |-
+                                              (String).
+                                              Trusted CA certificate ID in the Certificate Manager.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               unhealthyThreshold:
                                 description: Number of consecutive failed health checks
                                   required to demote endpoint into the unhealthy state.
@@ -1407,6 +1611,18 @@ spec:
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
+                              clientCertificate:
+                                description: Client certificate specification. Used
+                                  to establish mTLS connections with the backend.
+                                items:
+                                  properties:
+                                    certificateId:
+                                      description: |-
+                                        (String).
+                                        Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                      type: string
+                                  type: object
+                                type: array
                               sni:
                                 description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
                                   string for TLS connections.'
@@ -1535,6 +1751,48 @@ spec:
                               timeout:
                                 description: Time to wait for a health check response.
                                 type: string
+                              tls:
+                                description: |-
+                                  [Block]. TLS specification that will be used by this backend.
+                                  TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+
+                                  ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                                items:
+                                  properties:
+                                    clientCertificate:
+                                      description: Client certificate specification.
+                                        Used to establish mTLS connections with the
+                                        backend.
+                                      items:
+                                        properties:
+                                          certificateId:
+                                            description: |-
+                                              (String).
+                                              Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    sni:
+                                      description: SNI string for TLS connections.
+                                      type: string
+                                    validationContext:
+                                      description: Validation context for backend
+                                        TLS connections.
+                                      items:
+                                        properties:
+                                          trustedCaBytes:
+                                            description: PEM-encoded trusted CA certificate
+                                              chain.
+                                            type: string
+                                          trustedCaId:
+                                            description: |-
+                                              (String).
+                                              Trusted CA certificate ID in the Certificate Manager.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               unhealthyThreshold:
                                 description: Number of consecutive failed health checks
                                   required to demote endpoint into the unhealthy state.
@@ -1690,6 +1948,18 @@ spec:
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
+                              clientCertificate:
+                                description: Client certificate specification. Used
+                                  to establish mTLS connections with the backend.
+                                items:
+                                  properties:
+                                    certificateId:
+                                      description: |-
+                                        (String).
+                                        Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                      type: string
+                                  type: object
+                                type: array
                               sni:
                                 description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
                                   string for TLS connections.'
@@ -1893,6 +2163,48 @@ spec:
                               timeout:
                                 description: Time to wait for a health check response.
                                 type: string
+                              tls:
+                                description: |-
+                                  [Block]. TLS specification that will be used by this backend.
+                                  TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+
+                                  ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                                items:
+                                  properties:
+                                    clientCertificate:
+                                      description: Client certificate specification.
+                                        Used to establish mTLS connections with the
+                                        backend.
+                                      items:
+                                        properties:
+                                          certificateId:
+                                            description: |-
+                                              (String).
+                                              Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    sni:
+                                      description: SNI string for TLS connections.
+                                      type: string
+                                    validationContext:
+                                      description: Validation context for backend
+                                        TLS connections.
+                                      items:
+                                        properties:
+                                          trustedCaBytes:
+                                            description: PEM-encoded trusted CA certificate
+                                              chain.
+                                            type: string
+                                          trustedCaId:
+                                            description: |-
+                                              (String).
+                                              Trusted CA certificate ID in the Certificate Manager.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               unhealthyThreshold:
                                 description: Number of consecutive failed health checks
                                   required to demote endpoint into the unhealthy state.
@@ -2043,6 +2355,18 @@ spec:
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
+                              clientCertificate:
+                                description: Client certificate specification. Used
+                                  to establish mTLS connections with the backend.
+                                items:
+                                  properties:
+                                    certificateId:
+                                      description: |-
+                                        (String).
+                                        Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                      type: string
+                                  type: object
+                                type: array
                               sni:
                                 description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
                                   string for TLS connections.'
@@ -2248,6 +2572,48 @@ spec:
                               timeout:
                                 description: Time to wait for a health check response.
                                 type: string
+                              tls:
+                                description: |-
+                                  [Block]. TLS specification that will be used by this backend.
+                                  TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+
+                                  ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                                items:
+                                  properties:
+                                    clientCertificate:
+                                      description: Client certificate specification.
+                                        Used to establish mTLS connections with the
+                                        backend.
+                                      items:
+                                        properties:
+                                          certificateId:
+                                            description: |-
+                                              (String).
+                                              Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    sni:
+                                      description: SNI string for TLS connections.
+                                      type: string
+                                    validationContext:
+                                      description: Validation context for backend
+                                        TLS connections.
+                                      items:
+                                        properties:
+                                          trustedCaBytes:
+                                            description: PEM-encoded trusted CA certificate
+                                              chain.
+                                            type: string
+                                          trustedCaId:
+                                            description: |-
+                                              (String).
+                                              Trusted CA certificate ID in the Certificate Manager.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               unhealthyThreshold:
                                 description: Number of consecutive failed health checks
                                   required to demote endpoint into the unhealthy state.
@@ -2309,6 +2675,18 @@ spec:
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
+                              clientCertificate:
+                                description: Client certificate specification. Used
+                                  to establish mTLS connections with the backend.
+                                items:
+                                  properties:
+                                    certificateId:
+                                      description: |-
+                                        (String).
+                                        Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                      type: string
+                                  type: object
+                                type: array
                               sni:
                                 description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
                                   string for TLS connections.'
@@ -2437,6 +2815,48 @@ spec:
                               timeout:
                                 description: Time to wait for a health check response.
                                 type: string
+                              tls:
+                                description: |-
+                                  [Block]. TLS specification that will be used by this backend.
+                                  TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+
+                                  ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                                items:
+                                  properties:
+                                    clientCertificate:
+                                      description: Client certificate specification.
+                                        Used to establish mTLS connections with the
+                                        backend.
+                                      items:
+                                        properties:
+                                          certificateId:
+                                            description: |-
+                                              (String).
+                                              Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    sni:
+                                      description: SNI string for TLS connections.
+                                      type: string
+                                    validationContext:
+                                      description: Validation context for backend
+                                        TLS connections.
+                                      items:
+                                        properties:
+                                          trustedCaBytes:
+                                            description: PEM-encoded trusted CA certificate
+                                              chain.
+                                            type: string
+                                          trustedCaId:
+                                            description: |-
+                                              (String).
+                                              Trusted CA certificate ID in the Certificate Manager.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               unhealthyThreshold:
                                 description: Number of consecutive failed health checks
                                   required to demote endpoint into the unhealthy state.
@@ -2508,6 +2928,18 @@ spec:
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
+                              clientCertificate:
+                                description: Client certificate specification. Used
+                                  to establish mTLS connections with the backend.
+                                items:
+                                  properties:
+                                    certificateId:
+                                      description: |-
+                                        (String).
+                                        Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                      type: string
+                                  type: object
+                                type: array
                               sni:
                                 description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
                                   string for TLS connections.'
@@ -2714,6 +3146,48 @@ spec:
                               timeout:
                                 description: Time to wait for a health check response.
                                 type: string
+                              tls:
+                                description: |-
+                                  [Block]. TLS specification that will be used by this backend.
+                                  TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+
+                                  ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                                items:
+                                  properties:
+                                    clientCertificate:
+                                      description: Client certificate specification.
+                                        Used to establish mTLS connections with the
+                                        backend.
+                                      items:
+                                        properties:
+                                          certificateId:
+                                            description: |-
+                                              (String).
+                                              Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    sni:
+                                      description: SNI string for TLS connections.
+                                      type: string
+                                    validationContext:
+                                      description: Validation context for backend
+                                        TLS connections.
+                                      items:
+                                        properties:
+                                          trustedCaBytes:
+                                            description: PEM-encoded trusted CA certificate
+                                              chain.
+                                            type: string
+                                          trustedCaId:
+                                            description: |-
+                                              (String).
+                                              Trusted CA certificate ID in the Certificate Manager.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               unhealthyThreshold:
                                 description: Number of consecutive failed health checks
                                   required to demote endpoint into the unhealthy state.
@@ -2780,6 +3254,18 @@ spec:
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
+                              clientCertificate:
+                                description: Client certificate specification. Used
+                                  to establish mTLS connections with the backend.
+                                items:
+                                  properties:
+                                    certificateId:
+                                      description: |-
+                                        (String).
+                                        Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+                                      type: string
+                                  type: object
+                                type: array
                               sni:
                                 description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
                                   string for TLS connections.'

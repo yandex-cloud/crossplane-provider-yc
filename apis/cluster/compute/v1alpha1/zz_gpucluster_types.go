@@ -29,11 +29,11 @@ import (
 
 type GpuClusterInitParameters struct {
 
-	// Only) (String). The resource description.
+	// (String). Description of the GPU cluster.
 	// Description of the GPU cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// id is used.
+	// (String). ID of the folder that the GPU cluster belongs to.
 	// ID of the folder that the GPU cluster belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -46,87 +46,96 @@ type GpuClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (String). ID of the GPU cluster.
+	// (String). ID of the GPU cluster to return.
+	// To get a GPU cluster ID, make a [GpuClusterService.List] request.
 	// ID of the GPU cluster to return.
 	// To get a GPU cluster ID, make a [GpuClusterService.List] request.
 	GpuClusterID *string `json:"gpuClusterId,omitempty" tf:"gpu_cluster_id,omitempty"`
 
-	// Only) (String). Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
+	// (String). Type of interconnect used for this GPU cluster.
 	// Type of interconnect used for this GPU cluster.
 	InterconnectType *string `json:"interconnectType,omitempty" tf:"interconnect_type,omitempty"`
 
-	// Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+	// (Map Of String). GPU cluster labels as key:value pairs.
 	// GPU cluster labels as `key:value` pairs.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// (String). Name of the GPU cluster.
+	// The name is unique within the folder.
 	// Name of the GPU cluster.
 	// The name is unique within the folder.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (Number). Number of subnets in the GPU cluster.
+	// Number of subnets in the GPU cluster.
+	Subnets *float64 `json:"subnets,omitempty" tf:"subnets,omitempty"`
+
+	// (String). ID of the availability zone where the GPU cluster resides.
 	// ID of the availability zone where the GPU cluster resides.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type GpuClusterObservation struct {
 
-	// Only) (String). The creation timestamp of the resource.
+	// Only) (String). Creation timestamp.
 	// Creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Only) (String). The resource description.
+	// (String). Description of the GPU cluster.
 	// Description of the GPU cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// id is used.
+	// (String). ID of the folder that the GPU cluster belongs to.
 	// ID of the folder that the GPU cluster belongs to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String). ID of the GPU cluster.
+	// (String). ID of the GPU cluster to return.
+	// To get a GPU cluster ID, make a [GpuClusterService.List] request.
 	// ID of the GPU cluster to return.
 	// To get a GPU cluster ID, make a [GpuClusterService.List] request.
 	GpuClusterID *string `json:"gpuClusterId,omitempty" tf:"gpu_cluster_id,omitempty"`
 
-	// (String).
+	// (String). ID of the GPU cluster to return.
+	// To get a GPU cluster ID, make a [GpuClusterService.List] request.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Only) (String). Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
+	// (String). Type of interconnect used for this GPU cluster.
 	// Type of interconnect used for this GPU cluster.
 	InterconnectType *string `json:"interconnectType,omitempty" tf:"interconnect_type,omitempty"`
 
-	// Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+	// (Map Of String). GPU cluster labels as key:value pairs.
 	// GPU cluster labels as `key:value` pairs.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// (String). Name of the GPU cluster.
+	// The name is unique within the folder.
 	// Name of the GPU cluster.
 	// The name is unique within the folder.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Only) (String). The status of the GPU cluster.
+	// Only) (String). Status of the GPU cluster.
 	// Status of the GPU cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// Only) (Number). Number of subnets in the GPU cluster.
+	// (Number). Number of subnets in the GPU cluster.
 	// Number of subnets in the GPU cluster.
 	Subnets *float64 `json:"subnets,omitempty" tf:"subnets,omitempty"`
 
-	// Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (String). ID of the availability zone where the GPU cluster resides.
 	// ID of the availability zone where the GPU cluster resides.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type GpuClusterParameters struct {
 
-	// Only) (String). The resource description.
+	// (String). Description of the GPU cluster.
 	// Description of the GPU cluster.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// id is used.
+	// (String). ID of the folder that the GPU cluster belongs to.
 	// ID of the folder that the GPU cluster belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
@@ -140,30 +149,37 @@ type GpuClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (String). ID of the GPU cluster.
+	// (String). ID of the GPU cluster to return.
+	// To get a GPU cluster ID, make a [GpuClusterService.List] request.
 	// ID of the GPU cluster to return.
 	// To get a GPU cluster ID, make a [GpuClusterService.List] request.
 	// +kubebuilder:validation:Optional
 	GpuClusterID *string `json:"gpuClusterId,omitempty" tf:"gpu_cluster_id,omitempty"`
 
-	// Only) (String). Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
+	// (String). Type of interconnect used for this GPU cluster.
 	// Type of interconnect used for this GPU cluster.
 	// +kubebuilder:validation:Optional
 	InterconnectType *string `json:"interconnectType,omitempty" tf:"interconnect_type,omitempty"`
 
-	// Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+	// (Map Of String). GPU cluster labels as key:value pairs.
 	// GPU cluster labels as `key:value` pairs.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// (String). Name of the GPU cluster.
+	// The name is unique within the folder.
 	// Name of the GPU cluster.
 	// The name is unique within the folder.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (Number). Number of subnets in the GPU cluster.
+	// Number of subnets in the GPU cluster.
+	// +kubebuilder:validation:Optional
+	Subnets *float64 `json:"subnets,omitempty" tf:"subnets,omitempty"`
+
+	// (String). ID of the availability zone where the GPU cluster resides.
 	// ID of the availability zone where the GPU cluster resides.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`

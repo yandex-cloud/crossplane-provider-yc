@@ -61,7 +61,7 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String). The resource description.
+                      256 characters long.
                       Description of the cloud. 0-256 characters long.
                     type: string
                   labels:
@@ -69,12 +69,12 @@ spec:
                       type: string
                     description: |-
                       (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
-                      Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
+                      Resource labels as `` key:value `` pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      63 characters long.
                       Name of the cloud. 3-63 characters long.
                     type: string
                   organizationId:
@@ -122,7 +122,7 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String). The resource description.
+                      256 characters long.
                       Description of the cloud. 0-256 characters long.
                     type: string
                   labels:
@@ -130,12 +130,12 @@ spec:
                       type: string
                     description: |-
                       (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
-                      Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
+                      Resource labels as `` key:value `` pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      63 characters long.
                       Name of the cloud. 3-63 characters long.
                     type: string
                   organizationId:
@@ -238,28 +238,30 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      Only) (String). The creation timestamp of the resource.
+                      Only) (String). Creation timestamp.
                       Creation timestamp.
                     type: string
                   description:
                     description: |-
-                      (String). The resource description.
+                      256 characters long.
                       Description of the cloud. 0-256 characters long.
                     type: string
                   id:
-                    description: (String).
+                    description: |-
+                      (String). ID of the Cloud resource to return.
+                      To get the cloud ID, use a [CloudService.List] request.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
                       (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
-                      Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
+                      Resource labels as `` key:value `` pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      63 characters long.
                       Name of the cloud. 3-63 characters long.
                     type: string
                   organizationId:

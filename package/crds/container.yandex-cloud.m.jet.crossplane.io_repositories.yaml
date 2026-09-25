@@ -61,13 +61,15 @@ spec:
                 properties:
                   name:
                     description: |-
-                      (String). A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+                      (String). Name of the repository.
+                      The name is unique within the registry.
                       Name of the repository.
                       The name is unique within the registry.
                     type: string
                   repositoryId:
                     description: |-
-                      (String). The ID of a specific repository.
+                      (String). ID of the Repository resource to return.
+                      To get the repository ID use a [RepositoryService.List] request.
                       ID of the Repository resource to return.
                       To get the repository ID use a [RepositoryService.List] request.
                     type: string
@@ -87,13 +89,15 @@ spec:
                 properties:
                   name:
                     description: |-
-                      (String). A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+                      (String). Name of the repository.
+                      The name is unique within the registry.
                       Name of the repository.
                       The name is unique within the registry.
                     type: string
                   repositoryId:
                     description: |-
-                      (String). The ID of a specific repository.
+                      (String). ID of the Repository resource to return.
+                      To get the repository ID use a [RepositoryService.List] request.
                       ID of the Repository resource to return.
                       To get the repository ID use a [RepositoryService.List] request.
                     type: string
@@ -167,17 +171,21 @@ spec:
               atProvider:
                 properties:
                   id:
-                    description: (String).
+                    description: |-
+                      (String). ID of the Repository resource to return.
+                      To get the repository ID use a [RepositoryService.List] request.
                     type: string
                   name:
                     description: |-
-                      (String). A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+                      (String). Name of the repository.
+                      The name is unique within the registry.
                       Name of the repository.
                       The name is unique within the registry.
                     type: string
                   repositoryId:
                     description: |-
-                      (String). The ID of a specific repository.
+                      (String). ID of the Repository resource to return.
+                      To get the repository ID use a [RepositoryService.List] request.
                       ID of the Repository resource to return.
                       To get the repository ID use a [RepositoryService.List] request.
                     type: string

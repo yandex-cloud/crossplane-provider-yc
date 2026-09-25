@@ -30,16 +30,16 @@ import (
 
 type CloudInitParameters struct {
 
-	// (String). The resource description.
+	// 256 characters long.
 	// Description of the cloud. 0-256 characters long.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
-	// Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
+	// Resource labels as `` key:value `` pairs. Maximum of 64 per resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// 63 characters long.
 	// Name of the cloud. 3-63 characters long.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -53,23 +53,24 @@ type CloudInitParameters struct {
 
 type CloudObservation struct {
 
-	// Only) (String). The creation timestamp of the resource.
+	// Only) (String). Creation timestamp.
 	// Creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String). The resource description.
+	// 256 characters long.
 	// Description of the cloud. 0-256 characters long.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String).
+	// (String). ID of the Cloud resource to return.
+	// To get the cloud ID, use a [CloudService.List] request.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
-	// Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
+	// Resource labels as `` key:value `` pairs. Maximum of 64 per resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// 63 characters long.
 	// Name of the cloud. 3-63 characters long.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -83,18 +84,18 @@ type CloudObservation struct {
 
 type CloudParameters struct {
 
-	// (String). The resource description.
+	// 256 characters long.
 	// Description of the cloud. 0-256 characters long.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
-	// Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
+	// Resource labels as `` key:value `` pairs. Maximum of 64 per resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// 63 characters long.
 	// Name of the cloud. 3-63 characters long.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`

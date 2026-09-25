@@ -116,7 +116,7 @@ type ConfigPerformanceDiagnosticsInitParameters struct {
 	// Switch performance diagnostics from standard to advanced mode.
 	AdvancedMode *bool `json:"advancedMode,omitempty" tf:"advanced_mode,omitempty"`
 
-	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
 	// Enable performance diagnostics.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -135,7 +135,7 @@ type ConfigPerformanceDiagnosticsObservation struct {
 	// Switch performance diagnostics from standard to advanced mode.
 	AdvancedMode *bool `json:"advancedMode,omitempty" tf:"advanced_mode,omitempty"`
 
-	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
 	// Enable performance diagnostics.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -155,7 +155,7 @@ type ConfigPerformanceDiagnosticsParameters struct {
 	// +kubebuilder:validation:Optional
 	AdvancedMode *bool `json:"advancedMode,omitempty" tf:"advanced_mode,omitempty"`
 
-	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
 	// Enable performance diagnostics.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
@@ -225,8 +225,8 @@ type ConnectionManagerInitParameters struct {
 	// ID of the folder where connections for the cluster are created. Defaults to the cluster's folder if not specified.
 	ConnectionsFolderID *string `json:"connectionsFolderId,omitempty" tf:"connections_folder_id,omitempty"`
 
-	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
-	// Indicates whether Connection Manager integration is enabled for the cluster. Set to `true` to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
+	// Indicates whether Connection Manager integration is enabled for the cluster. Set to `true` to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: `enabled = false` is rejected.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	// (String). ID of the folder where connection secrets are created. Defaults to the cluster's folder if not specified.
@@ -240,8 +240,8 @@ type ConnectionManagerObservation struct {
 	// ID of the folder where connections for the cluster are created. Defaults to the cluster's folder if not specified.
 	ConnectionsFolderID *string `json:"connectionsFolderId,omitempty" tf:"connections_folder_id,omitempty"`
 
-	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
-	// Indicates whether Connection Manager integration is enabled for the cluster. Set to `true` to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
+	// Indicates whether Connection Manager integration is enabled for the cluster. Set to `true` to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: `enabled = false` is rejected.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	// (String). ID of the folder where connection secrets are created. Defaults to the cluster's folder if not specified.
@@ -256,8 +256,8 @@ type ConnectionManagerParameters struct {
 	// +kubebuilder:validation:Optional
 	ConnectionsFolderID *string `json:"connectionsFolderId,omitempty" tf:"connections_folder_id,omitempty"`
 
-	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
-	// Indicates whether Connection Manager integration is enabled for the cluster. Set to `true` to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
+	// Indicates whether Connection Manager integration is enabled for the cluster. Set to `true` to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: `enabled = false` is rejected.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -273,7 +273,7 @@ type ExtensionInitParameters struct {
 	// Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// 1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
+	// 1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
 	// Version of the extension.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
@@ -284,7 +284,7 @@ type ExtensionObservation struct {
 	// Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// 1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
+	// 1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
 	// Version of the extension.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
@@ -296,7 +296,7 @@ type ExtensionParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// 1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
+	// 1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
 	// Version of the extension.
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
@@ -304,21 +304,21 @@ type ExtensionParameters struct {
 
 type ManagedRepackInitParameters struct {
 
-	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
 	// Enable managed pg_repack for the cluster.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type ManagedRepackObservation struct {
 
-	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
 	// Enable managed pg_repack for the cluster.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type ManagedRepackParameters struct {
 
-	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+	// (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
 	// Enable managed pg_repack for the cluster.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
@@ -469,8 +469,8 @@ type PostgresqlClusterConfigInitParameters struct {
 	// Time to start the daily backup, in the UTC timezone.
 	BackupWindowStart []ConfigBackupWindowStartInitParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
-	// [Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
-	// Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+	// [Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
+	// Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: `enabled = false` is rejected.
 	ConnectionManager []ConnectionManagerInitParameters `json:"connectionManager,omitempty" tf:"connection_manager,omitempty"`
 
 	// [Block]. Cluster disk size autoscaling settings.
@@ -498,8 +498,8 @@ type PostgresqlClusterConfigInitParameters struct {
 	// Resources allocated to hosts of the PostgreSQL cluster.
 	Resources []ConfigResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// 1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
-	// Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
+	// 1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
+	// Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -517,8 +517,8 @@ type PostgresqlClusterConfigObservation struct {
 	// Time to start the daily backup, in the UTC timezone.
 	BackupWindowStart []ConfigBackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
-	// [Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
-	// Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+	// [Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
+	// Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: `enabled = false` is rejected.
 	ConnectionManager []ConnectionManagerObservation `json:"connectionManager,omitempty" tf:"connection_manager,omitempty"`
 
 	// [Block]. Cluster disk size autoscaling settings.
@@ -546,8 +546,8 @@ type PostgresqlClusterConfigObservation struct {
 	// Resources allocated to hosts of the PostgreSQL cluster.
 	Resources []ConfigResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// 1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
-	// Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
+	// 1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
+	// Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -568,8 +568,8 @@ type PostgresqlClusterConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	BackupWindowStart []ConfigBackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
-	// [Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
-	// Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+	// [Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
+	// Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: `enabled = false` is rejected.
 	// +kubebuilder:validation:Optional
 	ConnectionManager []ConnectionManagerParameters `json:"connectionManager,omitempty" tf:"connection_manager,omitempty"`
 
@@ -604,8 +604,8 @@ type PostgresqlClusterConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Resources []ConfigResourcesParameters `json:"resources" tf:"resources,omitempty"`
 
-	// 1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
-	// Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
+	// 1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
+	// Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version" tf:"version,omitempty"`
 }
@@ -628,8 +628,8 @@ type PostgresqlClusterDatabaseInitParameters struct {
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
-	// Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+	// (String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
+	// Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
 	Owner *string `json:"owner,omitempty" tf:"owner,omitempty"`
 
 	// (String). Name of the template database.
@@ -655,8 +655,8 @@ type PostgresqlClusterDatabaseObservation struct {
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
-	// Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+	// (String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
+	// Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
 	Owner *string `json:"owner,omitempty" tf:"owner,omitempty"`
 
 	// (String). Name of the template database.
@@ -686,8 +686,8 @@ type PostgresqlClusterDatabaseParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
-	// Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+	// (String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
+	// Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
 	// +kubebuilder:validation:Optional
 	Owner *string `json:"owner" tf:"owner,omitempty"`
 

@@ -75,12 +75,13 @@ spec:
                 properties:
                   description:
                     description: |-
-                      Only) (String). The resource description.
+                      (String). Description of the group.
                       Description of the group.
                     type: string
                   groupId:
                     description: |-
-                      (String). ID of a Group.
+                      (String). ID of the Group resource to return.
+                      To get the group ID, use a [GroupService.List] request.
                       ID of the Group resource to return.
                       To get the group ID, use a [GroupService.List] request.
                     type: string
@@ -94,12 +95,12 @@ spec:
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      (String). Name of the group.
                       Name of the group.
                     type: string
                   organizationId:
                     description: |-
-                      (String). Organization that the Group belongs to. If value is omitted, the default provider organization is used.
+                      (String). ID of the organization that the group belongs to.
                       ID of the organization that the group belongs to.
                     type: string
                 type: object
@@ -118,12 +119,13 @@ spec:
                 properties:
                   description:
                     description: |-
-                      Only) (String). The resource description.
+                      (String). Description of the group.
                       Description of the group.
                     type: string
                   groupId:
                     description: |-
-                      (String). ID of a Group.
+                      (String). ID of the Group resource to return.
+                      To get the group ID, use a [GroupService.List] request.
                       ID of the Group resource to return.
                       To get the group ID, use a [GroupService.List] request.
                     type: string
@@ -137,12 +139,12 @@ spec:
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      (String). Name of the group.
                       Name of the group.
                     type: string
                   organizationId:
                     description: |-
-                      (String). Organization that the Group belongs to. If value is omitted, the default provider organization is used.
+                      (String). ID of the organization that the group belongs to.
                       ID of the organization that the group belongs to.
                     type: string
                 type: object
@@ -248,22 +250,25 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      Only) (String). The creation timestamp of the resource.
+                      Only) (String). Creation timestamp.
                       Creation timestamp.
                     type: string
                   description:
                     description: |-
-                      Only) (String). The resource description.
+                      (String). Description of the group.
                       Description of the group.
                     type: string
                   groupId:
                     description: |-
-                      (String). ID of a Group.
+                      (String). ID of the Group resource to return.
+                      To get the group ID, use a [GroupService.List] request.
                       ID of the Group resource to return.
                       To get the group ID, use a [GroupService.List] request.
                     type: string
                   id:
-                    description: (String).
+                    description: |-
+                      (String). ID of the Group resource to return.
+                      To get the group ID, use a [GroupService.List] request.
                     type: string
                   labels:
                     additionalProperties:
@@ -275,12 +280,12 @@ spec:
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      (String). Name of the group.
                       Name of the group.
                     type: string
                   organizationId:
                     description: |-
-                      (String). Organization that the Group belongs to. If value is omitted, the default provider organization is used.
+                      (String). ID of the organization that the group belongs to.
                       ID of the organization that the group belongs to.
                     type: string
                 type: object

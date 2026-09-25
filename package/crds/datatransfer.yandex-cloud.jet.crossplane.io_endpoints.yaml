@@ -255,8 +255,8 @@ spec:
                                             type: string
                                           onPremise:
                                             description: |-
-                                              premise Kafka
-                                              Set only one of: cluster_id/on_premise/connection_manager_connection
+                                              [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                              filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                               Connection settings of the on-premise ClickHouse server
                                             items:
                                               properties:
@@ -575,8 +575,8 @@ spec:
                                             type: string
                                           onPremise:
                                             description: |-
-                                              premise Kafka
-                                              Set only one of: cluster_id/on_premise/connection_manager_connection
+                                              [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                              filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                               Connection settings of the on-premise ClickHouse server
                                             items:
                                               properties:
@@ -986,8 +986,8 @@ spec:
                                       type: array
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise Kafka
                                         Set only one of: cluster_id/on_premise/connection_manager_connection
                                       items:
@@ -1403,8 +1403,8 @@ spec:
                                       type: array
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise Kafka
                                         Set only one of: cluster_id/on_premise/connection_manager_connection
                                       items:
@@ -1782,8 +1782,8 @@ spec:
                                             type: object
                                           onPremise:
                                             description: |-
-                                              premise Kafka
-                                              Set only one of: cluster_id/on_premise/connection_manager_connection
+                                              [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                              filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                               Connection settings of the on-premise MongoDB server
                                               Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
                                             items:
@@ -2144,8 +2144,8 @@ spec:
                                             type: object
                                           onPremise:
                                             description: |-
-                                              premise Kafka
-                                              Set only one of: cluster_id/on_premise/connection_manager_connection
+                                              [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                              filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                               Connection settings of the on-premise MongoDB server
                                               Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
                                             items:
@@ -2461,8 +2461,8 @@ spec:
                                       type: object
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise MySQL
                                       items:
                                         properties:
@@ -3075,8 +3075,8 @@ spec:
                                       type: object
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise MySQL
                                       items:
                                         properties:
@@ -3654,8 +3654,8 @@ spec:
                                       type: object
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise PostgreSQL
                                       items:
                                         properties:
@@ -4358,8 +4358,8 @@ spec:
                                       type: object
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise PostgreSQL
                                       items:
                                         properties:
@@ -4791,6 +4791,30 @@ spec:
                             filename: yandex/cloud/datatransfer/v1/endpoint.proto
                           items:
                             properties:
+                              authentication:
+                                description: |-
+                                  [Block]. Choose one of authentication methods, right now only service account is avaiable
+                                  package: yandex.cloud.datatransfer.v1.endpoint
+                                  filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                items:
+                                  properties:
+                                    serviceAccount:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                      items:
+                                        properties:
+                                          serviceAccountId:
+                                            description: |-
+                                              (String). Service account ID which has read access to the stream
+                                              Service account ID for interaction with database
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               changefeedCustomConsumerName:
                                 description: |-
                                   created change feed if any
@@ -4863,6 +4887,83 @@ spec:
                                   Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
                                   database. If omitted, the server has to be accessible via Internet
                                 type: string
+                              ydbConnection:
+                                description: |-
+                                  [Block]. Connection settings for managed YDB or for on premise
+                                  package: yandex.cloud.datatransfer.v1.endpoint
+                                  filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                items:
+                                  properties:
+                                    databaseId:
+                                      description: |-
+                                        (String). Managed Service for YDB database ID
+                                        Managed Service for YDB database ID
+                                      type: string
+                                    onPremise:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                      items:
+                                        properties:
+                                          database:
+                                            description: |-
+                                              transfer
+                                              Database path in YDB where tables are stored.
+                                              Example: `/ru/transfer_manager/prod/data-transfer`
+                                            type: string
+                                          instance:
+                                            description: |-
+                                              ru-prestable.yandex.net:2135.
+                                              If not specified, will be determined by database
+                                              Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+                                              database. If omitted, the server has to be accessible via Internet
+                                              Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+                                              If omitted, the server has to be accessible via Internet
+                                            type: string
+                                          tlsMode:
+                                            description: |-
+                                              [Block]. TLS settings for server connection. Disabled by default
+                                              TLS settings for server connection. Disabled by default.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: |-
+                                                    [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                    Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: |-
+                                                    [Block]. TLS is used for the server connection
+                                                    TLS is used for the server connection
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: |-
+                                                          known CA
+                                                          CA certificate
+                                                          X.509 certificate of the certificate authority which issued the server's
+                                                          certificate, in PEM format. When CA certificate is specified, TLS is used to
+                                                          connect to the server. If CA certificate is empty, the server's certificate must
+                                                          be signed by a well-known CA
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                             type: object
                           type: array
                         ydbTarget:
@@ -4873,6 +4974,30 @@ spec:
                             filename: yandex/cloud/datatransfer/v1/endpoint.proto
                           items:
                             properties:
+                              authentication:
+                                description: |-
+                                  [Block]. Choose one of authentication methods, right now only service account is avaiable
+                                  package: yandex.cloud.datatransfer.v1.endpoint
+                                  filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                items:
+                                  properties:
+                                    serviceAccount:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                      items:
+                                        properties:
+                                          serviceAccountId:
+                                            description: |-
+                                              (String). Service account ID which has read access to the stream
+                                              Service account ID for interaction with database
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               cleanupPolicy:
                                 description: |-
                                   (String). Cleanup policy determine how to clean collections when activating the transfer.
@@ -4960,6 +5085,83 @@ spec:
                                   database.
                                   If omitted, the server has to be accessible via Internet
                                 type: string
+                              ydbConnection:
+                                description: |-
+                                  [Block]. Connection settings for managed YDB or for on premise
+                                  package: yandex.cloud.datatransfer.v1.endpoint
+                                  filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                items:
+                                  properties:
+                                    databaseId:
+                                      description: |-
+                                        (String). Managed Service for YDB database ID
+                                        Managed Service for YDB database ID
+                                      type: string
+                                    onPremise:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                      items:
+                                        properties:
+                                          database:
+                                            description: |-
+                                              transfer
+                                              Database path in YDB where tables are stored.
+                                              Example: `/ru/transfer_manager/prod/data-transfer`
+                                            type: string
+                                          instance:
+                                            description: |-
+                                              ru-prestable.yandex.net:2135.
+                                              If not specified, will be determined by database
+                                              Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+                                              database. If omitted, the server has to be accessible via Internet
+                                              Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+                                              If omitted, the server has to be accessible via Internet
+                                            type: string
+                                          tlsMode:
+                                            description: |-
+                                              [Block]. TLS settings for server connection. Disabled by default
+                                              TLS settings for server connection. Disabled by default.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: |-
+                                                    [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                    Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: |-
+                                                    [Block]. TLS is used for the server connection
+                                                    TLS is used for the server connection
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: |-
+                                                          known CA
+                                                          CA certificate
+                                                          X.509 certificate of the certificate authority which issued the server's
+                                                          certificate, in PEM format. When CA certificate is specified, TLS is used to
+                                                          connect to the server. If CA certificate is empty, the server's certificate must
+                                                          be signed by a well-known CA
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                             type: object
                           type: array
                         ydsSource:
@@ -4979,6 +5181,19 @@ spec:
                                   False: stop the transfer in error state, if detected lost data. True: continue
                                   working with losing part of data
                                 type: boolean
+                              authentication:
+                                description: |-
+                                  [Block]. Choose one of authentication methods, right now only service account is avaiable
+                                  Choose one of authentication methods, right now only service account is avaiable
+                                items:
+                                  properties:
+                                    serviceAccountId:
+                                      description: |-
+                                        (String). Service account ID which has read access to the stream
+                                        Service account ID for interaction with database
+                                      type: string
+                                  type: object
+                                type: array
                               consumer:
                                 description: |-
                                   for important streams
@@ -5218,6 +5433,102 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                              ydbConnection:
+                                description: |-
+                                  [Block]. Connection settings for managed YDB or for on premise
+                                  Connection settings for managed YDB or for on premise
+                                items:
+                                  properties:
+                                    managedYds:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                      items:
+                                        properties:
+                                          databaseId:
+                                            description: |-
+                                              (String). Managed Service for YDB database ID
+                                              Managed Service for YDB database ID
+                                            type: string
+                                          stream:
+                                            description: |-
+                                              (String). Stream to write to
+                                              Stream to read
+                                            type: string
+                                        type: object
+                                      type: array
+                                    onPremise:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                      items:
+                                        properties:
+                                          database:
+                                            description: |-
+                                              transfer
+                                              Database path in YDB where tables are stored.
+                                              Example: `/ru/transfer_manager/prod/data-transfer`
+                                            type: string
+                                          instance:
+                                            description: |-
+                                              ru-prestable.yandex.net:2135.
+                                              If not specified, will be determined by database
+                                              Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+                                            type: string
+                                          stream:
+                                            description: |-
+                                              (String). Stream to write to
+                                              Stream to read
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+                                              database. If omitted, the server has to be accessible via Internet
+                                              Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+                                              If omitted, the server has to be accessible via Internet
+                                            type: string
+                                          tlsMode:
+                                            description: |-
+                                              [Block]. TLS settings for server connection. Disabled by default
+                                              TLS settings for server connection. Disabled by default.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: |-
+                                                    [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                    Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: |-
+                                                    [Block]. TLS is used for the server connection
+                                                    TLS is used for the server connection
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: |-
+                                                          known CA
+                                                          CA certificate
+                                                          X.509 certificate of the certificate authority which issued the server's
+                                                          certificate, in PEM format. When CA certificate is specified, TLS is used to
+                                                          connect to the server. If CA certificate is empty, the server's certificate must
+                                                          be signed by a well-known CA
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                             type: object
                           type: array
                         ydsTarget:
@@ -5228,6 +5539,19 @@ spec:
                             filename: yandex/cloud/datatransfer/v1/endpoint.proto
                           items:
                             properties:
+                              authentication:
+                                description: |-
+                                  [Block]. Choose one of authentication methods, right now only service account is avaiable
+                                  Choose one of authentication methods, right now only service account is avaiable
+                                items:
+                                  properties:
+                                    serviceAccountId:
+                                      description: |-
+                                        (String). Service account ID which has read access to the stream
+                                        Service account ID for interaction with database
+                                      type: string
+                                  type: object
+                                type: array
                               compressionCodec:
                                 description: |-
                                   (String). Codec to use for output data compression. If not specified, no compression will
@@ -5334,6 +5658,102 @@ spec:
                                   Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
                                   database. If omitted, the server has to be accessible via Internet
                                 type: string
+                              ydbConnection:
+                                description: |-
+                                  [Block]. Connection settings for managed YDB or for on premise
+                                  Connection settings for managed YDB or for on premise
+                                items:
+                                  properties:
+                                    managedYds:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                      items:
+                                        properties:
+                                          databaseId:
+                                            description: |-
+                                              (String). Managed Service for YDB database ID
+                                              Managed Service for YDB database ID
+                                            type: string
+                                          stream:
+                                            description: |-
+                                              (String). Stream to write to
+                                              Stream to read
+                                            type: string
+                                        type: object
+                                      type: array
+                                    onPremise:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                      items:
+                                        properties:
+                                          database:
+                                            description: |-
+                                              transfer
+                                              Database path in YDB where tables are stored.
+                                              Example: `/ru/transfer_manager/prod/data-transfer`
+                                            type: string
+                                          instance:
+                                            description: |-
+                                              ru-prestable.yandex.net:2135.
+                                              If not specified, will be determined by database
+                                              Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+                                            type: string
+                                          stream:
+                                            description: |-
+                                              (String). Stream to write to
+                                              Stream to read
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+                                              database. If omitted, the server has to be accessible via Internet
+                                              Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+                                              If omitted, the server has to be accessible via Internet
+                                            type: string
+                                          tlsMode:
+                                            description: |-
+                                              [Block]. TLS settings for server connection. Disabled by default
+                                              TLS settings for server connection. Disabled by default.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: |-
+                                                    [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                    Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: |-
+                                                    [Block]. TLS is used for the server connection
+                                                    TLS is used for the server connection
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: |-
+                                                          known CA
+                                                          CA certificate
+                                                          X.509 certificate of the certificate authority which issued the server's
+                                                          certificate, in PEM format. When CA certificate is specified, TLS is used to
+                                                          connect to the server. If CA certificate is empty, the server's certificate must
+                                                          be signed by a well-known CA
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                             type: object
                           type: array
                       type: object
@@ -5558,8 +5978,8 @@ spec:
                                             type: string
                                           onPremise:
                                             description: |-
-                                              premise Kafka
-                                              Set only one of: cluster_id/on_premise/connection_manager_connection
+                                              [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                              filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                               Connection settings of the on-premise ClickHouse server
                                             items:
                                               properties:
@@ -5878,8 +6298,8 @@ spec:
                                             type: string
                                           onPremise:
                                             description: |-
-                                              premise Kafka
-                                              Set only one of: cluster_id/on_premise/connection_manager_connection
+                                              [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                              filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                               Connection settings of the on-premise ClickHouse server
                                             items:
                                               properties:
@@ -6289,8 +6709,8 @@ spec:
                                       type: array
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise Kafka
                                         Set only one of: cluster_id/on_premise/connection_manager_connection
                                       items:
@@ -6706,8 +7126,8 @@ spec:
                                       type: array
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise Kafka
                                         Set only one of: cluster_id/on_premise/connection_manager_connection
                                       items:
@@ -7085,8 +7505,8 @@ spec:
                                             type: object
                                           onPremise:
                                             description: |-
-                                              premise Kafka
-                                              Set only one of: cluster_id/on_premise/connection_manager_connection
+                                              [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                              filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                               Connection settings of the on-premise MongoDB server
                                               Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
                                             items:
@@ -7447,8 +7867,8 @@ spec:
                                             type: object
                                           onPremise:
                                             description: |-
-                                              premise Kafka
-                                              Set only one of: cluster_id/on_premise/connection_manager_connection
+                                              [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                              filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                               Connection settings of the on-premise MongoDB server
                                               Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
                                             items:
@@ -7764,8 +8184,8 @@ spec:
                                       type: object
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise MySQL
                                       items:
                                         properties:
@@ -8378,8 +8798,8 @@ spec:
                                       type: object
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise MySQL
                                       items:
                                         properties:
@@ -8957,8 +9377,8 @@ spec:
                                       type: object
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise PostgreSQL
                                       items:
                                         properties:
@@ -9661,8 +10081,8 @@ spec:
                                       type: object
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise PostgreSQL
                                       items:
                                         properties:
@@ -10094,6 +10514,30 @@ spec:
                             filename: yandex/cloud/datatransfer/v1/endpoint.proto
                           items:
                             properties:
+                              authentication:
+                                description: |-
+                                  [Block]. Choose one of authentication methods, right now only service account is avaiable
+                                  package: yandex.cloud.datatransfer.v1.endpoint
+                                  filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                items:
+                                  properties:
+                                    serviceAccount:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                      items:
+                                        properties:
+                                          serviceAccountId:
+                                            description: |-
+                                              (String). Service account ID which has read access to the stream
+                                              Service account ID for interaction with database
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               changefeedCustomConsumerName:
                                 description: |-
                                   created change feed if any
@@ -10166,6 +10610,83 @@ spec:
                                   Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
                                   database. If omitted, the server has to be accessible via Internet
                                 type: string
+                              ydbConnection:
+                                description: |-
+                                  [Block]. Connection settings for managed YDB or for on premise
+                                  package: yandex.cloud.datatransfer.v1.endpoint
+                                  filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                items:
+                                  properties:
+                                    databaseId:
+                                      description: |-
+                                        (String). Managed Service for YDB database ID
+                                        Managed Service for YDB database ID
+                                      type: string
+                                    onPremise:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                      items:
+                                        properties:
+                                          database:
+                                            description: |-
+                                              transfer
+                                              Database path in YDB where tables are stored.
+                                              Example: `/ru/transfer_manager/prod/data-transfer`
+                                            type: string
+                                          instance:
+                                            description: |-
+                                              ru-prestable.yandex.net:2135.
+                                              If not specified, will be determined by database
+                                              Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+                                              database. If omitted, the server has to be accessible via Internet
+                                              Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+                                              If omitted, the server has to be accessible via Internet
+                                            type: string
+                                          tlsMode:
+                                            description: |-
+                                              [Block]. TLS settings for server connection. Disabled by default
+                                              TLS settings for server connection. Disabled by default.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: |-
+                                                    [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                    Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: |-
+                                                    [Block]. TLS is used for the server connection
+                                                    TLS is used for the server connection
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: |-
+                                                          known CA
+                                                          CA certificate
+                                                          X.509 certificate of the certificate authority which issued the server's
+                                                          certificate, in PEM format. When CA certificate is specified, TLS is used to
+                                                          connect to the server. If CA certificate is empty, the server's certificate must
+                                                          be signed by a well-known CA
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                             type: object
                           type: array
                         ydbTarget:
@@ -10176,6 +10697,30 @@ spec:
                             filename: yandex/cloud/datatransfer/v1/endpoint.proto
                           items:
                             properties:
+                              authentication:
+                                description: |-
+                                  [Block]. Choose one of authentication methods, right now only service account is avaiable
+                                  package: yandex.cloud.datatransfer.v1.endpoint
+                                  filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                items:
+                                  properties:
+                                    serviceAccount:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                      items:
+                                        properties:
+                                          serviceAccountId:
+                                            description: |-
+                                              (String). Service account ID which has read access to the stream
+                                              Service account ID for interaction with database
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               cleanupPolicy:
                                 description: |-
                                   (String). Cleanup policy determine how to clean collections when activating the transfer.
@@ -10263,6 +10808,83 @@ spec:
                                   database.
                                   If omitted, the server has to be accessible via Internet
                                 type: string
+                              ydbConnection:
+                                description: |-
+                                  [Block]. Connection settings for managed YDB or for on premise
+                                  package: yandex.cloud.datatransfer.v1.endpoint
+                                  filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                items:
+                                  properties:
+                                    databaseId:
+                                      description: |-
+                                        (String). Managed Service for YDB database ID
+                                        Managed Service for YDB database ID
+                                      type: string
+                                    onPremise:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                      items:
+                                        properties:
+                                          database:
+                                            description: |-
+                                              transfer
+                                              Database path in YDB where tables are stored.
+                                              Example: `/ru/transfer_manager/prod/data-transfer`
+                                            type: string
+                                          instance:
+                                            description: |-
+                                              ru-prestable.yandex.net:2135.
+                                              If not specified, will be determined by database
+                                              Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+                                              database. If omitted, the server has to be accessible via Internet
+                                              Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+                                              If omitted, the server has to be accessible via Internet
+                                            type: string
+                                          tlsMode:
+                                            description: |-
+                                              [Block]. TLS settings for server connection. Disabled by default
+                                              TLS settings for server connection. Disabled by default.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: |-
+                                                    [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                    Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: |-
+                                                    [Block]. TLS is used for the server connection
+                                                    TLS is used for the server connection
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: |-
+                                                          known CA
+                                                          CA certificate
+                                                          X.509 certificate of the certificate authority which issued the server's
+                                                          certificate, in PEM format. When CA certificate is specified, TLS is used to
+                                                          connect to the server. If CA certificate is empty, the server's certificate must
+                                                          be signed by a well-known CA
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                             type: object
                           type: array
                         ydsSource:
@@ -10282,6 +10904,19 @@ spec:
                                   False: stop the transfer in error state, if detected lost data. True: continue
                                   working with losing part of data
                                 type: boolean
+                              authentication:
+                                description: |-
+                                  [Block]. Choose one of authentication methods, right now only service account is avaiable
+                                  Choose one of authentication methods, right now only service account is avaiable
+                                items:
+                                  properties:
+                                    serviceAccountId:
+                                      description: |-
+                                        (String). Service account ID which has read access to the stream
+                                        Service account ID for interaction with database
+                                      type: string
+                                  type: object
+                                type: array
                               consumer:
                                 description: |-
                                   for important streams
@@ -10521,6 +11156,102 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                              ydbConnection:
+                                description: |-
+                                  [Block]. Connection settings for managed YDB or for on premise
+                                  Connection settings for managed YDB or for on premise
+                                items:
+                                  properties:
+                                    managedYds:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                      items:
+                                        properties:
+                                          databaseId:
+                                            description: |-
+                                              (String). Managed Service for YDB database ID
+                                              Managed Service for YDB database ID
+                                            type: string
+                                          stream:
+                                            description: |-
+                                              (String). Stream to write to
+                                              Stream to read
+                                            type: string
+                                        type: object
+                                      type: array
+                                    onPremise:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                      items:
+                                        properties:
+                                          database:
+                                            description: |-
+                                              transfer
+                                              Database path in YDB where tables are stored.
+                                              Example: `/ru/transfer_manager/prod/data-transfer`
+                                            type: string
+                                          instance:
+                                            description: |-
+                                              ru-prestable.yandex.net:2135.
+                                              If not specified, will be determined by database
+                                              Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+                                            type: string
+                                          stream:
+                                            description: |-
+                                              (String). Stream to write to
+                                              Stream to read
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+                                              database. If omitted, the server has to be accessible via Internet
+                                              Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+                                              If omitted, the server has to be accessible via Internet
+                                            type: string
+                                          tlsMode:
+                                            description: |-
+                                              [Block]. TLS settings for server connection. Disabled by default
+                                              TLS settings for server connection. Disabled by default.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: |-
+                                                    [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                    Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: |-
+                                                    [Block]. TLS is used for the server connection
+                                                    TLS is used for the server connection
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: |-
+                                                          known CA
+                                                          CA certificate
+                                                          X.509 certificate of the certificate authority which issued the server's
+                                                          certificate, in PEM format. When CA certificate is specified, TLS is used to
+                                                          connect to the server. If CA certificate is empty, the server's certificate must
+                                                          be signed by a well-known CA
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                             type: object
                           type: array
                         ydsTarget:
@@ -10531,6 +11262,19 @@ spec:
                             filename: yandex/cloud/datatransfer/v1/endpoint.proto
                           items:
                             properties:
+                              authentication:
+                                description: |-
+                                  [Block]. Choose one of authentication methods, right now only service account is avaiable
+                                  Choose one of authentication methods, right now only service account is avaiable
+                                items:
+                                  properties:
+                                    serviceAccountId:
+                                      description: |-
+                                        (String). Service account ID which has read access to the stream
+                                        Service account ID for interaction with database
+                                      type: string
+                                  type: object
+                                type: array
                               compressionCodec:
                                 description: |-
                                   (String). Codec to use for output data compression. If not specified, no compression will
@@ -10637,6 +11381,102 @@ spec:
                                   Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
                                   database. If omitted, the server has to be accessible via Internet
                                 type: string
+                              ydbConnection:
+                                description: |-
+                                  [Block]. Connection settings for managed YDB or for on premise
+                                  Connection settings for managed YDB or for on premise
+                                items:
+                                  properties:
+                                    managedYds:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                      items:
+                                        properties:
+                                          databaseId:
+                                            description: |-
+                                              (String). Managed Service for YDB database ID
+                                              Managed Service for YDB database ID
+                                            type: string
+                                          stream:
+                                            description: |-
+                                              (String). Stream to write to
+                                              Stream to read
+                                            type: string
+                                        type: object
+                                      type: array
+                                    onPremise:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                      items:
+                                        properties:
+                                          database:
+                                            description: |-
+                                              transfer
+                                              Database path in YDB where tables are stored.
+                                              Example: `/ru/transfer_manager/prod/data-transfer`
+                                            type: string
+                                          instance:
+                                            description: |-
+                                              ru-prestable.yandex.net:2135.
+                                              If not specified, will be determined by database
+                                              Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+                                            type: string
+                                          stream:
+                                            description: |-
+                                              (String). Stream to write to
+                                              Stream to read
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+                                              database. If omitted, the server has to be accessible via Internet
+                                              Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+                                              If omitted, the server has to be accessible via Internet
+                                            type: string
+                                          tlsMode:
+                                            description: |-
+                                              [Block]. TLS settings for server connection. Disabled by default
+                                              TLS settings for server connection. Disabled by default.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: |-
+                                                    [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                    Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: |-
+                                                    [Block]. TLS is used for the server connection
+                                                    TLS is used for the server connection
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: |-
+                                                          known CA
+                                                          CA certificate
+                                                          X.509 certificate of the certificate authority which issued the server's
+                                                          certificate, in PEM format. When CA certificate is specified, TLS is used to
+                                                          connect to the server. If CA certificate is empty, the server's certificate must
+                                                          be signed by a well-known CA
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                             type: object
                           type: array
                       type: object
@@ -10866,8 +11706,8 @@ spec:
                                             type: string
                                           onPremise:
                                             description: |-
-                                              premise Kafka
-                                              Set only one of: cluster_id/on_premise/connection_manager_connection
+                                              [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                              filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                               Connection settings of the on-premise ClickHouse server
                                             items:
                                               properties:
@@ -11110,8 +11950,8 @@ spec:
                                             type: string
                                           onPremise:
                                             description: |-
-                                              premise Kafka
-                                              Set only one of: cluster_id/on_premise/connection_manager_connection
+                                              [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                              filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                               Connection settings of the on-premise ClickHouse server
                                             items:
                                               properties:
@@ -11445,8 +12285,8 @@ spec:
                                       type: array
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise Kafka
                                         Set only one of: cluster_id/on_premise/connection_manager_connection
                                       items:
@@ -11862,8 +12702,8 @@ spec:
                                       type: array
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise Kafka
                                         Set only one of: cluster_id/on_premise/connection_manager_connection
                                       items:
@@ -12164,8 +13004,8 @@ spec:
                                             type: string
                                           onPremise:
                                             description: |-
-                                              premise Kafka
-                                              Set only one of: cluster_id/on_premise/connection_manager_connection
+                                              [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                              filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                               Connection settings of the on-premise MongoDB server
                                               Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
                                             items:
@@ -12373,8 +13213,8 @@ spec:
                                             type: string
                                           onPremise:
                                             description: |-
-                                              premise Kafka
-                                              Set only one of: cluster_id/on_premise/connection_manager_connection
+                                              [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                              filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                               Connection settings of the on-premise MongoDB server
                                               Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
                                             items:
@@ -12538,8 +13378,8 @@ spec:
                                       type: string
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise MySQL
                                       items:
                                         properties:
@@ -12768,8 +13608,8 @@ spec:
                                       type: string
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise MySQL
                                       items:
                                         properties:
@@ -12963,8 +13803,8 @@ spec:
                                       type: string
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise PostgreSQL
                                       items:
                                         properties:
@@ -13283,8 +14123,8 @@ spec:
                                       type: string
                                     onPremise:
                                       description: |-
-                                        premise Kafka
-                                        Set only one of: cluster_id/on_premise/connection_manager_connection
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
                                         Connection options for on-premise PostgreSQL
                                       items:
                                         properties:
@@ -13408,6 +14248,30 @@ spec:
                             filename: yandex/cloud/datatransfer/v1/endpoint.proto
                           items:
                             properties:
+                              authentication:
+                                description: |-
+                                  [Block]. Choose one of authentication methods, right now only service account is avaiable
+                                  package: yandex.cloud.datatransfer.v1.endpoint
+                                  filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                items:
+                                  properties:
+                                    serviceAccount:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                      items:
+                                        properties:
+                                          serviceAccountId:
+                                            description: |-
+                                              (String). Service account ID which has read access to the stream
+                                              Service account ID for interaction with database
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               changefeedCustomConsumerName:
                                 description: |-
                                   created change feed if any
@@ -13461,6 +14325,83 @@ spec:
                                   Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
                                   database. If omitted, the server has to be accessible via Internet
                                 type: string
+                              ydbConnection:
+                                description: |-
+                                  [Block]. Connection settings for managed YDB or for on premise
+                                  package: yandex.cloud.datatransfer.v1.endpoint
+                                  filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                items:
+                                  properties:
+                                    databaseId:
+                                      description: |-
+                                        (String). Managed Service for YDB database ID
+                                        Managed Service for YDB database ID
+                                      type: string
+                                    onPremise:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                      items:
+                                        properties:
+                                          database:
+                                            description: |-
+                                              transfer
+                                              Database path in YDB where tables are stored.
+                                              Example: `/ru/transfer_manager/prod/data-transfer`
+                                            type: string
+                                          instance:
+                                            description: |-
+                                              ru-prestable.yandex.net:2135.
+                                              If not specified, will be determined by database
+                                              Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+                                              database. If omitted, the server has to be accessible via Internet
+                                              Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+                                              If omitted, the server has to be accessible via Internet
+                                            type: string
+                                          tlsMode:
+                                            description: |-
+                                              [Block]. TLS settings for server connection. Disabled by default
+                                              TLS settings for server connection. Disabled by default.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: |-
+                                                    [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                    Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: |-
+                                                    [Block]. TLS is used for the server connection
+                                                    TLS is used for the server connection
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: |-
+                                                          known CA
+                                                          CA certificate
+                                                          X.509 certificate of the certificate authority which issued the server's
+                                                          certificate, in PEM format. When CA certificate is specified, TLS is used to
+                                                          connect to the server. If CA certificate is empty, the server's certificate must
+                                                          be signed by a well-known CA
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                             type: object
                           type: array
                         ydbTarget:
@@ -13471,6 +14412,30 @@ spec:
                             filename: yandex/cloud/datatransfer/v1/endpoint.proto
                           items:
                             properties:
+                              authentication:
+                                description: |-
+                                  [Block]. Choose one of authentication methods, right now only service account is avaiable
+                                  package: yandex.cloud.datatransfer.v1.endpoint
+                                  filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                items:
+                                  properties:
+                                    serviceAccount:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                      items:
+                                        properties:
+                                          serviceAccountId:
+                                            description: |-
+                                              (String). Service account ID which has read access to the stream
+                                              Service account ID for interaction with database
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               cleanupPolicy:
                                 description: |-
                                   (String). Cleanup policy determine how to clean collections when activating the transfer.
@@ -13539,6 +14504,83 @@ spec:
                                   database.
                                   If omitted, the server has to be accessible via Internet
                                 type: string
+                              ydbConnection:
+                                description: |-
+                                  [Block]. Connection settings for managed YDB or for on premise
+                                  package: yandex.cloud.datatransfer.v1.endpoint
+                                  filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                items:
+                                  properties:
+                                    databaseId:
+                                      description: |-
+                                        (String). Managed Service for YDB database ID
+                                        Managed Service for YDB database ID
+                                      type: string
+                                    onPremise:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                      items:
+                                        properties:
+                                          database:
+                                            description: |-
+                                              transfer
+                                              Database path in YDB where tables are stored.
+                                              Example: `/ru/transfer_manager/prod/data-transfer`
+                                            type: string
+                                          instance:
+                                            description: |-
+                                              ru-prestable.yandex.net:2135.
+                                              If not specified, will be determined by database
+                                              Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+                                              database. If omitted, the server has to be accessible via Internet
+                                              Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+                                              If omitted, the server has to be accessible via Internet
+                                            type: string
+                                          tlsMode:
+                                            description: |-
+                                              [Block]. TLS settings for server connection. Disabled by default
+                                              TLS settings for server connection. Disabled by default.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: |-
+                                                    [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                    Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: |-
+                                                    [Block]. TLS is used for the server connection
+                                                    TLS is used for the server connection
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: |-
+                                                          known CA
+                                                          CA certificate
+                                                          X.509 certificate of the certificate authority which issued the server's
+                                                          certificate, in PEM format. When CA certificate is specified, TLS is used to
+                                                          connect to the server. If CA certificate is empty, the server's certificate must
+                                                          be signed by a well-known CA
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                             type: object
                           type: array
                         ydsSource:
@@ -13558,6 +14600,19 @@ spec:
                                   False: stop the transfer in error state, if detected lost data. True: continue
                                   working with losing part of data
                                 type: boolean
+                              authentication:
+                                description: |-
+                                  [Block]. Choose one of authentication methods, right now only service account is avaiable
+                                  Choose one of authentication methods, right now only service account is avaiable
+                                items:
+                                  properties:
+                                    serviceAccountId:
+                                      description: |-
+                                        (String). Service account ID which has read access to the stream
+                                        Service account ID for interaction with database
+                                      type: string
+                                  type: object
+                                type: array
                               consumer:
                                 description: |-
                                   for important streams
@@ -13797,6 +14852,102 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                              ydbConnection:
+                                description: |-
+                                  [Block]. Connection settings for managed YDB or for on premise
+                                  Connection settings for managed YDB or for on premise
+                                items:
+                                  properties:
+                                    managedYds:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                      items:
+                                        properties:
+                                          databaseId:
+                                            description: |-
+                                              (String). Managed Service for YDB database ID
+                                              Managed Service for YDB database ID
+                                            type: string
+                                          stream:
+                                            description: |-
+                                              (String). Stream to write to
+                                              Stream to read
+                                            type: string
+                                        type: object
+                                      type: array
+                                    onPremise:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                      items:
+                                        properties:
+                                          database:
+                                            description: |-
+                                              transfer
+                                              Database path in YDB where tables are stored.
+                                              Example: `/ru/transfer_manager/prod/data-transfer`
+                                            type: string
+                                          instance:
+                                            description: |-
+                                              ru-prestable.yandex.net:2135.
+                                              If not specified, will be determined by database
+                                              Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+                                            type: string
+                                          stream:
+                                            description: |-
+                                              (String). Stream to write to
+                                              Stream to read
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+                                              database. If omitted, the server has to be accessible via Internet
+                                              Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+                                              If omitted, the server has to be accessible via Internet
+                                            type: string
+                                          tlsMode:
+                                            description: |-
+                                              [Block]. TLS settings for server connection. Disabled by default
+                                              TLS settings for server connection. Disabled by default.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: |-
+                                                    [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                    Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: |-
+                                                    [Block]. TLS is used for the server connection
+                                                    TLS is used for the server connection
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: |-
+                                                          known CA
+                                                          CA certificate
+                                                          X.509 certificate of the certificate authority which issued the server's
+                                                          certificate, in PEM format. When CA certificate is specified, TLS is used to
+                                                          connect to the server. If CA certificate is empty, the server's certificate must
+                                                          be signed by a well-known CA
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                             type: object
                           type: array
                         ydsTarget:
@@ -13807,6 +14958,19 @@ spec:
                             filename: yandex/cloud/datatransfer/v1/endpoint.proto
                           items:
                             properties:
+                              authentication:
+                                description: |-
+                                  [Block]. Choose one of authentication methods, right now only service account is avaiable
+                                  Choose one of authentication methods, right now only service account is avaiable
+                                items:
+                                  properties:
+                                    serviceAccountId:
+                                      description: |-
+                                        (String). Service account ID which has read access to the stream
+                                        Service account ID for interaction with database
+                                      type: string
+                                  type: object
+                                type: array
                               compressionCodec:
                                 description: |-
                                   (String). Codec to use for output data compression. If not specified, no compression will
@@ -13913,6 +15077,102 @@ spec:
                                   Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
                                   database. If omitted, the server has to be accessible via Internet
                                 type: string
+                              ydbConnection:
+                                description: |-
+                                  [Block]. Connection settings for managed YDB or for on premise
+                                  Connection settings for managed YDB or for on premise
+                                items:
+                                  properties:
+                                    managedYds:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                      items:
+                                        properties:
+                                          databaseId:
+                                            description: |-
+                                              (String). Managed Service for YDB database ID
+                                              Managed Service for YDB database ID
+                                            type: string
+                                          stream:
+                                            description: |-
+                                              (String). Stream to write to
+                                              Stream to read
+                                            type: string
+                                        type: object
+                                      type: array
+                                    onPremise:
+                                      description: |-
+                                        [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+                                        package: yandex.cloud.datatransfer.v1.endpoint
+                                        filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+                                      items:
+                                        properties:
+                                          database:
+                                            description: |-
+                                              transfer
+                                              Database path in YDB where tables are stored.
+                                              Example: `/ru/transfer_manager/prod/data-transfer`
+                                            type: string
+                                          instance:
+                                            description: |-
+                                              ru-prestable.yandex.net:2135.
+                                              If not specified, will be determined by database
+                                              Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+                                            type: string
+                                          stream:
+                                            description: |-
+                                              (String). Stream to write to
+                                              Stream to read
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+                                              database. If omitted, the server has to be accessible via Internet
+                                              Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+                                              If omitted, the server has to be accessible via Internet
+                                            type: string
+                                          tlsMode:
+                                            description: |-
+                                              [Block]. TLS settings for server connection. Disabled by default
+                                              TLS settings for server connection. Disabled by default.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: |-
+                                                    [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                    Empty block designating that the connection is not secured, i.e. plaintext
+                                                    connection
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: |-
+                                                    [Block]. TLS is used for the server connection
+                                                    TLS is used for the server connection
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: |-
+                                                          known CA
+                                                          CA certificate
+                                                          X.509 certificate of the certificate authority which issued the server's
+                                                          certificate, in PEM format. When CA certificate is specified, TLS is used to
+                                                          connect to the server. If CA certificate is empty, the server's certificate must
+                                                          be signed by a well-known CA
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                             type: object
                           type: array
                       type: object

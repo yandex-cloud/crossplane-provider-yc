@@ -49,7 +49,15 @@ type KafkaUserInitParameters struct {
 
 	// (String). The password of the user.
 	// The password of the user.
-	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+
+	// only and is not stored in state. Requires password_wo_version to trigger updates.11 or higher.
+	// The password of the user. This attribute is write-only and is not stored in state. Requires `password_wo_version` to trigger updates.11 or higher.
+	PasswordWoSecretRef *v1.LocalSecretKeySelector `json:"passwordWoSecretRef,omitempty" tf:"-"`
+
+	// only password. Increment this to trigger a password update.
+	// A version number for the write-only password. Increment this to trigger a password update.
+	PasswordWoVersion *float64 `json:"passwordWoVersion,omitempty" tf:"password_wo_version,omitempty"`
 
 	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
@@ -68,6 +76,10 @@ type KafkaUserObservation struct {
 	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// only password. Increment this to trigger a password update.
+	// A version number for the write-only password. Increment this to trigger a password update.
+	PasswordWoVersion *float64 `json:"passwordWoVersion,omitempty" tf:"password_wo_version,omitempty"`
 
 	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
@@ -98,7 +110,17 @@ type KafkaUserParameters struct {
 	// (String). The password of the user.
 	// The password of the user.
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+
+	// only and is not stored in state. Requires password_wo_version to trigger updates.11 or higher.
+	// The password of the user. This attribute is write-only and is not stored in state. Requires `password_wo_version` to trigger updates.11 or higher.
+	// +kubebuilder:validation:Optional
+	PasswordWoSecretRef *v1.LocalSecretKeySelector `json:"passwordWoSecretRef,omitempty" tf:"-"`
+
+	// only password. Increment this to trigger a password update.
+	// A version number for the write-only password. Increment this to trigger a password update.
+	// +kubebuilder:validation:Optional
+	PasswordWoVersion *float64 `json:"passwordWoVersion,omitempty" tf:"password_wo_version,omitempty"`
 
 	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
@@ -194,7 +216,6 @@ type KafkaUser struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.passwordSecretRef)",message="spec.forProvider.passwordSecretRef is a required parameter"
 	Spec   KafkaUserSpec   `json:"spec"`
 	Status KafkaUserStatus `json:"status,omitempty"`
 }

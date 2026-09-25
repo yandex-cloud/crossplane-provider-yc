@@ -29,20 +29,20 @@ import (
 
 type FolderInitParameters struct {
 
-	// (String). Cloud that the resource belongs to. If value is omitted, the default provider cloud is used.
+	// (String). ID of the cloud that the folder belongs to.
 	// ID of the cloud that the folder belongs to.
 	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
 
-	// Only) (String). The resource description.
+	// 256 characters long.
 	// Description of the folder. 0-256 characters long.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Map Of String). A set of key/value label pairs which assigned to resource.
-	// Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
+	// (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
+	// Resource labels as `` key:value `` pairs. Maximum of 64 per resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// 63 characters long.
 	// Name of the folder.
 	// The name is unique within the cloud. 3-63 characters long.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -53,32 +53,33 @@ type FolderInitParameters struct {
 
 type FolderObservation struct {
 
-	// (String). Cloud that the resource belongs to. If value is omitted, the default provider cloud is used.
+	// (String). ID of the cloud that the folder belongs to.
 	// ID of the cloud that the folder belongs to.
 	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
 
-	// Only) (String). The creation timestamp of the resource.
+	// Only) (String). Creation timestamp.
 	// Creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Only) (String). The resource description.
+	// 256 characters long.
 	// Description of the folder. 0-256 characters long.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String).
+	// (String). ID of the Folder resource to return.
+	// To get the folder ID, use a [FolderService.List] request.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map Of String). A set of key/value label pairs which assigned to resource.
-	// Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
+	// (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
+	// Resource labels as `` key:value `` pairs. Maximum of 64 per resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// 63 characters long.
 	// Name of the folder.
 	// The name is unique within the cloud. 3-63 characters long.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Only) (String). Current status of the folder.
+	// Only) (String). Status of the folder.
 	// Status of the folder.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
@@ -88,23 +89,23 @@ type FolderObservation struct {
 
 type FolderParameters struct {
 
-	// (String). Cloud that the resource belongs to. If value is omitted, the default provider cloud is used.
+	// (String). ID of the cloud that the folder belongs to.
 	// ID of the cloud that the folder belongs to.
 	// +kubebuilder:validation:Optional
 	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
 
-	// Only) (String). The resource description.
+	// 256 characters long.
 	// Description of the folder. 0-256 characters long.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Map Of String). A set of key/value label pairs which assigned to resource.
-	// Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
+	// (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
+	// Resource labels as `` key:value `` pairs. Maximum of 64 per resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// 63 characters long.
 	// Name of the folder.
 	// The name is unique within the cloud. 3-63 characters long.
 	// +kubebuilder:validation:Optional

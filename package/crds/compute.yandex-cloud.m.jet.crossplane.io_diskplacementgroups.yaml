@@ -61,7 +61,7 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String). The resource description.
+                      (String). Description of the placement group.
                       Description of the placement group.
                     type: string
                   diskPlacementGroupId:
@@ -77,7 +77,7 @@ spec:
                     type: string
                   folderId:
                     description: |-
-                      id is used.
+                      (String). ID of the folder that the placement group belongs to.
                       ID of the folder that the placement group belongs to.
                     type: string
                   folderIdRef:
@@ -166,19 +166,20 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map Of String). A set of key/value label pairs which assigned to resource.
+                      (Map Of String). Resource labels as key:value pairs.
                       Resource labels as `key:value` pairs.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      (String). Name of the placement group.
+                      The name is unique within the folder.
                       Name of the placement group.
                       The name is unique within the folder.
                     type: string
                   zone:
                     description: |-
-                      (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). ID of the availability zone where the placement group resides.
                       ID of the availability zone where the placement group resides.
                     type: string
                 type: object
@@ -197,7 +198,7 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String). The resource description.
+                      (String). Description of the placement group.
                       Description of the placement group.
                     type: string
                   diskPlacementGroupId:
@@ -213,7 +214,7 @@ spec:
                     type: string
                   folderId:
                     description: |-
-                      id is used.
+                      (String). ID of the folder that the placement group belongs to.
                       ID of the folder that the placement group belongs to.
                     type: string
                   folderIdRef:
@@ -302,19 +303,20 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map Of String). A set of key/value label pairs which assigned to resource.
+                      (Map Of String). Resource labels as key:value pairs.
                       Resource labels as `key:value` pairs.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      (String). Name of the placement group.
+                      The name is unique within the folder.
                       Name of the placement group.
                       The name is unique within the folder.
                     type: string
                   zone:
                     description: |-
-                      (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). ID of the availability zone where the placement group resides.
                       ID of the availability zone where the placement group resides.
                     type: string
                 type: object
@@ -383,12 +385,12 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      Only) (String). The creation timestamp of the resource.
+                      Only) (String). Creation timestamp in RFC3339 text format.
                       Creation timestamp in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
                     type: string
                   description:
                     description: |-
-                      (String). The resource description.
+                      (String). Description of the placement group.
                       Description of the placement group.
                     type: string
                   diskPlacementGroupId:
@@ -404,34 +406,39 @@ spec:
                     type: string
                   folderId:
                     description: |-
-                      id is used.
+                      (String). ID of the folder that the placement group belongs to.
                       ID of the folder that the placement group belongs to.
                     type: string
                   id:
-                    description: (String).
+                    description: |-
+                      (String). ID of the placement group to return.
+                      To get the placement group ID, use [DiskPlacementGroupService.List] request.
+                      The length must be less than or equal to 50.
+                      This field is required.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map Of String). A set of key/value label pairs which assigned to resource.
+                      (Map Of String). Resource labels as key:value pairs.
                       Resource labels as `key:value` pairs.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      (String). Name of the placement group.
+                      The name is unique within the folder.
                       Name of the placement group.
                       The name is unique within the folder.
                     type: string
                   status:
                     description: |-
-                      Only) (String). Status of the Disk Placement Group.
+                      Only) (String). Current status of the placement group
                       Current status of the placement group
                     type: string
                   zone:
                     description: |-
-                      (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). ID of the availability zone where the placement group resides.
                       ID of the availability zone where the placement group resides.
                     type: string
                 type: object

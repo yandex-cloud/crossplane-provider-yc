@@ -35,7 +35,7 @@ func (mg *KafkaUser) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this KafkaUser
 func (tr *KafkaUser) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"password": "passwordSecretRef"}
+	return map[string]string{"password": "passwordSecretRef", "password_wo": "passwordWoSecretRef"}
 }
 
 // GetObservation of this KafkaUser

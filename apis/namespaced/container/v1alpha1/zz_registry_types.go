@@ -30,7 +30,7 @@ import (
 
 type RegistryInitParameters struct {
 
-	// id is used.
+	// (String). ID of the folder that the registry belongs to.
 	// ID of the folder that the registry belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -43,16 +43,17 @@ type RegistryInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map Of String). A set of key/value label pairs which assigned to resource.
+	// (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
 	// Resource labels as `key:value` pairs. Maximum of 64 per resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// (String). Name of the registry.
 	// Name of the registry.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). The ID of a specific registry.
+	// (String). ID of the Registry resource to return.
+	// To get the registry ID use a [RegistryService.List] request.
 	// ID of the Registry resource to return.
 	// To get the registry ID use a [RegistryService.List] request.
 	RegistryID *string `json:"registryId,omitempty" tf:"registry_id,omitempty"`
@@ -60,39 +61,41 @@ type RegistryInitParameters struct {
 
 type RegistryObservation struct {
 
-	// Only) (String). The creation timestamp of the resource.
+	// Only) (String). Output only. Creation timestamp in RFC3339 text format.
 	// Output only. Creation timestamp in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// id is used.
+	// (String). ID of the folder that the registry belongs to.
 	// ID of the folder that the registry belongs to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String).
+	// (String). ID of the Registry resource to return.
+	// To get the registry ID use a [RegistryService.List] request.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map Of String). A set of key/value label pairs which assigned to resource.
+	// (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
 	// Resource labels as `key:value` pairs. Maximum of 64 per resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// (String). Name of the registry.
 	// Name of the registry.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). The ID of a specific registry.
+	// (String). ID of the Registry resource to return.
+	// To get the registry ID use a [RegistryService.List] request.
 	// ID of the Registry resource to return.
 	// To get the registry ID use a [RegistryService.List] request.
 	RegistryID *string `json:"registryId,omitempty" tf:"registry_id,omitempty"`
 
-	// Only) (String). Status of the registry.
+	// Only) (String). Output only. Status of the registry.
 	// Output only. Status of the registry.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type RegistryParameters struct {
 
-	// id is used.
+	// (String). ID of the folder that the registry belongs to.
 	// ID of the folder that the registry belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
@@ -106,18 +109,19 @@ type RegistryParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map Of String). A set of key/value label pairs which assigned to resource.
+	// (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
 	// Resource labels as `key:value` pairs. Maximum of 64 per resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String). The resource name.
+	// (String). Name of the registry.
 	// Name of the registry.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). The ID of a specific registry.
+	// (String). ID of the Registry resource to return.
+	// To get the registry ID use a [RegistryService.List] request.
 	// ID of the Registry resource to return.
 	// To get the registry ID use a [RegistryService.List] request.
 	// +kubebuilder:validation:Optional

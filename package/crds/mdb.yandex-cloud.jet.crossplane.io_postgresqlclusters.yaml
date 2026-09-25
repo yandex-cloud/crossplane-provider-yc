@@ -137,8 +137,8 @@ spec:
                           type: array
                         connectionManager:
                           description: |-
-                            [Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
-                            Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+                            [Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
+                            Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: `enabled = false` is rejected.
                           items:
                             properties:
                               connectionsFolderId:
@@ -148,8 +148,8 @@ spec:
                                 type: string
                               enabled:
                                 description: |-
-                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
-                                  Indicates whether Connection Manager integration is enabled for the cluster. Set to `true` to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
+                                  Indicates whether Connection Manager integration is enabled for the cluster. Set to `true` to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: `enabled = false` is rejected.
                                 type: boolean
                               secretsFolderId:
                                 description: |-
@@ -189,7 +189,7 @@ spec:
                             properties:
                               enabled:
                                 description: |-
-                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
                                   Enable managed pg_repack for the cluster.
                                 type: boolean
                             type: object
@@ -207,7 +207,7 @@ spec:
                                 type: boolean
                               enabled:
                                 description: |-
-                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
                                   Enable performance diagnostics.
                                 type: boolean
                               sessionsSamplingInterval:
@@ -281,8 +281,8 @@ spec:
                           type: array
                         version:
                           description: |-
-                            1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
-                            Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
+                            1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
+                            Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
                           type: string
                       type: object
                     type: array
@@ -305,7 +305,7 @@ spec:
                                 type: string
                               version:
                                 description: |-
-                                  1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
+                                  1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
                                   Version of the extension.
                                 type: string
                             type: object
@@ -327,8 +327,8 @@ spec:
                           type: string
                         owner:
                           description: |-
-                            (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
-                            Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                            (String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
+                            Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
                           type: string
                         templateDb:
                           description: |-
@@ -977,8 +977,8 @@ spec:
                           type: array
                         connectionManager:
                           description: |-
-                            [Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
-                            Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+                            [Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
+                            Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: `enabled = false` is rejected.
                           items:
                             properties:
                               connectionsFolderId:
@@ -988,8 +988,8 @@ spec:
                                 type: string
                               enabled:
                                 description: |-
-                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
-                                  Indicates whether Connection Manager integration is enabled for the cluster. Set to `true` to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
+                                  Indicates whether Connection Manager integration is enabled for the cluster. Set to `true` to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: `enabled = false` is rejected.
                                 type: boolean
                               secretsFolderId:
                                 description: |-
@@ -1029,7 +1029,7 @@ spec:
                             properties:
                               enabled:
                                 description: |-
-                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
                                   Enable managed pg_repack for the cluster.
                                 type: boolean
                             type: object
@@ -1047,7 +1047,7 @@ spec:
                                 type: boolean
                               enabled:
                                 description: |-
-                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
                                   Enable performance diagnostics.
                                 type: boolean
                               sessionsSamplingInterval:
@@ -1121,8 +1121,8 @@ spec:
                           type: array
                         version:
                           description: |-
-                            1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
-                            Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
+                            1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
+                            Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
                           type: string
                       type: object
                     type: array
@@ -1145,7 +1145,7 @@ spec:
                                 type: string
                               version:
                                 description: |-
-                                  1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
+                                  1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
                                   Version of the extension.
                                 type: string
                             type: object
@@ -1167,8 +1167,8 @@ spec:
                           type: string
                         owner:
                           description: |-
-                            (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
-                            Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                            (String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
+                            Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
                           type: string
                         templateDb:
                           description: |-
@@ -1914,8 +1914,8 @@ spec:
                           type: array
                         connectionManager:
                           description: |-
-                            [Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
-                            Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+                            [Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
+                            Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: `enabled = false` is rejected.
                           items:
                             properties:
                               connectionsFolderId:
@@ -1925,8 +1925,8 @@ spec:
                                 type: string
                               enabled:
                                 description: |-
-                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
-                                  Indicates whether Connection Manager integration is enabled for the cluster. Set to `true` to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
+                                  Indicates whether Connection Manager integration is enabled for the cluster. Set to `true` to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: `enabled = false` is rejected.
                                 type: boolean
                               secretsFolderId:
                                 description: |-
@@ -1966,7 +1966,7 @@ spec:
                             properties:
                               enabled:
                                 description: |-
-                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
                                   Enable managed pg_repack for the cluster.
                                 type: boolean
                             type: object
@@ -1984,7 +1984,7 @@ spec:
                                 type: boolean
                               enabled:
                                 description: |-
-                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+                                  (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.
                                   Enable performance diagnostics.
                                 type: boolean
                               sessionsSamplingInterval:
@@ -2058,8 +2058,8 @@ spec:
                           type: array
                         version:
                           description: |-
-                            1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
-                            Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
+                            1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
+                            Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
                           type: string
                       type: object
                     type: array
@@ -2087,7 +2087,7 @@ spec:
                                 type: string
                               version:
                                 description: |-
-                                  1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).
+                                  1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).
                                   Version of the extension.
                                 type: string
                             type: object
@@ -2109,8 +2109,8 @@ spec:
                           type: string
                         owner:
                           description: |-
-                            (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
-                            Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                            (String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
+                            Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
                           type: string
                         templateDb:
                           description: |-

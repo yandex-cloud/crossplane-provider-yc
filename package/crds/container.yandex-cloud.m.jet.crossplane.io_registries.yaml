@@ -61,7 +61,7 @@ spec:
                 properties:
                   folderId:
                     description: |-
-                      id is used.
+                      (String). ID of the folder that the registry belongs to.
                       ID of the folder that the registry belongs to.
                     type: string
                   folderIdRef:
@@ -150,18 +150,19 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map Of String). A set of key/value label pairs which assigned to resource.
+                      (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
                       Resource labels as `key:value` pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      (String). Name of the registry.
                       Name of the registry.
                     type: string
                   registryId:
                     description: |-
-                      (String). The ID of a specific registry.
+                      (String). ID of the Registry resource to return.
+                      To get the registry ID use a [RegistryService.List] request.
                       ID of the Registry resource to return.
                       To get the registry ID use a [RegistryService.List] request.
                     type: string
@@ -181,7 +182,7 @@ spec:
                 properties:
                   folderId:
                     description: |-
-                      id is used.
+                      (String). ID of the folder that the registry belongs to.
                       ID of the folder that the registry belongs to.
                     type: string
                   folderIdRef:
@@ -270,18 +271,19 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map Of String). A set of key/value label pairs which assigned to resource.
+                      (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
                       Resource labels as `key:value` pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      (String). Name of the registry.
                       Name of the registry.
                     type: string
                   registryId:
                     description: |-
-                      (String). The ID of a specific registry.
+                      (String). ID of the Registry resource to return.
+                      To get the registry ID use a [RegistryService.List] request.
                       ID of the Registry resource to return.
                       To get the registry ID use a [RegistryService.List] request.
                     type: string
@@ -351,39 +353,42 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      Only) (String). The creation timestamp of the resource.
+                      Only) (String). Output only. Creation timestamp in RFC3339 text format.
                       Output only. Creation timestamp in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
                     type: string
                   folderId:
                     description: |-
-                      id is used.
+                      (String). ID of the folder that the registry belongs to.
                       ID of the folder that the registry belongs to.
                     type: string
                   id:
-                    description: (String).
+                    description: |-
+                      (String). ID of the Registry resource to return.
+                      To get the registry ID use a [RegistryService.List] request.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map Of String). A set of key/value label pairs which assigned to resource.
+                      (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
                       Resource labels as `key:value` pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String). The resource name.
+                      (String). Name of the registry.
                       Name of the registry.
                     type: string
                   registryId:
                     description: |-
-                      (String). The ID of a specific registry.
+                      (String). ID of the Registry resource to return.
+                      To get the registry ID use a [RegistryService.List] request.
                       ID of the Registry resource to return.
                       To get the registry ID use a [RegistryService.List] request.
                     type: string
                   status:
                     description: |-
-                      Only) (String). Status of the registry.
+                      Only) (String). Output only. Status of the registry.
                       Output only. Status of the registry.
                     type: string
                 type: object

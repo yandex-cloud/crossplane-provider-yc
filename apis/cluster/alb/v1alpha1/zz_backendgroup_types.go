@@ -180,6 +180,28 @@ type BackendGroupParameters struct {
 	StreamBackend []StreamBackendParameters `json:"streamBackend,omitempty" tf:"stream_backend,omitempty"`
 }
 
+type ClientCertificateInitParameters struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+}
+
+type ClientCertificateObservation struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+}
+
+type ClientCertificateParameters struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	// +kubebuilder:validation:Optional
+	CertificateID *string `json:"certificateId" tf:"certificate_id,omitempty"`
+}
+
 type ConnectionInitParameters struct {
 
 	// (Bool). Source IP address to use with affinity.
@@ -274,7 +296,7 @@ type GRPCBackendInitParameters struct {
 	// TLS specification that will be used by this backend.
 	//
 	// ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
-	TLS []TLSInitParameters `json:"tls,omitempty" tf:"tls,omitempty"`
+	TLS []GRPCBackendTLSInitParameters `json:"tls,omitempty" tf:"tls,omitempty"`
 
 	// (List Of String). References target groups for the backend.
 	// References target groups for the backend.
@@ -318,7 +340,7 @@ type GRPCBackendObservation struct {
 	// TLS specification that will be used by this backend.
 	//
 	// ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
-	TLS []TLSObservation `json:"tls,omitempty" tf:"tls,omitempty"`
+	TLS []GRPCBackendTLSObservation `json:"tls,omitempty" tf:"tls,omitempty"`
 
 	// (List Of String). References target groups for the backend.
 	// References target groups for the backend.
@@ -358,7 +380,7 @@ type GRPCBackendParameters struct {
 	//
 	// ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
 	// +kubebuilder:validation:Optional
-	TLS []TLSParameters `json:"tls,omitempty" tf:"tls,omitempty"`
+	TLS []GRPCBackendTLSParameters `json:"tls,omitempty" tf:"tls,omitempty"`
 
 	// (List Of String). References target groups for the backend.
 	// References target groups for the backend.
@@ -378,6 +400,45 @@ type GRPCBackendParameters struct {
 	// Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
 	// +kubebuilder:validation:Optional
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
+}
+
+type GRPCBackendTLSInitParameters struct {
+
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	ClientCertificate []TLSClientCertificateInitParameters `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
+
+	// Validation context
+	ValidationContext []TLSValidationContextInitParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
+}
+
+type GRPCBackendTLSObservation struct {
+
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	ClientCertificate []TLSClientCertificateObservation `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
+
+	// Validation context
+	ValidationContext []TLSValidationContextObservation `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
+}
+
+type GRPCBackendTLSParameters struct {
+
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	// +kubebuilder:validation:Optional
+	ClientCertificate []TLSClientCertificateParameters `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+	// +kubebuilder:validation:Optional
+	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
+
+	// Validation context
+	// +kubebuilder:validation:Optional
+	ValidationContext []TLSValidationContextParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
 }
 
 type GRPCHealthcheckInitParameters struct {
@@ -429,6 +490,12 @@ type HTTPBackendHealthcheckInitParameters struct {
 	// Stream Healthcheck specification that will be used by this healthcheck.
 	StreamHealthcheck []HealthcheckStreamHealthcheckInitParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
 
+	// [Block]. TLS specification that will be used by this backend.
+	// TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+	//
+	// ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+	TLS []HealthcheckTLSInitParameters `json:"tls,omitempty" tf:"tls,omitempty"`
+
 	// Time to wait for a health check response.
 	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
@@ -462,6 +529,12 @@ type HTTPBackendHealthcheckObservation struct {
 	// [Block]. Healthcheck specification that will be used by this backend.
 	// Stream Healthcheck specification that will be used by this healthcheck.
 	StreamHealthcheck []HealthcheckStreamHealthcheckObservation `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
+
+	// [Block]. TLS specification that will be used by this backend.
+	// TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+	//
+	// ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+	TLS []HealthcheckTLSObservation `json:"tls,omitempty" tf:"tls,omitempty"`
 
 	// Time to wait for a health check response.
 	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
@@ -503,6 +576,13 @@ type HTTPBackendHealthcheckParameters struct {
 	// Stream Healthcheck specification that will be used by this healthcheck.
 	// +kubebuilder:validation:Optional
 	StreamHealthcheck []HealthcheckStreamHealthcheckParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
+
+	// [Block]. TLS specification that will be used by this backend.
+	// TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+	//
+	// ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+	// +kubebuilder:validation:Optional
+	TLS []HealthcheckTLSParameters `json:"tls,omitempty" tf:"tls,omitempty"`
 
 	// Time to wait for a health check response.
 	// +kubebuilder:validation:Optional
@@ -730,33 +810,97 @@ type HTTPBackendParameters struct {
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
 
+type HTTPBackendTLSClientCertificateInitParameters struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+}
+
+type HTTPBackendTLSClientCertificateObservation struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+}
+
+type HTTPBackendTLSClientCertificateParameters struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	// +kubebuilder:validation:Optional
+	CertificateID *string `json:"certificateId" tf:"certificate_id,omitempty"`
+}
+
 type HTTPBackendTLSInitParameters struct {
+
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	ClientCertificate []HTTPBackendTLSClientCertificateInitParameters `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
 
 	// [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
 	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
 
 	// Validation context
-	ValidationContext []TLSValidationContextInitParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
+	ValidationContext []HTTPBackendTLSValidationContextInitParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
 }
 
 type HTTPBackendTLSObservation struct {
 
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	ClientCertificate []HTTPBackendTLSClientCertificateObservation `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
 	// [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
 	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
 
 	// Validation context
-	ValidationContext []TLSValidationContextObservation `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
+	ValidationContext []HTTPBackendTLSValidationContextObservation `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
 }
 
 type HTTPBackendTLSParameters struct {
 
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	// +kubebuilder:validation:Optional
+	ClientCertificate []HTTPBackendTLSClientCertificateParameters `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
 	// [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
 	// +kubebuilder:validation:Optional
 	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
 
 	// Validation context
 	// +kubebuilder:validation:Optional
-	ValidationContext []TLSValidationContextParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
+	ValidationContext []HTTPBackendTLSValidationContextParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
+}
+
+type HTTPBackendTLSValidationContextInitParameters struct {
+
+	// PEM-encoded trusted CA certificate chain.
+	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
+
+	// (String).
+	// Trusted CA certificate ID in the Certificate Manager.
+	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
+}
+
+type HTTPBackendTLSValidationContextObservation struct {
+
+	// PEM-encoded trusted CA certificate chain.
+	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
+
+	// (String).
+	// Trusted CA certificate ID in the Certificate Manager.
+	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
+}
+
+type HTTPBackendTLSValidationContextParameters struct {
+
+	// PEM-encoded trusted CA certificate chain.
+	// +kubebuilder:validation:Optional
+	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
+
+	// (String).
+	// Trusted CA certificate ID in the Certificate Manager.
+	// +kubebuilder:validation:Optional
+	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
 }
 
 type HTTPHealthcheckInitParameters struct {
@@ -940,6 +1084,12 @@ type HealthcheckInitParameters struct {
 	// Stream Healthcheck specification that will be used by this healthcheck.
 	StreamHealthcheck []StreamHealthcheckInitParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
 
+	// [Block]. TLS specification that will be used by this backend.
+	// TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+	//
+	// ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+	TLS []TLSInitParameters `json:"tls,omitempty" tf:"tls,omitempty"`
+
 	// Time to wait for a health check response.
 	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
@@ -973,6 +1123,12 @@ type HealthcheckObservation struct {
 	// [Block]. Healthcheck specification that will be used by this backend.
 	// Stream Healthcheck specification that will be used by this healthcheck.
 	StreamHealthcheck []StreamHealthcheckObservation `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
+
+	// [Block]. TLS specification that will be used by this backend.
+	// TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+	//
+	// ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+	TLS []TLSObservation `json:"tls,omitempty" tf:"tls,omitempty"`
 
 	// Time to wait for a health check response.
 	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
@@ -1015,6 +1171,13 @@ type HealthcheckParameters struct {
 	// +kubebuilder:validation:Optional
 	StreamHealthcheck []StreamHealthcheckParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
 
+	// [Block]. TLS specification that will be used by this backend.
+	// TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+	//
+	// ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+	// +kubebuilder:validation:Optional
+	TLS []TLSParameters `json:"tls,omitempty" tf:"tls,omitempty"`
+
 	// Time to wait for a health check response.
 	// +kubebuilder:validation:Optional
 	Timeout *string `json:"timeout" tf:"timeout,omitempty"`
@@ -1051,6 +1214,99 @@ type HealthcheckStreamHealthcheckParameters struct {
 	// Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
 	// +kubebuilder:validation:Optional
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
+}
+
+type HealthcheckTLSClientCertificateInitParameters struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+}
+
+type HealthcheckTLSClientCertificateObservation struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+}
+
+type HealthcheckTLSClientCertificateParameters struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	// +kubebuilder:validation:Optional
+	CertificateID *string `json:"certificateId" tf:"certificate_id,omitempty"`
+}
+
+type HealthcheckTLSInitParameters struct {
+
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	ClientCertificate []HealthcheckTLSClientCertificateInitParameters `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// SNI string for TLS connections.
+	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
+
+	// Validation context for backend TLS connections.
+	ValidationContext []HealthcheckTLSValidationContextInitParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
+}
+
+type HealthcheckTLSObservation struct {
+
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	ClientCertificate []HealthcheckTLSClientCertificateObservation `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// SNI string for TLS connections.
+	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
+
+	// Validation context for backend TLS connections.
+	ValidationContext []HealthcheckTLSValidationContextObservation `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
+}
+
+type HealthcheckTLSParameters struct {
+
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	// +kubebuilder:validation:Optional
+	ClientCertificate []HealthcheckTLSClientCertificateParameters `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// SNI string for TLS connections.
+	// +kubebuilder:validation:Optional
+	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
+
+	// Validation context for backend TLS connections.
+	// +kubebuilder:validation:Optional
+	ValidationContext []HealthcheckTLSValidationContextParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
+}
+
+type HealthcheckTLSValidationContextInitParameters struct {
+
+	// PEM-encoded trusted CA certificate chain.
+	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
+
+	// (String).
+	// Trusted CA certificate ID in the Certificate Manager.
+	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
+}
+
+type HealthcheckTLSValidationContextObservation struct {
+
+	// PEM-encoded trusted CA certificate chain.
+	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
+
+	// (String).
+	// Trusted CA certificate ID in the Certificate Manager.
+	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
+}
+
+type HealthcheckTLSValidationContextParameters struct {
+
+	// PEM-encoded trusted CA certificate chain.
+	// +kubebuilder:validation:Optional
+	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
+
+	// (String).
+	// Trusted CA certificate ID in the Certificate Manager.
+	// +kubebuilder:validation:Optional
+	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
 }
 
 type LoadBalancingConfigInitParameters struct {
@@ -1266,6 +1522,12 @@ type StreamBackendHealthcheckInitParameters struct {
 	// Stream Healthcheck specification that will be used by this healthcheck.
 	StreamHealthcheck []StreamBackendHealthcheckStreamHealthcheckInitParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
 
+	// [Block]. TLS specification that will be used by this backend.
+	// TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+	//
+	// ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+	TLS []StreamBackendHealthcheckTLSInitParameters `json:"tls,omitempty" tf:"tls,omitempty"`
+
 	// Time to wait for a health check response.
 	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
@@ -1299,6 +1561,12 @@ type StreamBackendHealthcheckObservation struct {
 	// [Block]. Healthcheck specification that will be used by this backend.
 	// Stream Healthcheck specification that will be used by this healthcheck.
 	StreamHealthcheck []StreamBackendHealthcheckStreamHealthcheckObservation `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
+
+	// [Block]. TLS specification that will be used by this backend.
+	// TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+	//
+	// ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+	TLS []StreamBackendHealthcheckTLSObservation `json:"tls,omitempty" tf:"tls,omitempty"`
 
 	// Time to wait for a health check response.
 	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
@@ -1341,6 +1609,13 @@ type StreamBackendHealthcheckParameters struct {
 	// +kubebuilder:validation:Optional
 	StreamHealthcheck []StreamBackendHealthcheckStreamHealthcheckParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
 
+	// [Block]. TLS specification that will be used by this backend.
+	// TLS transport settings for health checks. Used to establish mTLS connections with the backend.
+	//
+	// ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+	// +kubebuilder:validation:Optional
+	TLS []StreamBackendHealthcheckTLSParameters `json:"tls,omitempty" tf:"tls,omitempty"`
+
 	// Time to wait for a health check response.
 	// +kubebuilder:validation:Optional
 	Timeout *string `json:"timeout" tf:"timeout,omitempty"`
@@ -1377,6 +1652,99 @@ type StreamBackendHealthcheckStreamHealthcheckParameters struct {
 	// Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
 	// +kubebuilder:validation:Optional
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
+}
+
+type StreamBackendHealthcheckTLSClientCertificateInitParameters struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+}
+
+type StreamBackendHealthcheckTLSClientCertificateObservation struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+}
+
+type StreamBackendHealthcheckTLSClientCertificateParameters struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	// +kubebuilder:validation:Optional
+	CertificateID *string `json:"certificateId" tf:"certificate_id,omitempty"`
+}
+
+type StreamBackendHealthcheckTLSInitParameters struct {
+
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	ClientCertificate []StreamBackendHealthcheckTLSClientCertificateInitParameters `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// SNI string for TLS connections.
+	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
+
+	// Validation context for backend TLS connections.
+	ValidationContext []StreamBackendHealthcheckTLSValidationContextInitParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
+}
+
+type StreamBackendHealthcheckTLSObservation struct {
+
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	ClientCertificate []StreamBackendHealthcheckTLSClientCertificateObservation `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// SNI string for TLS connections.
+	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
+
+	// Validation context for backend TLS connections.
+	ValidationContext []StreamBackendHealthcheckTLSValidationContextObservation `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
+}
+
+type StreamBackendHealthcheckTLSParameters struct {
+
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	// +kubebuilder:validation:Optional
+	ClientCertificate []StreamBackendHealthcheckTLSClientCertificateParameters `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// SNI string for TLS connections.
+	// +kubebuilder:validation:Optional
+	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
+
+	// Validation context for backend TLS connections.
+	// +kubebuilder:validation:Optional
+	ValidationContext []StreamBackendHealthcheckTLSValidationContextParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
+}
+
+type StreamBackendHealthcheckTLSValidationContextInitParameters struct {
+
+	// PEM-encoded trusted CA certificate chain.
+	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
+
+	// (String).
+	// Trusted CA certificate ID in the Certificate Manager.
+	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
+}
+
+type StreamBackendHealthcheckTLSValidationContextObservation struct {
+
+	// PEM-encoded trusted CA certificate chain.
+	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
+
+	// (String).
+	// Trusted CA certificate ID in the Certificate Manager.
+	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
+}
+
+type StreamBackendHealthcheckTLSValidationContextParameters struct {
+
+	// PEM-encoded trusted CA certificate chain.
+	// +kubebuilder:validation:Optional
+	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
+
+	// (String).
+	// Trusted CA certificate ID in the Certificate Manager.
+	// +kubebuilder:validation:Optional
+	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
 }
 
 type StreamBackendInitParameters struct {
@@ -1596,7 +1964,32 @@ type StreamBackendParameters struct {
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
 
+type StreamBackendTLSClientCertificateInitParameters struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+}
+
+type StreamBackendTLSClientCertificateObservation struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+}
+
+type StreamBackendTLSClientCertificateParameters struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	// +kubebuilder:validation:Optional
+	CertificateID *string `json:"certificateId" tf:"certificate_id,omitempty"`
+}
+
 type StreamBackendTLSInitParameters struct {
+
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	ClientCertificate []StreamBackendTLSClientCertificateInitParameters `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
 
 	// [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
 	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
@@ -1607,6 +2000,9 @@ type StreamBackendTLSInitParameters struct {
 
 type StreamBackendTLSObservation struct {
 
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	ClientCertificate []StreamBackendTLSClientCertificateObservation `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
 	// [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
 	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
 
@@ -1615,6 +2011,10 @@ type StreamBackendTLSObservation struct {
 }
 
 type StreamBackendTLSParameters struct {
+
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	// +kubebuilder:validation:Optional
+	ClientCertificate []StreamBackendTLSClientCertificateParameters `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
 
 	// [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
 	// +kubebuilder:validation:Optional
@@ -1686,31 +2086,63 @@ type StreamHealthcheckParameters struct {
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
 
+type TLSClientCertificateInitParameters struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+}
+
+type TLSClientCertificateObservation struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+}
+
+type TLSClientCertificateParameters struct {
+
+	// (String).
+	// Certificate ID in the Certificate Manager to use as a client certificate for connections to the backend.
+	// +kubebuilder:validation:Optional
+	CertificateID *string `json:"certificateId" tf:"certificate_id,omitempty"`
+}
+
 type TLSInitParameters struct {
 
-	// [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	ClientCertificate []ClientCertificateInitParameters `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// SNI string for TLS connections.
 	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
 
-	// Validation context
+	// Validation context for backend TLS connections.
 	ValidationContext []ValidationContextInitParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
 }
 
 type TLSObservation struct {
 
-	// [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	ClientCertificate []ClientCertificateObservation `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// SNI string for TLS connections.
 	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
 
-	// Validation context
+	// Validation context for backend TLS connections.
 	ValidationContext []ValidationContextObservation `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
 }
 
 type TLSParameters struct {
 
-	// [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+	// Client certificate specification. Used to establish mTLS connections with the backend.
+	// +kubebuilder:validation:Optional
+	ClientCertificate []ClientCertificateParameters `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// SNI string for TLS connections.
 	// +kubebuilder:validation:Optional
 	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
 
-	// Validation context
+	// Validation context for backend TLS connections.
 	// +kubebuilder:validation:Optional
 	ValidationContext []ValidationContextParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
 }

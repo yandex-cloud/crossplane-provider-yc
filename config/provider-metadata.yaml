@@ -86,6 +86,7 @@ resources:
             min_count: (Required)(Number). The minimum number of worker instances in the cluster.
             min_level: (String). Minimum level of messages that will be sent to Cloud Logging. Can be either TRACE, DEBUG, INFO, WARN, ERROR or FATAL. If not set then server default is applied (currently INFO).
             name: (Required)(String). The resource name.
+            password: (String). Password or access token for repository authentication. Exactly one of ssh_key or username/password should be specified.
             pip_packages: (Set Of String). Python packages that are installed in the cluster.
             python_version: (String). Version of Python that Airflow will run on. Must be in format <major>.<minor>.
             repo: (Required)(String). The URL of the Git repository that stores DAG files used in the cluster.
@@ -94,7 +95,7 @@ resources:
             scheduler: '[Block]. Configuration of scheduler instances.'
             security_group_ids: (Set Of String). The list of security groups applied to resource or their components.
             service_account_id: (Required)(String). Service account which linked to the resource. For more information, see documentation.
-            ssh_key: (Required)(String). The SSH key that is used to access the Git repository.
+            ssh_key: (String). The SSH key that is used to access the Git repository. Exactly one of ssh_key or username/password should be specified.
             status: (Read-Only) (String). Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
             sub_path: (Required)(String). The path to the directory in the repository that stores DAG files used in the cluster.
             subnet_ids: (Required)(Set Of String). The list of VPC subnets identifiers which resource is attached.
@@ -102,12 +103,51 @@ resources:
             triggerer: '[Block]. Configuration of triggerer instances.'
             type: (String). Type of maintenance window. Can be either ANYTIME or WEEKLY. If WEEKLY, day and hour must be specified.
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            username: (String). Username for repository authentication. For GitLab access tokens use oauth2. Exactly one of ssh_key or username/password should be specified.
             webserver: '[Block]. Configuration of webserver instances.'
             worker: '[Block]. Configuration of worker instances.'
         importStatements:
             - |-
               # terraform import yandex_airflow_cluster.<resource Name> <resource Id>
               terraform import yandex_airflow_cluster.my_airflow_cluster enphq**********cjsw4
+    yandex_airflow_cluster_change_freeze:
+        subCategory: Managed Service for Apache Airflow™
+        description: Manages the yandex_airflow_cluster_change_freeze resource.
+        name: yandex_airflow_cluster_change_freeze
+        title: yandex_airflow_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2027-01-06T00:00:00Z",
+                  "reason": "New Year holidays",
+                  "resource_id": "${yandex_airflow_cluster.example.id}",
+                  "start_at": "2026-12-30T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_airflow_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_airflow_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_airflow_cluster_change_freeze.example enp-resource-id:change-freeze-id
     yandex_airflow_cluster_iam_binding:
         subCategory: Managed Service for Apache Airflow™
         description: Manages the yandex_airflow_cluster_iam_binding resource.
@@ -321,8 +361,10 @@ resources:
                 listener.http.handler.http_router_id: yandex_alb_http_router.test-router.id
                 network_id: yandex_vpc_network.test-network.id
         argumentDocs:
+            accept_untrusted: (Bool). If true, ALB will not check certification chain and will allow expired client certificates.
             address: '[Block]. One or more addresses to listen on.'
             allocation_policy: '[Block]. Allocation zones for the Load Balancer instance.'
+            allow_expired: (Bool). If true, ALB will allow expired client certificates even if accept_untrusted is set to false.
             allow_http10: (Bool). If set, will enable only HTTP1 protocol with HTTP1.0 support.
             allow_zonal_shift: (Bool). Specifies whether application load balancer is available to zonal shift
             auto_scale_policy: '[Block]. Scaling settings of the application load balancer.'
@@ -732,6 +774,7 @@ resources:
             bucket_name: (Required)(String). Name of the destination bucket.
             categories: '[Block]. Deprecated.'
             codec: '(String). Codec for compressing events. Allowed values: RAW, GZIP, ZSTD. Default: RAW'
+            condition: '[Block]. Condition that must be satisfied by an event. Conditions are combined using logical AND.'
             data_events_filter: '[Block]. Structure describing filtering process for the service-specific data events.'
             data_stream_destination: '[Block]. Structure describing destination data stream of the trail. Mutually exclusive with logging_destination and storage_destination.'
             database_id: (Required)(String). ID of the YDB hosting the destination data stream.
@@ -739,7 +782,9 @@ resources:
             description: (String). The resource description.
             dns_filter: '[Block]. Specific filter for DNS service.'
             event_filters: '[Block]. Deprecated.'
+            exclude_rule: '[Block]. Rules defining which data events will be excluded. Rules are combined using logical OR.'
             excluded_events: (List Of String). A list of events that won't be gathered by the trail from this service. New events will be automatically gathered when this option is specified. Mutually exclusive with included_events.
+            field: (Required)(String). Path to a scalar field of the event.
             filter: '[Block]. Structure is deprecated. Use filtering_policy instead.'
             filter.event_filters.categories: blocks. With the introduction of included_events/excluded_events you can configure filtering per each event type.
             filter.event_filters.path_filter: with the appropriate resource_scope blocks. You have to account that resource_scope does not support specifying relations between resources, so your configuration will simplify to only the actual resources, that will be monitored.
@@ -748,6 +793,7 @@ resources:
             folder_id: (Required)(String). The folder identifier that resource belongs to. If it is not provided, the default provider folder-id is used.
             id: (String).
             include_nonrecursive_queries: (Required)(Bool). All types of queries will be delivered.
+            include_rule: '[Block]. Rules defining which data events will be included. Rules are combined using logical OR.'
             included_events: (List Of String). A list of events that will be gathered by the trail from this service. New events won't be gathered by default when this option is specified. Mutually exclusive with excluded_events.
             labels: (Map Of String). A set of key/value label pairs which assigned to resource.
             log_group_id: (Required)(String). ID of the destination Cloud Logging Group.
@@ -755,6 +801,7 @@ resources:
             management_events_filter: '[Block]. Structure describing filtering process for management events.'
             name: (Required)(String). The resource name.
             object_prefix: (String). Additional prefix of the uploaded objects. If not specified, objects will be uploaded with prefix equal to trail_id.
+            operator: (Required)(String). Operator that controls how the values are interpreted.
             path_filter: '[Block]. Deprecated.'
             plane: (Required)(String). Deprecated.
             resource_id: (Required)(String). Resource ID.
@@ -769,6 +816,7 @@ resources:
             timeouts: '[Block].'
             trail_id: (Read-Only) (String). ID of the trail resource.
             type: (Required)(String). Deprecated.
+            values: (Required)(List Of String). Values interpreted according to the selected field and operator.
         importStatements:
             - |-
               # terraform import yandex_audit_trails_trail.<resource Name> <resource Id>
@@ -1766,6 +1814,112 @@ resources:
             timeouts: '[Block].'
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
         importStatements: []
+    yandex_cloudrouter_routing_instance:
+        subCategory: Cloud Router
+        description: Manages the yandex_cloudrouter_routing_instance resource.
+        name: yandex_cloudrouter_routing_instance
+        title: yandex_cloudrouter_routing_instance
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "name": "my-routing-instance",
+                  "vpc_info": [
+                    {
+                      "vpc_network_id": "${yandex_vpc_network.example.id}"
+                    }
+                  ]
+                }
+              dependencies:
+                yandex_vpc_network.example: |-
+                    {
+                      "name": "my-network"
+                    }
+            - name: with_private_connection
+              manifest: |-
+                {
+                  "cic_private_connection_info": [
+                    {
+                      "cic_private_connection_id": "${var.cic_private_connection_id}"
+                    }
+                  ],
+                  "deletion_protection": true,
+                  "description": "Routing between a VPC network and a private connection",
+                  "labels": {
+                    "environment": "production"
+                  },
+                  "name": "my-interconnect-routing-instance",
+                  "vpc_info": [
+                    {
+                      "az_infos": [
+                        {
+                          "manual_info": {
+                            "az_id": "${yandex_vpc_subnet.interconnect.zone}",
+                            "prefixes": "${yandex_vpc_subnet.interconnect.v4_cidr_blocks}"
+                          }
+                        }
+                      ],
+                      "vpc_network_id": "${yandex_vpc_network.interconnect.id}"
+                    }
+                  ]
+                }
+              dependencies:
+                yandex_vpc_network.interconnect: |-
+                    {
+                      "name": "my-interconnect-network"
+                    }
+                yandex_vpc_subnet.interconnect: |-
+                    {
+                      "name": "my-interconnect-subnet",
+                      "network_id": "${yandex_vpc_network.interconnect.id}",
+                      "v4_cidr_blocks": [
+                        "10.10.0.0/24"
+                      ],
+                      "zone": "ru-central1-a"
+                    }
+        argumentDocs:
+            az_id: (Required)(String). ID of the AZ
+            cic_private_connection_info: '[Block]. List of the info about privateConnections which are attached to routingInstance.'
+            cic_private_connection_info.cic_private_connection_id: (Required)(String). ID of the cicPrivateConnection that is attached to the routingInstance.
+            created_at: (Read-Only) (String). Creation timestamp in RFC3339 text format.
+            deletion_protection: |-
+                (Bool). package: yandex.cloud.cloudrouter.v1
+                filename: yandex/cloud/cloudrouter/v1/routing_instance.proto
+            description: (String). Description of the routingInstance. 0-256 characters long.
+            folder_id: (String). ID of the folder that the routingInstance belongs to.
+            id: |-
+                (Read-Only) (String). ID of the RoutingInstance resource to return.
+                To get the routingInstance ID use a [RoutingInstanceService.List] request.
+            labels: |-
+                (Map Of String). Resource labels, key:value pairs.
+                No more than 64 per resource.
+                The maximum string length in characters for each value is 63.
+                Each value must match the regular expression [-_0-9a-z]*.
+                The string length in characters for each key must be 1-63.
+                Each key must match the regular expression [a-z][-_0-9a-z]*.
+            manual_info: '[Block]. VpcInfo which is set by user'
+            name: |-
+                (String). Name of the routingInstance.
+                The name must be unique within the folder.
+                Value must match the regular expression \|[a-zA-Z]([-_a-zA-Z0-9]{0,61}[a-zA-Z0-9])?.
+            prefixes: (Set Of String). List of prefixes to announce
+            region_id: (Read-Only) (String). ID of the region that the routingInstance belongs to.
+            routing_instance_id: |-
+                (Read-Only) (String). ID of the RoutingInstance resource to return.
+                To get the routingInstance ID use a [RoutingInstanceService.List] request.
+            status: (Read-Only) (String). Status of the routingInstance.
+            timeouts: '[Block].'
+            timeouts.create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            timeouts.delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            timeouts.read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            timeouts.update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            vpc_info: '[Block]. List of the info about vpcNetworks which are attached to routingInstance.'
+            vpc_info.az_infos: '[Block]. List of the az-related info about vpcNetworks which are attached to routingInstance'
+            vpc_info.vpc_network_id: (Required)(String). ID of the vpcNetwork that is attached to the routingInstance.
+        importStatements:
+            - |-
+              # terraform import yandex_cloudrouter_routing_instance.<resource Name> <resource Id>
+              terraform import yandex_cloudrouter_routing_instance.example routing-instance-id
     yandex_cm_certificate:
         subCategory: Certificate Manager
         description: Manages the yandex_cm_certificate resource.
@@ -2092,23 +2246,29 @@ resources:
                 }
         argumentDocs:
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            created_at: (Read-Only) (String). The creation timestamp of the resource.
+            created_at: (Read-Only) (String). Creation timestamp in RFC3339 text format.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            description: (String). The resource description.
+            description: (String). Description of the placement group.
             disk_placement_group_id: |-
                 (String). ID of the placement group to return.
                 To get the placement group ID, use [DiskPlacementGroupService.List] request.
                 The length must be less than or equal to 50.
                 This field is required.
-            folder_id: (String). The folder identifier that resource belongs to. If it is not provided, the default provider folder-id is used.
-            id: (String).
-            labels: (Map Of String). A set of key/value label pairs which assigned to resource.
-            name: (String). The resource name.
+            folder_id: (String). ID of the folder that the placement group belongs to.
+            id: |-
+                (String). ID of the placement group to return.
+                To get the placement group ID, use [DiskPlacementGroupService.List] request.
+                The length must be less than or equal to 50.
+                This field is required.
+            labels: (Map Of String). Resource labels as key:value pairs.
+            name: |-
+                (String). Name of the placement group.
+                The name is unique within the folder.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
-            status: (Read-Only) (String). Status of the Disk Placement Group.
+            status: (Read-Only) (String). Current status of the placement group
             timeouts: '[Block].'
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            zone: (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+            zone: (String). ID of the availability zone where the placement group resides.
         importStatements:
             - |-
               # terraform import yandex_compute_disk_placement_group.<resource Name> <resource Id>
@@ -2162,23 +2322,37 @@ resources:
                   "zone": "ru-central1-a"
                 }
         argumentDocs:
-            block_size: (Read-Only) (Number). Block size of the filesystem, specified in bytes.
+            block_size: (Number). Block size used for the filesystem, specified in bytes.
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            created_at: (Read-Only) (String). The creation timestamp of the resource.
+            created_at: (Read-Only) (String). Creation timestamp.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            description: (Read-Only) (String). The resource description.
-            filesystem_id: (String). ID of the filesystem.
-            folder_id: (String). The folder identifier that resource belongs to. If it is not provided, the default provider folder-id is used.
-            id: (String).
-            labels: (Read-Only) (Map Of String). A set of key/value label pairs which assigned to resource.
-            name: (String). The resource name.
+            description: (String). Description of the filesystem.
+            filesystem_id: |-
+                (String). ID of the filesystem to return.
+                To get the filesystem ID, make a [FilesystemService.List] request.
+                The length must be less than or equal to 50.
+                This field is required.
+            folder_id: (String). ID of the folder that the filesystem belongs to.
+            id: |-
+                (String). ID of the filesystem to return.
+                To get the filesystem ID, make a [FilesystemService.List] request.
+                The length must be less than or equal to 50.
+                This field is required.
+            labels: |-
+                (Map Of String). Filesystem labels as key:value pairs.
+                For details about the concept, see documentation.
+            name: (String). Name of the filesystem. The name is unique within the folder.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
-            size: (Read-Only) (Number). Size of the filesystem, specified in GB.
-            status: (Read-Only) (String). The status of the filesystem.
+            size: (Number). Size of the filesystem, specified in bytes.
+            status: (Read-Only) (String). Current status of the filesystem.
             timeouts: '[Block].'
-            type: (Read-Only) (String). Type of filesystem to create. Type network-hdd is set by default.
+            type: |-
+                (String). ID of the filesystem type.
+                To get a list of available filesystem types, make a [yandex.cloud.compute.v1.DiskTypeService.List] request.
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            zone: (Read-Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+            zone: |-
+                (String). ID of the availability zone where the filesystem resides.
+                A filesystem can be attached only to instances residing in the same availability zone.
         importStatements:
             - |-
               # terraform import yandex_compute_filesystem.<resource Name> <resource Id>
@@ -2236,21 +2410,27 @@ resources:
                 }
         argumentDocs:
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            created_at: (Read-Only) (String). The creation timestamp of the resource.
+            created_at: (Read-Only) (String). Creation timestamp.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            description: (Read-Only) (String). The resource description.
-            folder_id: (String). The folder identifier that resource belongs to. If it is not provided, the default provider folder-id is used.
-            gpu_cluster_id: (String). ID of the GPU cluster.
-            id: (String).
-            interconnect_type: (Read-Only) (String). Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
-            labels: (Read-Only) (Map Of String). A set of key/value label pairs which assigned to resource.
-            name: (String). The resource name.
+            description: (String). Description of the GPU cluster.
+            folder_id: (String). ID of the folder that the GPU cluster belongs to.
+            gpu_cluster_id: |-
+                (String). ID of the GPU cluster to return.
+                To get a GPU cluster ID, make a [GpuClusterService.List] request.
+            id: |-
+                (String). ID of the GPU cluster to return.
+                To get a GPU cluster ID, make a [GpuClusterService.List] request.
+            interconnect_type: (String). Type of interconnect used for this GPU cluster.
+            labels: (Map Of String). GPU cluster labels as key:value pairs.
+            name: |-
+                (String). Name of the GPU cluster.
+                The name is unique within the folder.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
-            status: (Read-Only) (String). The status of the GPU cluster.
-            subnets: (Read-Only) (Number). Number of subnets in the GPU cluster.
+            status: (Read-Only) (String). Status of the GPU cluster.
+            subnets: (Number). Number of subnets in the GPU cluster.
             timeouts: '[Block].'
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            zone: (Read-Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+            zone: (String). ID of the availability zone where the GPU cluster resides.
         importStatements:
             - |-
               # terraform import yandex_compute_gpu_cluster.<resource Name> <resource Id>
@@ -3437,15 +3617,19 @@ resources:
                 }
         argumentDocs:
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            created_at: (Read-Only) (String). The creation timestamp of the resource.
+            created_at: (Read-Only) (String). Output only. Creation timestamp in RFC3339 text format.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            folder_id: (String). The folder identifier that resource belongs to. If it is not provided, the default provider folder-id is used.
-            id: (String).
-            labels: (Map Of String). A set of key/value label pairs which assigned to resource.
-            name: (String). The resource name.
+            folder_id: (String). ID of the folder that the registry belongs to.
+            id: |-
+                (String). ID of the Registry resource to return.
+                To get the registry ID use a [RegistryService.List] request.
+            labels: (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
+            name: (String). Name of the registry.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
-            registry_id: (String). The ID of a specific registry.
-            status: (Read-Only) (String). Status of the registry.
+            registry_id: |-
+                (String). ID of the Registry resource to return.
+                To get the registry ID use a [RegistryService.List] request.
+            status: (Read-Only) (String). Output only. Status of the registry.
             timeouts: '[Block].'
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
         importStatements:
@@ -3546,10 +3730,16 @@ resources:
         argumentDocs:
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            id: (String).
-            name: (String). A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+            id: |-
+                (String). ID of the Repository resource to return.
+                To get the repository ID use a [RepositoryService.List] request.
+            name: |-
+                (Required)(String). Name of the repository.
+                The name is unique within the registry.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
-            repository_id: (String). The ID of a specific repository.
+            repository_id: |-
+                (String). ID of the Repository resource to return.
+                To get the repository ID use a [RepositoryService.List] request.
             timeouts: '[Block].'
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
         importStatements:
@@ -3945,6 +4135,44 @@ resources:
             zone_id: (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
         importStatements:
             - "# terraform import yandex_dataproc_cluster.<resource Name> <resource Id> \nterraform import yandex_dataproc_cluster.foo c9q85**********gpn21"
+    yandex_dataproc_cluster_change_freeze:
+        subCategory: Yandex Data Processing
+        description: Manages the yandex_dataproc_cluster_change_freeze resource.
+        name: yandex_dataproc_cluster_change_freeze
+        title: yandex_dataproc_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2026-12-01T00:00:00Z",
+                  "reason": "Black Friday",
+                  "resource_id": "${yandex_dataproc_cluster.example.id}",
+                  "start_at": "2026-11-26T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_dataproc_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_dataproc_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_dataproc_cluster_change_freeze.example c9q-resource-id:change-freeze-id
     yandex_dataproc_cluster_iam_binding:
         subCategory: Yandex Data Processing
         description: Manages the yandex_dataproc_cluster_iam_binding resource.
@@ -4207,6 +4435,9 @@ resources:
         argumentDocs:
             add_rest_column: (Bool). Will add _rest column for all unknown fields
             audit_trails_v1_parser: '[Block]. Parse Audit Trails data. Empty struct'
+            authentication.service_account: |-
+                [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
             broker_urls: (List Of String). Kafka broker URLs
             buffer_flush_interval: (String). Flush interval
             buffer_size: |-
@@ -4355,6 +4586,11 @@ resources:
             kafka_target.topic_settings: '[Block]. Target topic settings'
             key: (Bool). Mark field as Primary Key
             labels: (Map Of String). Endpoint labels as key:value pairs.
+            managed_yds: |-
+                [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+            managed_yds.database_id: (String). Managed Service for YDB database ID
+            managed_yds.stream: (String). Stream to read
             mdb_cluster_id: (String). Managed Service for PostgreSQL cluster ID
             mechanism: |-
                 (String). SASL mechanism for authentication, use one of: KAFKA_MECHANISM_SHA256,
@@ -4421,6 +4657,15 @@ resources:
             on_premise: |-
                 [Block]. Connection options for on-premise Kafka
                 Set only one of: cluster_id/on_premise/connection_manager_connection
+            on_premise.database: |-
+                (String). Database path in YDB where tables are stored.
+                Example: /ru/transfer_manager/prod/data-transfer
+            on_premise.instance: '(String). Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.'
+            on_premise.stream: (String). Stream to read
+            on_premise.subnet_id: |-
+                (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+                If omitted, the server has to be accessible via Internet
+            on_premise.tls_mode: '[Block]. TLS settings for server connection. Disabled by default.'
             password: '[Block]. Password for user'
             password.mysql_target: |-
                 [Block]. package: yandex.cloud.datatransfer.v1
@@ -4500,6 +4745,7 @@ resources:
             serializer_parameters: |-
                 [Block]. A list of Debezium parameters set by the structure of the key and value
                 string fields
+            service_account.service_account_id: (String). Service account ID for interaction with database
             service_account_id: (String). Service account
             settings: '[Block]. DataTransfer Endpoint Settings block'
             shard_name: |-
@@ -4543,6 +4789,13 @@ resources:
                 [Block]. package: yandex.cloud.datatransfer.v1
                 filename: yandex/cloud/datatransfer/v1/endpoint.proto
             value: (String). Value of the serializer parameter
+            ydb_connection.database_id: (String). Managed Service for YDB database ID
+            ydb_connection.on_premise: |-
+                [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+            ydb_source.authentication: |-
+                [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
             ydb_source.changefeed_custom_consumer_name: (String). Consumer for pre-created change feed if any
             ydb_source.changefeed_custom_name: (String). Pre-created change feed if any
             ydb_source.database: |-
@@ -4562,6 +4815,12 @@ resources:
             ydb_source.subnet_id: |-
                 (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
                 database. If omitted, the server has to be accessible via Internet
+            ydb_source.ydb_connection: |-
+                [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+            ydb_target.authentication: |-
+                [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
             ydb_target.cleanup_policy: |-
                 (String). Cleanup policy determine how to clean collections when activating the transfer.
                 One of YDB_CLEANUP_POLICY_DISABLED or YDB_CLEANUP_POLICY_DROP
@@ -4589,10 +4848,14 @@ resources:
                 (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
                 database.
                 If omitted, the server has to be accessible via Internet
+            ydb_target.ydb_connection: |-
+                [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+                filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
             yds_source.allow_ttl_rewind: |-
                 (Bool). Should continue working, if consumer read lag exceed TTL of topic
                 False: stop the transfer in error state, if detected lost data. True: continue
                 working with losing part of data
+            yds_source.authentication: '[Block]. Choose one of authentication methods, right now only service account is avaiable'
             yds_source.consumer: (String). Custom consumer - for important streams
             yds_source.database: |-
                 (String). Database path in YDB for streams
@@ -4611,6 +4874,8 @@ resources:
                 (List Of String). List of supported compression codecs
                 Options: YDS_COMPRESSION_CODEC_RAW, YDS_COMPRESSION_CODEC_ZSTD,
                 YDS_COMPRESSION_CODEC_GZIP
+            yds_source.ydb_connection: '[Block]. Connection settings for managed YDB or for on premise'
+            yds_target.authentication: '[Block]. Choose one of authentication methods, right now only service account is avaiable'
             yds_target.compression_codec: |-
                 (String). Codec to use for output data compression. If not specified, no compression will
                 be done
@@ -4633,6 +4898,7 @@ resources:
             yds_target.subnet_id: |-
                 (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
                 database. If omitted, the server has to be accessible via Internet
+            yds_target.ydb_connection: '[Block]. Connection settings for managed YDB or for on premise'
         importStatements:
             - |-
               # terraform import yandex_datatransfer_endpoint.<resource Name> <resource Id>
@@ -5764,16 +6030,22 @@ resources:
                 }
         argumentDocs:
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            created_at: (Read-Only) (String). The creation timestamp of the resource.
+            created_at: (Read-Only) (String). Creation timestamp.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            description: (Read-Only) (String). The resource description.
+            description: (String). Description of the service account. 0-256 characters long.
             expires_at: (String). Timestamp when the service account expires.
-            folder_id: (String). The folder identifier that resource belongs to. If it is not provided, the default provider folder-id is used.
-            id: (String).
+            folder_id: (String). ID of the folder that the service account belongs to.
+            id: |-
+                (String). ID of the ServiceAccount resource to return.
+                To get the service account ID, use a [ServiceAccountService.List] request.
             labels: (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
-            name: (String). The resource name.
+            name: |-
+                (Required)(String). Name of the service account.
+                The name is unique within the cloud. 3-63 characters long.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
-            service_account_id: (String). ID of a specific service account.
+            service_account_id: |-
+                (String). ID of the ServiceAccount resource to return.
+                To get the service account ID, use a [ServiceAccountService.List] request.
             status: |-
                 (Read-Only) (String). Current status of the service account.
                 Determines whether the service account can authenticate and access the system.
@@ -6017,22 +6289,30 @@ resources:
                   "name": "some_wlif_name"
                 }
         argumentDocs:
-            audiences: (Read-Only) (Set Of String). List of trusted values for aud claim.
+            audiences: (Set Of String). List of trusted values for aud claim.
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             created_at: (Read-Only) (String). Creation timestamp.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            description: (Read-Only) (String). Description of the OIDC workload identity federation.
+            description: (String). Description of the service account. 0-256 characters long.
             disabled: |-
                 (Bool). True - the OIDC workload identity federation is disabled and cannot be used for authentication.
                 False - the OIDC workload identity federation is enabled and can be used for authentication.
-            enabled: (Read-Only) (Bool). Enabled flag.
-            federation_id: (String). Id of the OIDC workload identity federation.
-            folder_id: (Read-Only) (String). Id of the folder that the OIDC workload identity federation belongs to.
-            id: (String).
-            issuer: (Read-Only) (String). Issuer identifier of the external IdP server to be used for authentication.
-            jwks_url: (Read-Only) (String). URL reference to trusted keys in format of JSON Web Key Set.
-            labels: (Read-Only) (Map Of String). Resource labels as key-value pairs.
-            name: (String). Name of the OIDC workload identity federation. The name is unique within the folder.
+            enabled: |-
+                (Read-Only) (Bool). True - the OIDC workload identity federation is enabled and can be used for authentication.
+                False - the OIDC workload identity federation is disabled and cannot be used for authentication.
+            federation_id: |-
+                (String). ID of the OIDC workload identity federation to return.
+                To get the OIDC workload identity federation ID, make a [FederationService.List] request.
+            folder_id: (String). ID of the folder that the OIDC workload identity federation belongs to.
+            id: |-
+                (String). ID of the OIDC workload identity federation to return.
+                To get the OIDC workload identity federation ID, make a [FederationService.List] request.
+            issuer: (Required)(String). URL of the external IdP server to be used for authentication.
+            jwks_url: (Required)(String). URL reference to trusted keys in format of JSON Web Key Set.
+            labels: (Map Of String). Resource labels as key:value pairs
+            name: |-
+                (Required)(String). Name of the OIDC workload identity federation
+                The name is unique within the folder. 3-63 characters long.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             timeouts: '[Block].'
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
@@ -6440,20 +6720,26 @@ resources:
                 }
         argumentDocs:
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            created_at: (Read-Only) (String). The creation timestamp of the resource.
-            default_algorithm: (String). Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is AES_128.
+            created_at: (Read-Only) (String). Time when the key was created.
+            default_algorithm: (String). Default encryption algorithm to be used with new versions of the key.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            deletion_protection: (Bool). The true value means that resource is protected from accidental deletion.
-            description: (String). The resource description.
-            folder_id: (String). The folder identifier that resource belongs to. If it is not provided, the default provider folder-id is used.
-            id: (String).
-            labels: (Map Of String). A set of key/value label pairs which assigned to resource.
-            name: (String). The resource name.
+            deletion_protection: (Bool). Flag that inhibits deletion of the key
+            description: (String). Description of the key.
+            folder_id: (String). ID of the folder that the key belongs to.
+            id: |-
+                (String). ID of the symmetric KMS key to return.
+                To get the ID of a symmetric KMS key use a [SymmetricKeyService.List] request.
+            labels: (Map Of String). Custom labels for the key as key:value pairs. Maximum 64 per key.
+            name: (String). Name of the key.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
-            rotated_at: (Read-Only) (String). Last rotation timestamp of the key.
-            rotation_period: (String). Interval between automatic rotations. To disable automatic rotation, omit this parameter.
-            status: (Read-Only) (String). The status of the key.
-            symmetric_key_id: (String). The symmetric key ID.
+            rotated_at: |-
+                (Read-Only) (String). Time of the last key rotation (time when the last version was created).
+                Empty if the key does not have versions yet.
+            rotation_period: (String). Time period between automatic key rotations.
+            status: (String). Current status of the key.
+            symmetric_key_id: |-
+                (String). ID of the symmetric KMS key to return.
+                To get the ID of a symmetric KMS key use a [SymmetricKeyService.List] request.
             timeouts: '[Block].'
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
         importStatements:
@@ -7144,20 +7430,33 @@ resources:
                 target.address: yandex_compute_instance.my-instance-2.network_interface.0.ip_address
                 target.subnet_id: yandex_vpc_subnet.my-subnet.id
         argumentDocs:
-            address: .
+            address: (String). IP address of the target.
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            created_at: (Read-Only) (String). The creation timestamp of the resource.
+            created_at: (Read-Only) (String). Output only. Creation timestamp in RFC3339 text format.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            description: (Read-Only) (String). The resource description.
-            folder_id: (String). The folder identifier that resource belongs to. If it is not provided, the default provider folder-id is used.
-            id: (String).
-            labels: (Read-Only) (Map Of String). A set of key/value label pairs which assigned to resource.
-            name: (String). The resource name.
+            description: (String). Description of the target group. 0-256 characters long.
+            folder_id: (String). ID of the folder that the target group belongs to.
+            id: |-
+                (String). ID of the TargetGroup resource to return.
+                To get the target group ID, use a [TargetGroupService.List] request.
+                The length must be less than or equal to 50.
+                This field is required.
+            labels: (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
+            name: |-
+                (String). Name of the target group.
+                The name is unique within the folder. 3-63 characters long.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             region_id: (String). ID of the region where the target group resides.
-            subnet_id: .
-            target: '[Block].'
-            target_group_id: (String). Target Group ID.
+            subnet_id: |-
+                (String). ID of the subnet that targets are connected to.
+                All targets in the target group must be connected to the same subnet within a single availability zone.
+                The length must be less than or equal to 50.
+            target: '[Block]. A list of targets in the target group.'
+            target_group_id: |-
+                (String). ID of the TargetGroup resource to return.
+                To get the target group ID, use a [TargetGroupService.List] request.
+                The length must be less than or equal to 50.
+                This field is required.
             timeouts: '[Block].'
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
         importStatements:
@@ -7408,22 +7707,26 @@ resources:
               references:
                 folder_id: data.yandex_resourcemanager_folder.test_folder.id
         argumentDocs:
-            cloud_id: (Read-Only) (String). The Cloud ID which resource belongs to. If it is not provided, the default provider cloud-id is used.
+            cloud_id: (String). Log group cloud ID.
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            created_at: (Read-Only) (String). The creation timestamp of the resource.
-            data_stream: (Read-Only) (String). Data Stream.
+            created_at: (Read-Only) (String). Log group creation time.
+            data_stream: (String). Data stream name
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            description: (Read-Only) (String). The resource description.
-            folder_id: (String). The folder identifier that resource belongs to. If it is not provided, the default provider folder-id is used.
-            id: (String).
-            labels: (Read-Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+            description: (String). Log group description.
+            folder_id: (String). Log group folder ID.
+            id: |-
+                (String). ID of the log group to return.
+                To get a log group ID make a [LogGroupService.List] request.
+            labels: (Map Of String). Log group labels.
             log_group_id: |-
                 (String). ID of the log group to return.
                 To get a log group ID make a [LogGroupService.List] request.
-            name: (String). The resource name.
+            name: (String). Log group name.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
-            retention_period: (Read-Only) (String). Log entries retention period for the Yandex Cloud Logging group.
-            status: (Read-Only) (String). The Yandex Cloud Logging group status.
+            retention_period: |-
+                (String). Log group entry retention period.
+                Entries will be present in group during this period.
+            status: (Read-Only) (String). Status of the log group.
             timeouts: '[Block].'
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
         importStatements:
@@ -8316,6 +8619,44 @@ resources:
             - |-
               # terraform import yandex_mdb_clickhouse_cluster.<resource Name> <resource Id>
               terraform import yandex_mdb_clickhouse_cluster.my_cluster ...
+    yandex_mdb_clickhouse_cluster_change_freeze:
+        subCategory: Managed Service for ClickHouse
+        description: Manages the yandex_mdb_clickhouse_cluster_change_freeze resource.
+        name: yandex_mdb_clickhouse_cluster_change_freeze
+        title: yandex_mdb_clickhouse_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2026-12-01T00:00:00Z",
+                  "reason": "Black Friday",
+                  "resource_id": "${yandex_mdb_clickhouse_cluster.example.id}",
+                  "start_at": "2026-11-26T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_mdb_clickhouse_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_mdb_clickhouse_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_mdb_clickhouse_cluster_change_freeze.example c9q-resource-id:change-freeze-id
     yandex_mdb_clickhouse_cluster_iam_binding:
         subCategory: Managed Service for ClickHouse
         description: Manages the yandex_mdb_clickhouse_cluster_iam_binding resource.
@@ -8679,6 +9020,7 @@ resources:
             admin_password_wo_version: (Number). A version number for the write-only password. Increment this to trigger a password update.
             age: (Required)(Number). Minimum data age in seconds.
             allow_ddl: (Bool). Allows or denies DDL queries.
+            allow_degradation_to_read_only: (Bool). Allows the cluster to become read-only during migration from ZooKeeper to ClickHouse Keeper. Must be enabled when changing coordinator host types from ZOOKEEPER to KEEPER.
             allow_host_recreation: '(Bool). Allows or denies re-creation of hosts during cluster configuration changes that require it, such as a disk type change. Note: only data of replicated tables is preserved during host re-creation; data of non-replicated tables is lost.'
             allow_introspection_functions: (Bool). Enables or disables introspection functions for query profiling.
             allow_read_expired_keys: (Bool). Allow reading expired keys.
@@ -8728,6 +9070,8 @@ resources:
             config: '[Block]. Configuration of the ClickHouse subcluster.'
             connect_timeout: (Number). Connection timeout in milliseconds.
             connect_timeout_with_failover: (Number). The timeout in milliseconds for connecting to a remote server for a Distributed table engine.  Applies only if the cluster uses sharding and replication. If unsuccessful, several attempts are made to connect to various replicas.
+            connection_manager: '[Block]. Connection Manager integration settings. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.'
+            connections_folder_id: (String). ID of the folder where connections for the cluster are created. Defaults to the cluster's folder if not specified.
             copy_schema_on_new_hosts: (Bool). Whether to copy schema on new ClickHouse hosts.
             count_distinct_implementation: (String). Specifies which of the uniq* functions should be used to perform the COUNT(DISTINCT …) construction.
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
@@ -9049,6 +9393,7 @@ resources:
             sasl_mechanism: (String). SASL mechanism used in kafka authentication.
             sasl_password: (String). User password on kafka server.
             sasl_username: (String). Username on kafka server.
+            secrets_folder_id: (String). ID of the folder where connection secrets are created. Defaults to the cluster's folder if not specified.
             secure: (Bool). Use TLS for the connection.
             security_group_ids: (Set Of String). The list of security groups applied to resource or their components.
             security_protocol: (String). Security protocol used to connect to kafka server.
@@ -9073,8 +9418,8 @@ resources:
             skip_unavailable_shards: (Bool). Enables or disables silent skipping of unavailable shards
             sort_overflow_mode: (String). Sets behaviour on overflow while sort.
             source: '[Block]. Source of the external dictionary data.'
-            sql_database_management: (Bool). Grants admin user database management permission.
-            sql_user_management: (Bool). Enables admin user with user management permission.
+            sql_database_management: (Bool). Grants admin user database management permission. Can be enabled in-place, disabling requires the cluster to be recreated.
+            sql_user_management: (Bool). Enables admin user with user management permission. Can be enabled in-place, disabling requires the cluster to be recreated.
             ssl_mode: (String). SSL mode for the PostgreSQL connection (DISABLE, ALLOW, PREFER, VERIFY_CA, VERIFY_FULL).
             structure: '[Block]. Structure of the external dictionary.'
             subnet_id: (String). ID of the subnet where the host is located.
@@ -9370,8 +9715,9 @@ resources:
             compile_expressions: (Bool). Enable or disable compilation of some scalar functions and operators to native code.
             connect_timeout: (Number). Connection timeout in milliseconds.
             connect_timeout_with_failover: (Number). The timeout in milliseconds for connecting to a remote server for a Distributed table engine.  Applies only if the cluster uses sharding and replication. If unsuccessful, several attempts are made to connect to various replicas.
+            connection_folder_id: (String). ID of the folder where the connection is created. Defaults to the cluster's folder if not specified. Cannot be changed after user creation.
             connection_id: (Read-Only) (String). ID of Connection Manager connection. Filled in by the server automatically. String.
-            connection_manager: '[Block]. Connection Manager connection configuration. Filled in by the server automatically.'
+            connection_manager: '[Block]. Deprecated. Please use user_connection_manager instead. Connection Manager connection configuration. Filled in by the server automatically.'
             count_distinct_implementation: (String). Specifies which of the uniq* functions should be used to perform the COUNT(DISTINCT …) construction.
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             data_type_default_nullable: (Bool). Allows data types without explicit modifiers NULL or NOT NULL in column definition will be Nullable.
@@ -9524,6 +9870,7 @@ resources:
             result_overflow_mode: (String). Sets behaviour on overflow in result.
             result_rows: (Number). The total number of rows given as the result. 0 - unlimited.
             s3_use_adaptive_timeouts: (Bool). Enables or disables adaptive timeouts for S3 requests.
+            secret_folder_id: (String). ID of the folder where the secret is created. Defaults to the cluster's folder if not specified. Cannot be changed after user creation.
             select_sequential_consistency: (Bool). Determines the behavior of SELECT queries from replicated tables. If enabled, ClickHouse will terminate a query with error message in case the replica does not have a chunk written with the quorum and will not read the parts that have not yet been written with the quorum.
             send_progress_in_http_headers: (Bool). Enables or disables X-ClickHouse-Progress HTTP response headers in clickhouse-server responses.
             send_timeout: (Number). Send timeout in milliseconds.
@@ -9540,6 +9887,7 @@ resources:
             use_hedged_requests: '(Bool). Enables hedged requests logic for remote queries. It allows to establish many connections with different replicas for query. New connection is enabled in case existent connection(s) with replica(s) were not established within hedged_connection_timeout or no data was received within receive_data_timeout. Query uses the first connection which send non empty progress packet (or data packet, if allow_changing_replica_until_first_data_packet); other connections are cancelled. Queries with max_parallel_replicas > 1 are supported. Default value: true.'
             use_query_cache: (Bool). If turned on, SELECT queries may utilize the query cache.
             use_uncompressed_cache: (Bool). Whether to use a cache of uncompressed blocks.
+            user_connection_manager: '[Block]. Connection Manager settings for the user.'
             wait_for_async_insert: (Bool). Enables waiting for processing of asynchronous insertion. If enabled, server returns OK only after the data is inserted.
             wait_for_async_insert_timeout: (Number). The timeout (in seconds) for waiting for processing of asynchronous insertion. Value must be at least 1000 (1 second).
         importStatements:
@@ -9672,6 +10020,7 @@ resources:
             delete: (String).
             deletion_protection: (Bool). The true value means that resource is protected from accidental deletion.
             description: (String). The resource description.
+            disk_encryption_key_id: (String). ID of the KMS key used for cluster disk encryption. Encryption cant be disabled for an existing cluster. If the source cluster is encrypted and you leave this field empty when restoring, the restored cluster will be created without encryption. This parameter only works when both master and segment hosts use local-ssd` disks. Changing this value requires recreating the cluster. The key is preserved in Terraform state but cannot currently be read from the API, including during import.
             disk_size: (Required)(Number). Volume of the storage available to a host, in gigabytes.
             disk_type_id: (Required)(String). Type of the storage of Greenplum hosts - environment default is used if missing.
             enable: (Bool). Flag that indicates whether script is enabled.
@@ -9748,6 +10097,44 @@ resources:
             - |-
               # terraform import yandex_mdb_greenplum_cluster.<resource Name> <resource Id>
               terraform import yandex_mdb_greenplum_cluster.my_cluster ...
+    yandex_mdb_greenplum_cluster_change_freeze:
+        subCategory: Managed Service for Greenplum®
+        description: Manages the yandex_mdb_greenplum_cluster_change_freeze resource.
+        name: yandex_mdb_greenplum_cluster_change_freeze
+        title: yandex_mdb_greenplum_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2027-01-06T00:00:00Z",
+                  "reason": "New Year holidays",
+                  "resource_id": "${yandex_mdb_greenplum_cluster.example.id}",
+                  "start_at": "2026-12-30T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_mdb_greenplum_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_mdb_greenplum_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_mdb_greenplum_cluster_change_freeze.example c9q-resource-id:change-freeze-id
     yandex_mdb_greenplum_cluster_iam_binding:
         subCategory: Managed Service for Greenplum®
         description: Manages the yandex_mdb_greenplum_cluster_iam_binding resource.
@@ -9871,6 +10258,7 @@ resources:
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             deletion_protection: (Bool). Determines whether the cluster is protected from being deleted.
             description: (String). Description of the Greenplum® cluster.
+            disk_encryption_key_id: (String). ID of the KMS key used for cluster disk encryption. Encryption cant be disabled for an existing cluster. If the source cluster is encrypted and you leave this field empty when restoring, the restored cluster will be created without encryption. This parameter only works when both master and segment hosts use local-ssd` disks. Changing this value requires recreating the cluster. The key is preserved in Terraform state but cannot currently be read from the API, including during import.
             disk_size: (Number). Volume of the storage used by the host, in bytes.
             disk_type_id: '(String). Type of the storage used by the host: network-hdd, network-ssd or local-ssd.'
             enable: (Bool). enable Cloud Storage for cluster
@@ -10699,6 +11087,44 @@ resources:
             - |-
               # terraform import yandex_mdb_kafka_cluster.<resource Name> <resource Id>
               terraform import yandex_mdb_kafka_cluster.my_cluster ...
+    yandex_mdb_kafka_cluster_change_freeze:
+        subCategory: Managed Service for Apache Kafka®
+        description: Manages the yandex_mdb_kafka_cluster_change_freeze resource.
+        name: yandex_mdb_kafka_cluster_change_freeze
+        title: yandex_mdb_kafka_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2026-12-01T00:00:00Z",
+                  "reason": "Black Friday",
+                  "resource_id": "${yandex_mdb_kafka_cluster.example.id}",
+                  "start_at": "2026-11-26T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_mdb_kafka_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_mdb_kafka_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_mdb_kafka_cluster_change_freeze.example c9q-resource-id:change-freeze-id
     yandex_mdb_kafka_cluster_iam_binding:
         subCategory: Managed Service for Apache Kafka®
         description: Manages the yandex_mdb_kafka_cluster_iam_binding resource.
@@ -10965,6 +11391,8 @@ resources:
             s3_connection: '[Block]. Settings for connection to s3-compatible storage.'
             sasl_mechanism: (String). Type of SASL authentification mechanism to use.
             sasl_password: (String). Password to use in SASL authentification mechanism
+            sasl_password_wo: (String). Password to use in SASL authentification mechanism. This attribute is write-only and is not stored in state. Requires sasl_password_wo_version to trigger updates. Write-only arguments are only supported in Terraform v1.11 or higher.
+            sasl_password_wo_version: (Number). A version number for the write-only SASL password. Increment this to trigger a password update.
             sasl_username: (String). Username to use in SASL authentification mechanism.
             schema_case_insensitive: '(Bool). Enable case-insensitive field name matching. Default: false'
             schema_force_optional: '(Bool). Force all columns to be nullable. Default: false'
@@ -11140,7 +11568,9 @@ resources:
             delete: (String).
             id: (String).
             name: (Required)(String). The resource name.
-            password: (Required)(String). The password of the user.
+            password: (String). The password of the user.
+            password_wo: (String). The password of the user. This attribute is write-only and is not stored in state. Requires password_wo_version to trigger updates. Write-only arguments are only supported in Terraform v1.11 or higher.
+            password_wo_version: (Number). A version number for the write-only password. Increment this to trigger a password update.
             permission: '[Block]. Set of permissions granted to the user.'
             read: (String).
             role: (Required)(String). The role type to grant to the topic.
@@ -11221,7 +11651,13 @@ resources:
                 Defaults to "".
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             description: (String). Human-readable description.
+            hour: |-
+                (String). Hour in cron format. Valid values: 0-23, , ranges (8-18), steps (/2), lists (0,12).
+                Defaults to "". Support depends on the database engine.
             id: (String). Unique identifier for the [BackupRetentionPolicy].
+            minute: |-
+                (String). Minute in cron format. Valid values: 0-59, , ranges (0-30), steps (/5), lists (0,15,30,45).
+                Defaults to "". Support depends on the database engine.
             month: |-
                 (String). Month in cron format. Valid values: 1-12, , ranges (1-6), steps (/3), lists (1,6,12).
                 Defaults to "*".
@@ -11459,6 +11895,44 @@ resources:
             - |-
               # terraform import yandex_mdb_mongodb_cluster.<resource Name> <resource Id>
               terraform import yandex_mdb_mongodb_cluster.my_cluster ...
+    yandex_mdb_mongodb_cluster_change_freeze:
+        subCategory: Managed Service for MongoDB
+        description: Manages the yandex_mdb_mongodb_cluster_change_freeze resource.
+        name: yandex_mdb_mongodb_cluster_change_freeze
+        title: yandex_mdb_mongodb_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2027-01-06T00:00:00Z",
+                  "reason": "New Year holidays",
+                  "resource_id": "${yandex_mdb_mongodb_cluster.example.id}",
+                  "start_at": "2026-12-30T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_mdb_mongodb_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_mdb_mongodb_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_mdb_mongodb_cluster_change_freeze.example c9q-resource-id:change-freeze-id
     yandex_mdb_mongodb_cluster_iam_binding:
         subCategory: Managed Service for MongoDB
         description: Manages the yandex_mdb_mongodb_cluster_iam_binding resource.
@@ -11613,7 +12087,9 @@ resources:
             deletion_protection: (Bool). Inhibits deletion of the user.
             id: (Read-Only) (String). The resource identifier.
             name: (Required)(String). The name of the user.
-            password: (String). The password of the user. Required for users with PASSWORD authentication and must be omitted for users with IAM authentication.
+            password: (String). The password of the user. Either password or password_wo is required for users with PASSWORD authentication and both must be omitted for users with IAM authentication.
+            password_wo: (String). The password of the user. This attribute is write-only and is not stored in state. Requires password_wo_version to trigger updates. Write-only arguments are supported in Terraform 1.11 and later. Must be omitted for users with IAM authentication.
+            password_wo_version: (Number). A version number for the write-only password. Increment this to trigger a password update.
             permission: '[Block]. Set of permissions granted to the user.'
             roles: (Set Of String). The roles of the user in this database. For more information see the official documentation.
             timeouts: '[Block].'
@@ -11688,7 +12164,13 @@ resources:
                 Defaults to "".
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             description: (String). Human-readable description.
+            hour: |-
+                (String). Hour in cron format. Valid values: 0-23, , ranges (8-18), steps (/2), lists (0,12).
+                Defaults to "". Support depends on the database engine.
             id: (String). Unique identifier for the [BackupRetentionPolicy].
+            minute: |-
+                (String). Minute in cron format. Valid values: 0-59, , ranges (0-30), steps (/5), lists (0,15,30,45).
+                Defaults to "". Support depends on the database engine.
             month: |-
                 (String). Month in cron format. Valid values: 1-12, , ranges (1-6), steps (/3), lists (1,6,12).
                 Defaults to "*".
@@ -12038,7 +12520,7 @@ resources:
                 Regenerate hosts after changing the assign_public_ip parameter.
             assign_public_ip: (Bool). Sets whether the host should get a public IP address. It can be changed on the fly only when name is set.
             authentication_plugin: '(String). Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH).'
-            backup_id: (Required)(String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
+            backup_id: (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups. Should not be used together with source_cluster_id.
             backup_priority: (Number). Host backup priority. Value is between 0 and 100, default is 0.
             backup_retain_period_days: (Number). The period in days during which backups are stored.
             backup_window_start: '[Block]. Time to start the daily backup, in the UTC.'
@@ -12089,14 +12571,15 @@ resources:
             replication_source_name: (String). Host replication source name points to host's name from which this host should replicate. When not set then host in HA group. It works only when name is set.
             resource_preset_id: (Required)(String). The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see the official documentation.
             resources: '[Block]. Resources allocated to hosts of the MySQL cluster.'
-            restore: '[Block]. The cluster will be created from the specified backup.'
+            restore: '[Block]. The cluster will be created from the specified backup or source cluster.'
             roles: '(List Of String). List user''s roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE,REFERENCES.'
             security_group_ids: (Set Of String). The list of security groups applied to resource or their components.
             sessions_sampling_interval: (Required)(Number). Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+            source_cluster_id: (String). ID of the source cluster to restore from. The latest backup suitable for time will be used for the restore. time is required. Should not be used together with backup_id.
             statements_sampling_interval: (Required)(Number). Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
             status: (Read-Only) (String). Status of the cluster.
             subnet_id: (String). The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
-            time: '(String). Timestamp of the moment to which the MySQL cluster should be restored. (Format: 2006-01-02T15:04:05 - UTC). When not set, current time is used.'
+            time: '(String). Timestamp of the moment to which the MySQL cluster should be restored. (Format: 2006-01-02T15:04:05 - UTC). Required when source_cluster_id is used.'
             timeouts: '[Block].'
             type: (Required)(String). Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
             update: (String).
@@ -12109,6 +12592,44 @@ resources:
             - |-
               # terraform import yandex_mdb_mysql_cluster.<resource Name> <resource Id>
               terraform import yandex_mdb_mysql_cluster.my_cluster ...
+    yandex_mdb_mysql_cluster_change_freeze:
+        subCategory: Managed Service for MySQL
+        description: Manages the yandex_mdb_mysql_cluster_change_freeze resource.
+        name: yandex_mdb_mysql_cluster_change_freeze
+        title: yandex_mdb_mysql_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2026-12-01T00:00:00Z",
+                  "reason": "Black Friday",
+                  "resource_id": "${yandex_mdb_mysql_cluster.example.id}",
+                  "start_at": "2026-11-26T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_mdb_mysql_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_mdb_mysql_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_mdb_mysql_cluster_change_freeze.example c9q-resource-id:change-freeze-id
     yandex_mdb_mysql_cluster_iam_binding:
         subCategory: Managed Service for MySQL
         description: Manages the yandex_mdb_mysql_cluster_iam_binding resource.
@@ -12196,7 +12717,7 @@ resources:
         argumentDocs:
             access: '[Block]. Access policy to the MySQL cluster.'
             assign_public_ip: (Bool). Assign a public IP address to the host.
-            backup_id: (Required)(String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
+            backup_id: (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups. Should not be used together with source_cluster_id.
             backup_retain_period_days: (Number). The period in days during which backups are stored.
             backup_window_start: '[Block]. Time to start the daily backup, in the UTC timezone.'
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
@@ -12232,12 +12753,13 @@ resources:
             replication_source_name: (String). Label (map key) of the host to use as replication source. Use this during cluster creation when FQDNs are not yet known.
             resource_preset_id: (Required)(String). ID of the resource preset that determines the number of CPU cores and memory size for the host.
             resources: '[Block]. Resources allocated to hosts of the MySQL cluster.'
-            restore: '[Block]. The cluster will be created from the specified backup.'
+            restore: '[Block]. The cluster will be created from the specified backup or source cluster.'
             security_group_ids: (Set Of String). The list of security groups applied to resource or their components.
             sessions_sampling_interval: (Required)(Number). Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+            source_cluster_id: (String). ID of the source cluster to restore from. The latest backup suitable for time will be used for the restore. time is required. Should not be used together with backup_id.
             statements_sampling_interval: (Required)(Number). Interval (in seconds) for pg_stat_statements sampling Acceptable values are 60 to 86400, inclusive.
             subnet_id: (String). ID of the subnet where the host is located.
-            time: '(String). Timestamp of the moment to which the MySQL cluster should be restored. (Format: 2006-01-02T15:04:05 - UTC). When not set, current time is used.'
+            time: '(String). Timestamp of the moment to which the MySQL cluster should be restored. (Format: 2006-01-02T15:04:05 - UTC). Required when source_cluster_id is used.'
             timeouts: '[Block].'
             type: (String). Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
@@ -12769,6 +13291,44 @@ resources:
             - |-
               # terraform import yandex_mdb_opensearch_cluster.<resource Name> <resource Id>
               terraform import yandex_mdb_opensearch_cluster.my_cluster ...
+    yandex_mdb_opensearch_cluster_change_freeze:
+        subCategory: Managed Service for OpenSearch
+        description: Manages the yandex_mdb_opensearch_cluster_change_freeze resource.
+        name: yandex_mdb_opensearch_cluster_change_freeze
+        title: yandex_mdb_opensearch_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2027-01-06T00:00:00Z",
+                  "reason": "New Year holidays",
+                  "resource_id": "${yandex_mdb_opensearch_cluster.example.id}",
+                  "start_at": "2026-12-30T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_mdb_opensearch_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_mdb_opensearch_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_mdb_opensearch_cluster_change_freeze.example c9q-resource-id:change-freeze-id
     yandex_mdb_opensearch_cluster_iam_binding:
         subCategory: Managed Service for OpenSearch
         description: Manages the yandex_mdb_opensearch_cluster_iam_binding resource.
@@ -12851,7 +13411,13 @@ resources:
                 Defaults to "".
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             description: (String). Human-readable description.
+            hour: |-
+                (String). Hour in cron format. Valid values: 0-23, , ranges (8-18), steps (/2), lists (0,12).
+                Defaults to "". Support depends on the database engine.
             id: (String). Unique identifier for the [BackupRetentionPolicy].
+            minute: |-
+                (String). Minute in cron format. Valid values: 0-59, , ranges (0-30), steps (/5), lists (0,15,30,45).
+                Defaults to "". Support depends on the database engine.
             month: |-
                 (String). Month in cron format. Valid values: 1-12, , ranges (1-6), steps (/3), lists (1,6,12).
                 Defaults to "*".
@@ -13111,7 +13677,7 @@ resources:
             catchup_timeout: '- The connection pooler setting. It determines the maximum allowed replication lag (in seconds). Pooler will reject connections to the replica with a lag above this threshold. Default value is 0, which disables this feature. Integer.'
             config: '[Block]. Configuration of the PostgreSQL cluster.'
             conn_limit: (Number). The maximum number of connections per user. (Default 50).
-            connection_manager: '[Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.'
+            connection_manager: '[Block]. Connection Manager integration configuration for the cluster. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.'
             connections_folder_id: (String). ID of the folder where connections for the cluster are created. Defaults to the cluster's folder if not specified.
             create: (String).
             created_at: (Read-Only) (String). The creation timestamp of the resource.
@@ -13130,7 +13696,7 @@ resources:
             disk_size_limit: (Required)(Number). The overall maximum for disk size that limit all autoscaling iterations. See the documentation for details.
             disk_type_id: (String). Type of the storage of PostgreSQL hosts.
             emergency_usage_threshold: (Number). Threshold of storage usage (in percent) that triggers immediate automatic scaling of the storage. Zero value means disabled threshold.
-            enabled: (Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+            enabled: '(Bool). Indicates whether Connection Manager integration is enabled for the cluster. Set to true to enable the integration. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.'
             environment: (Required)(String). Deployment environment of the PostgreSQL cluster.
             extension: '[Block]. Set of database extensions.'
             "false": (default) — the restore point refers to the first backup moment before [time].
@@ -13157,7 +13723,7 @@ resources:
             minutes: (Number). The minute at which backup will be started.
             name: (Required)(String). The name of PostgreSQL cluster.
             network_id: (Required)(String). The VPC Network ID of subnets which resource attached to.
-            owner: (Required)(String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+            owner: (Required)(String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
             password: (Required)(String). The password of the user.
             performance_diagnostics: '[Block]. Cluster performance diagnostics settings. YC Documentation.'
             permission: '[Block]. Set of permissions granted to the user.'
@@ -13196,7 +13762,7 @@ resources:
             unspecified: .
             update: (String).
             user: '[Block]. ~> Deprecated! To manage users, please switch to using a separate resource type yandex_mdb_postgresql_user.'
-            version: '(Required)(String). Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c).'
+            version: '(Required)(String). Version of the PostgreSQL cluster. (allowed versions are: 15, 15-1c, 16, 16-1c, 17, 17-1c, 18, 18-1c, 19, 19-1c).'
             wal_sender_timeout: '- The maximum time (in milliseconds) to wait for WAL replication. Terminate replication connections that are inactive for longer than this amount of time. Integer.'
             web_sql: (Bool). Allow access for SQL queries in the management console.
             yandex_query: (Bool). Allow access for YandexQuery.
@@ -13205,6 +13771,44 @@ resources:
             - |-
               # terraform import yandex_mdb_postgresql_cluster.<resource Name> <resource Id>
               terraform import yandex_mdb_postgresql_cluster.my_cluster ...
+    yandex_mdb_postgresql_cluster_change_freeze:
+        subCategory: Managed Service for PostgreSQL
+        description: Manages the yandex_mdb_postgresql_cluster_change_freeze resource.
+        name: yandex_mdb_postgresql_cluster_change_freeze
+        title: yandex_mdb_postgresql_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2026-12-01T00:00:00Z",
+                  "reason": "Black Friday",
+                  "resource_id": "${yandex_mdb_postgresql_cluster.example.id}",
+                  "start_at": "2026-11-26T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_mdb_postgresql_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_mdb_postgresql_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_mdb_postgresql_cluster_change_freeze.example c9q-resource-id:change-freeze-id
     yandex_mdb_postgresql_cluster_iam_binding:
         subCategory: Managed Service for PostgreSQL
         description: Manages the yandex_mdb_postgresql_cluster_iam_binding resource.
@@ -13282,7 +13886,7 @@ resources:
             backup_retain_period_days: (Number). The period in days during which backups are stored.
             backup_window_start: '[Block]. Time to start the daily backup, in the UTC timezone.'
             config: '[Block]. Configuration of the PostgreSQL cluster.'
-            connection_manager: '[Block]. Connection Manager integration settings. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.'
+            connection_manager: '[Block]. Connection Manager integration settings. If the block is omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.'
             connections_folder_id: (String). ID of the folder where connections for the cluster are created. Defaults to the cluster's folder if not specified.
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             data_lens: (Bool). Allow access for Yandex DataLens.
@@ -13297,7 +13901,7 @@ resources:
             disk_size_limit: (Required)(Number). The overall maximum for disk size (GB) that limits all autoscaling iterations. See the documentation for details.
             disk_type_id: (Required)(String). ID of the disk type that determines the disk performance characteristics.
             emergency_usage_threshold: (Number). Threshold of storage usage (in percent) that triggers immediate automatic scaling of the storage. Zero value means disabled threshold.
-            enabled: (Bool). Indicates whether Connection Manager integration is enabled. Set to true to enable the integration. If omitted, the API enables the integration by default for newly created clusters. Disabling the integration after the cluster is created is not supported.
+            enabled: '(Bool). Indicates whether Connection Manager integration is enabled. Set to true to enable the integration. If omitted, the API enables the integration by default for newly created clusters. Disabling the integration is not supported: enabled = false is rejected.'
             environment: (Required)(String). Deployment environment of the PostgreSQL cluster.
             "false": (default) — the restore point refers to the first backup moment before [time].
             folder_id: (String). The folder identifier that resource belongs to. If it is not provided, the default provider folder-id is used.
@@ -13328,7 +13932,7 @@ resources:
             security_group_ids: (Set Of String). The list of security groups applied to resource or their components.
             serverless: (Bool). Allow access for connection to managed databases from functions
             sessions_sampling_interval: (Required)(Number). Interval (in seconds) for pg_stat_activity sampling. Acceptable values are 1 to 86400, inclusive.
-            statements_sampling_interval: (Required)(Number). Interval (in seconds) for pg_stat_statements sampling. Acceptable values are 60 to 86400, inclusive.
+            statements_sampling_interval: (Required)(Number). Interval (in seconds) for pg_stat_statements sampling. Acceptable values are 1 to 86400, inclusive.
             subnet_id: (String). ID of the subnet where the host is located.
             time: '(String). Timestamp of the moment to which the PostgreSQL cluster should be restored. (Format: 2006-01-02T15:04:05 - UTC). When not set, current time is used.'
             time_inclusive: '(Bool). Flag that indicates whether a database should be restored to the first backup point available just after the timestamp specified in the [time] field instead of just before. Possible values:'
@@ -13420,7 +14024,7 @@ resources:
             lc_collate: (String). POSIX locale for string sorting order. Forbidden to change in an existing database.
             lc_type: (String). POSIX locale for character classification. Forbidden to change in an existing database.
             name: (Required)(String). The name of the PostgreSQL database.
-            owner: (Required)(String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+            owner: (Required)(String). Name of the user assigned as the owner of the database. Changing this value transfers ownership of the database to another user.
             read: (String).
             template_db: (String). Name of the template database.
             timeouts: '[Block].'
@@ -13602,7 +14206,13 @@ resources:
                 Defaults to "".
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             description: (String). Human-readable description.
+            hour: |-
+                (String). Hour in cron format. Valid values: 0-23, , ranges (8-18), steps (/2), lists (0,12).
+                Defaults to "". Support depends on the database engine.
             id: (String). Unique identifier for the [BackupRetentionPolicy].
+            minute: |-
+                (String). Minute in cron format. Valid values: 0-59, , ranges (0-30), steps (/5), lists (0,15,30,45).
+                Defaults to "". Support depends on the database engine.
             month: |-
                 (String). Month in cron format. Valid values: 1-12, , ranges (1-6), steps (/3), lists (1,6,12).
                 Defaults to "*".
@@ -13809,6 +14419,44 @@ resources:
             - |-
               # terraform import yandex_mdb_redis_cluster.<resource Name> <resource Id>
               terraform import yandex_mdb_redis_cluster.my_cluster ...
+    yandex_mdb_redis_cluster_change_freeze:
+        subCategory: Managed Service for ValKey
+        description: Manages the yandex_mdb_redis_cluster_change_freeze resource.
+        name: yandex_mdb_redis_cluster_change_freeze
+        title: yandex_mdb_redis_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2027-01-06T00:00:00Z",
+                  "reason": "New Year holidays",
+                  "resource_id": "${yandex_mdb_redis_cluster.example.id}",
+                  "start_at": "2026-12-30T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_mdb_redis_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_mdb_redis_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_mdb_redis_cluster_change_freeze.example c9q-resource-id:change-freeze-id
     yandex_mdb_redis_cluster_iam_binding:
         subCategory: Managed Service for ValKey
         description: Manages the yandex_mdb_redis_cluster_iam_binding resource.
@@ -14376,6 +15024,44 @@ resources:
             - |-
               # terraform import yandex_mdb_sharded_postgresql_cluster.<resource Name> <resource Id>
               terraform import yandex_mdb_sharded_postgresql_cluster.my_cluster ...
+    yandex_mdb_sharded_postgresql_cluster_change_freeze:
+        subCategory: Managed Service for SPQR
+        description: Manages the yandex_mdb_sharded_postgresql_cluster_change_freeze resource.
+        name: yandex_mdb_sharded_postgresql_cluster_change_freeze
+        title: yandex_mdb_sharded_postgresql_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2026-12-01T00:00:00Z",
+                  "reason": "Black Friday",
+                  "resource_id": "${yandex_mdb_sharded_postgresql_cluster.example.id}",
+                  "start_at": "2026-11-26T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_mdb_sharded_postgresql_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_mdb_sharded_postgresql_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_mdb_sharded_postgresql_cluster_change_freeze.example c9q-resource-id:change-freeze-id
     yandex_mdb_sharded_postgresql_cluster_iam_binding:
         subCategory: Managed Service for PostgreSQL
         description: Manages the yandex_mdb_sharded_postgresql_cluster_iam_binding resource.
@@ -14743,6 +15429,44 @@ resources:
             - |-
               # terraform import yandex_metastore_cluster.<resource Name> <resource Id>
               terraform import yandex_metastore_cluster.my_metastore_cluster <cluster-id>
+    yandex_metastore_cluster_change_freeze:
+        subCategory: Managed Service for Hive Metastore™
+        description: Manages the yandex_metastore_cluster_change_freeze resource.
+        name: yandex_metastore_cluster_change_freeze
+        title: yandex_metastore_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2027-01-06T00:00:00Z",
+                  "reason": "New Year holidays",
+                  "resource_id": "${yandex_metastore_cluster.example.id}",
+                  "start_at": "2026-12-30T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_metastore_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_metastore_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_metastore_cluster_change_freeze.example c9q-resource-id:change-freeze-id
     yandex_metastore_cluster_iam_binding:
         subCategory: Managed Service for Hive Metastore™
         description: Manages the yandex_metastore_cluster_iam_binding resource.
@@ -15083,14 +15807,18 @@ resources:
                 }
         argumentDocs:
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            created_at: (Read-Only) (String). The creation timestamp of the resource.
+            created_at: (Read-Only) (String). Creation timestamp.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            description: (Read-Only) (String). The resource description.
-            group_id: (String). ID of a Group.
-            id: (String).
+            description: (String). Description of the group.
+            group_id: |-
+                (String). ID of the Group resource to return.
+                To get the group ID, use a [GroupService.List] request.
+            id: |-
+                (String). ID of the Group resource to return.
+                To get the group ID, use a [GroupService.List] request.
             labels: (Map Of String). Resource labels as key:value pairs.
-            name: (String). The resource name.
-            organization_id: (String). Organization that the Group belongs to. If value is omitted, the default provider organization is used.
+            name: (Required)(String). Name of the group.
+            organization_id: (Required)(String). ID of the organization that the group belongs to.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             timeouts: '[Block].'
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
@@ -15238,6 +15966,7 @@ resources:
             created_at: (Read-Only) (String). Creation timestamp.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             description: (String). Description of the application. 0-256 characters long.
+            group_claim_value: (String). Source of the group value provided to the application.
             group_claims_settings: '[Block]. Settings of the group claims'
             group_distribution_type: (String). Represents current distribution type of the groups. I.e. which groups are visible for the application users.
             id: |-
@@ -15363,6 +16092,7 @@ resources:
             entity_id: (Required)(String). Service provider entity ID.
             format: (Required)(String). Format of the NameID.
             group_attribute_name: (String). Name of the SAML attribute that contains group information.
+            group_attribute_value: (String). Source of the group value provided to the application.
             group_claims_settings: '[Block]. Group claims settings for the SAML application.'
             group_distribution_type: (String). Distribution type for group claims.
             id: (String). ID of the SAML application to return.
@@ -15514,6 +16244,12 @@ resources:
             is_active: (Bool). Whether the user is active. Default is true.
             job_title: (String). User's job title.
             password: (Required)(String). The password string.
+            password_change_required: |-
+                (Bool). Whether the user must change their password on first login.
+                Applies only when [PasswordHash] credentials are provided.
+            password_created_at: |-
+                (Read-Only) (String). Timestamp when the user's current password was created.
+                For synchronized passwords, this is the time when the password was last set in the source directory.
             password_hash: '[Block]. Password hash. Credentials type. Exactly one of credentials type must be specified.'
             password_hash_type: (Required)(String). Type of the password hash.
             password_spec: '[Block]. Password specification. Credentials type. Exactly one of credentials type must be specified.'
@@ -15955,14 +16691,18 @@ resources:
                   "organization_id": "my_organization_id"
                 }
         argumentDocs:
-            cloud_id: (String). ID of the cloud.
+            cloud_id: |-
+                (String). ID of the Cloud resource to return.
+                To get the cloud ID, use a [CloudService.List] request.
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            created_at: (Read-Only) (String). The creation timestamp of the resource.
+            created_at: (Read-Only) (String). Creation timestamp.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            description: (String). The resource description.
-            id: (String).
+            description: (String). Description of the cloud. 0-256 characters long.
+            id: |-
+                (String). ID of the Cloud resource to return.
+                To get the cloud ID, use a [CloudService.List] request.
             labels: (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
-            name: (String). The resource name.
+            name: (Required)(String). Name of the cloud. 3-63 characters long.
             organization_id: (String). ID of the organization that the cloud belongs to.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             timeouts: '[Block].'
@@ -16035,17 +16775,23 @@ resources:
                   "cloud_id": "my_cloud_id"
                 }
         argumentDocs:
-            cloud_id: (String). Cloud that the resource belongs to. If value is omitted, the default provider cloud is used.
+            cloud_id: (String). ID of the cloud that the folder belongs to.
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            created_at: (Read-Only) (String). The creation timestamp of the resource.
+            created_at: (Read-Only) (String). Creation timestamp.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            description: (Read-Only) (String). The resource description.
-            folder_id: (String). ID of the folder.
-            id: (String).
-            labels: (Map Of String). A set of key/value label pairs which assigned to resource.
-            name: (String). The resource name.
+            description: (String). Description of the folder. 0-256 characters long.
+            folder_id: |-
+                (String). ID of the Folder resource to return.
+                To get the folder ID, use a [FolderService.List] request.
+            id: |-
+                (String). ID of the Folder resource to return.
+                To get the folder ID, use a [FolderService.List] request.
+            labels: (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
+            name: |-
+                (Required)(String). Name of the folder.
+                The name is unique within the cloud. 3-63 characters long.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
-            status: (Read-Only) (String). Current status of the folder.
+            status: (Read-Only) (String). Status of the folder.
             timeouts: '[Block].'
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
         importStatements:
@@ -16350,17 +17096,17 @@ resources:
         name: yandex_serverless_eventrouter_bus
         title: yandex_serverless_eventrouter_bus
         argumentDocs:
-            bus_id: (String). ID of the bus
-            cloud_id: (Read-Only) (String). ID of the cloud that the bus resides in
+            bus_id: (String). ID of the bus to get.
+            cloud_id: (String). ID of the cloud that the bus resides in.
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
-            created_at: (Read-Only) (String). Creation timestamp
+            created_at: (Read-Only) (String). Creation timestamp.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
-            deletion_protection: (Read-Only) (Bool). Deletion protection
-            description: (Read-Only) (String). Description of the bus
-            folder_id: (Read-Only) (String). ID of the folder that the bus belongs to
-            id: (String).
-            labels: (Read-Only) (Map Of String). Bus labels
-            name: (String). Name of the bus
+            deletion_protection: (Bool). Deletion protection.
+            description: (String). Description of the bus.
+            folder_id: (String). ID of the folder that the bus belongs to.
+            id: (String). ID of the bus to get.
+            labels: (Map Of String). Resource labels as key:value pairs.
+            name: (String). Name of the bus.
             read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             status: (Read-Only) (String). Status of the bus.
             timeouts: '[Block].'
@@ -16467,6 +17213,9 @@ resources:
             batch_settings: '[Block]. Batch settings for accumulating registry events.'
             billing_account_id: (Required)(String). ID of the billing account to monitor.
             billing_budget: '[Block]. Billing budget source: fires when a budget threshold is reached.'
+            bot_display_name: (String). Display name of the bot the token belongs to. output only.
+            bot_id: (String). ID of the bot the token belongs to. output only.
+            bot_login: (String). Login of the bot the token belongs to. output only.
             bot_token: |-
                 (String). input only, always empty in output.
                 Required on Create; on Update, changing it re-registers the webhook.
@@ -16528,6 +17277,10 @@ resources:
             message_attributes: (Map Of String). Constant message attributes attached to every message written to the queue.
             mqtt_topic: (String). MQTT topic whose messages activate the trigger.
             name: (Required)(String). Name of the trigger.
+            oauth_token: |-
+                (String). OAuth token of the Yandex Messenger bot.
+                input only, always empty in output.
+                Required on Create; on Update, changing it re-registers the webhook.
             object_storage: '[Block]. Object Storage source: fires on object events in a bucket.'
             path: (Required)(String). WebSocket connection path on the gateway to broadcast to.
             payload: (String). Payload passed to the invoked target on each firing.
@@ -16559,6 +17312,7 @@ resources:
             update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             visibility_timeout: (String). Queue visibility timeout override.
             workflow_id: (Required)(String). ID of the workflow to start.
+            yandex_messenger: '[Block]. Yandex Messenger source: fires on Yandex Messenger bot updates.'
             yds: '[Block]. YDS source: fires on records in a Yandex Data Streams stream.'
             ymq: '[Block]. YMQ source: fires on messages in a Yandex Message Queue.'
         importStatements: []
@@ -16880,6 +17634,7 @@ resources:
                       "executor": {
                         "max_size": 2,
                         "min_size": 1,
+                        "preemptible": true,
                         "resource_preset_id": "c4-m16"
                       }
                     },
@@ -16939,6 +17694,7 @@ resources:
             name: (Required)(String). Name of the cluster. The name is unique within the folder.
             network: '[Block]. Network configuration.'
             pip_packages: (Set Of String). Python packages that need to be installed using pip (in pip requirement format).
+            preemptible: (Bool). Whether executor nodes use preemptible (interruptible) compute instances. Defaults to false. For more information, see Preemptible Virtual Machines.
             resource_pools: '[Block]. Computational resources.'
             resource_preset_id: (Required)(String). Resource preset ID for the driver pool.
             security_group_ids: (Set Of String). Network security groups.
@@ -16954,6 +17710,44 @@ resources:
             - |-
               # terraform import yandex_spark_cluster.<resource Name> <resource Id>
               terraform import yandex_spark_cluster.my_spark_cluster ...
+    yandex_spark_cluster_change_freeze:
+        subCategory: Managed Spark
+        description: Manages the yandex_spark_cluster_change_freeze resource.
+        name: yandex_spark_cluster_change_freeze
+        title: yandex_spark_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2026-12-01T00:00:00Z",
+                  "reason": "Black Friday",
+                  "resource_id": "${yandex_spark_cluster.example.id}",
+                  "start_at": "2026-11-26T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_spark_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_spark_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_spark_cluster_change_freeze.example c9q-resource-id:change-freeze-id
     yandex_spark_cluster_iam_binding:
         subCategory: Managed Spark
         description: Manages the yandex_spark_cluster_iam_binding resource.
@@ -17696,6 +18490,117 @@ resources:
             - |-
               # terraform import yandex_sws_advanced_rate_limiter_profile.<resource Name> <resource Id>
               terraform import yandex_sws_advanced_rate_limiter_profile.demo-profile ...
+    yandex_sws_domain:
+        subCategory: Smart Web Security
+        description: Manages the yandex_sws_domain resource.
+        name: yandex_sws_domain
+        title: yandex_sws_domain
+        argumentDocs:
+            all_requests_per_second: |-
+                (Number). Rate limit for all requests.
+                Defaults:
+            certificate_id: (String). Certificate ID in the Certificate Manager.
+            connection: '[Block]. Session affinity based on source IP address.'
+            cookie: '[Block]. Session affinity based on a cookie.'
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            description: (String). Domain description.
+            enable_http1: (Bool). Enables HTTP/1.0 and HTTP/1.1 support and disables HTTP/2.
+            enabled: (Bool). Enable http (plaintext) listener.
+            header: '[Block]. Session affinity based on an HTTP header.'
+            header_name: (String). Header name.
+            http_backend: '[Block]. Backend settings.'
+            http_listener: '[Block]. Optional plaintext listener settings.'
+            idle_timeout: (String). Specifies the idle timeout for the route. If not specified, there is no per-route idle timeout.
+            ip_address: (String). IPv4 address.
+            load_balancer_id: (Required)(String). ID of the Load balancer that the domain belongs to.
+            name: (String). Cookie name.
+            path: (String). Optional cookie path.
+            port: (Number). Target port.
+            rate_limit: '[Block]. Optional rate limit settings.'
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            redirect_to_https: |-
+                (Bool). Automatically redirect from HTTP to HTTPS.
+                If TlsListener's port is 443 or not set, redirect URL will be "https://" and "https://:" in other case.
+            requests_per_ip_per_second: |-
+                (Number). Rate limit for individual IP addresses.
+                Defaults:
+            security_profile_id: (String). Security Profile ID of SmartWebSecurity service.
+            server_name: |-
+                (Required)(String). Server name or wildcard to be matched against SNI in a TLS connection and authority(host) header.
+                Wildcards are in the form of ".s.o.m.e".
+                Allowed: "example.com", ".example.com".
+                Not allowed: "..example.com", "*-sub.example.com".
+            session_affinity: '[Block]. Session affinity.'
+            sni: |-
+                (String). SNI string for TLS connections.
+                Applicable only if use_tls enabled.
+            solid_waf_profile_id: (String). ID of the Solid WAF profile.
+            solid_waf_settings: '[Block]. Optional Solid WAF settings.'
+            source_ip: (Bool). IP address.
+            target: '[Block]. List of targets.'
+            timeout: (String). Backend timeout. If not set, default is 300 seconds.
+            timeouts: '[Block].'
+            tls_listener: '[Block]. Optional TLS listener settings.'
+            trusted_ca_bytes: |-
+                (String). Trusted certificate authority certificates bundle (PEM text).
+                Applicable only if use_tls enabled.
+            ttl: (String). If not set, session cookie will be used (not persisted between browser restarts).
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            use_http2: |-
+                (Bool). Enables HTTP2 for upstream requests.
+                If not set, HTTP 1.1 will be used by default.
+            use_tls: (Bool). Enable TLS for upstream requests.
+            web_app_id: (String). ID of the Solid WAF web app.
+        importStatements: []
+    yandex_sws_load_balancer:
+        subCategory: Smart Web Security
+        description: Manages the yandex_sws_load_balancer resource.
+        name: yandex_sws_load_balancer
+        title: yandex_sws_load_balancer
+        argumentDocs:
+            append: (String). Append string to the header value.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). Creation time.
+            ddos_protection_provider: '(Read-Only) (String). L3-L4 DDoS protection provider. Currently supported: "" or "qrator".'
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            deletion_protection: |-
+                (Bool). Forbids Delete() calls.
+                NOTE: Deletion in status CREATING still allow even if deletion_protection is set.
+            description: (String). Description of the load balancer.
+            disable: (Bool). Do not send logs to Cloud Logging log group.
+            discard_percent: '(Number). Percent of logs to be discarded: 0 - keep all, 100 or unset - discard all.'
+            discard_rule: '[Block]. Ordered list of rules, first matching rule applies.'
+            folder_id: (String). ID of the folder that the load balancer belongs to.
+            http_code_intervals: (List Of String). Groups of HTTP codes like 4xx that should be discarded.
+            http_codes: (List Of Number). HTTP codes that should be discarded.
+            id: (String). ID of the load balancer to return.
+            ip_address: (Read-Only) (String). IP address of resulting balancer.
+            labels: (Map Of String). Resource labels as key:value pairs.
+            load_balancer_id: (String). ID of the load balancer to return.
+            log_group_id: |-
+                (Read-Only) (String). Cloud logging log group ID.
+                If empty string was passed to log options, this field will contain ID of default log group.
+                If logs are disabled, this field will contain empty string.
+            log_options: '[Block]. Cloud logging settings.'
+            modify_request_headers: '[Block]. Apply the following modifications to the request headers.'
+            modify_response_headers: '[Block]. Apply the following modifications to the response headers.'
+            name: (Required)(String). Name of the load balancer.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            region_id: (Required)(String). "ru-central1", "kz1", etc.
+            remove: (Bool). Remove the header.
+            rename: (String). New name for a header.
+            replace: (String). New value for a header.
+            resource_units: |-
+                (Number). Number of initially allocated resource units.
+                Zero means the minimum configured for the service installation.
+            route_options: '[Block]. Options that apply to all domains.'
+            service_account_id: (String). Service account for access to certificate, securityProfile and logGroup.
+            status: (Read-Only) (String). Status of the load balancer.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). Last time when the load balancer was modified.
+        importStatements: []
     yandex_sws_match_list:
         subCategory: Smart Web Security
         description: Manages the yandex_sws_match_list resource.
@@ -18046,6 +18951,153 @@ resources:
             - |-
               # terraform import yandex_sws_security_profile.<resource Name> <resource Id>
               terraform import yandex_sws_security_profile.demo-profile-simple ...
+    yandex_sws_security_profile_advanced_rate_limiter_profile_attachment:
+        subCategory: Unknown
+        description: Manages the yandex_sws_security_profile_advanced_rate_limiter_profile_attachment resource.
+        name: yandex_sws_security_profile_advanced_rate_limiter_profile_attachment
+        title: yandex_sws_security_profile_advanced_rate_limiter_profile_attachment
+        examples:
+            - name: attachment
+              manifest: |-
+                {
+                  "advanced_rate_limiter_profile_id": "${yandex_sws_advanced_rate_limiter_profile.arl.id}",
+                  "security_profile_id": "${yandex_sws_security_profile.security_profile.id}"
+                }
+              references:
+                advanced_rate_limiter_profile_id: yandex_sws_advanced_rate_limiter_profile.arl.id
+                security_profile_id: yandex_sws_security_profile.security_profile.id
+              dependencies:
+                yandex_sws_advanced_rate_limiter_profile.arl: |-
+                    {
+                      "advanced_rate_limiter_rule": [
+                        {
+                          "dry_run": true,
+                          "name": "example-rule",
+                          "priority": 1,
+                          "static_quota": [
+                            {
+                              "action": "DENY",
+                              "limit": 1000,
+                              "period": 60
+                            }
+                          ]
+                        }
+                      ],
+                      "name": "example-arl-profile"
+                    }
+                yandex_sws_security_profile.security_profile: |-
+                    {
+                      "default_action": "ALLOW",
+                      "disallow_data_processing": false,
+                      "name": "example-security-profile"
+                    }
+        argumentDocs:
+            advanced_rate_limiter_profile_id: (Required)(String). ID of the Advanced Rate Limiter profile.
+            create: (String).
+            delete: (String).
+            id: (String).
+            read: (String).
+            security_profile_id: (Required)(String). ID of the Smart Web Security profile.
+            timeouts: '[Block].'
+        importStatements:
+            - |-
+              #!/bin/bash
+
+              terraform import yandex_sws_security_profile_advanced_rate_limiter_profile_attachment.attachment '<security_profile_id>/<advanced_rate_limiter_profile_id>'
+    yandex_sws_security_profile_waf_profile_attachment:
+        subCategory: Unknown
+        description: Manages the yandex_sws_security_profile_waf_profile_attachment resource.
+        name: yandex_sws_security_profile_waf_profile_attachment
+        title: yandex_sws_security_profile_waf_profile_attachment
+        examples:
+            - name: attachment
+              manifest: |-
+                {
+                  "security_profile_id": "${yandex_sws_security_profile.security_profile.id}",
+                  "security_rule_name": "waf",
+                  "waf_profile_id": "${yandex_sws_waf_profile.waf.id}"
+                }
+              references:
+                security_profile_id: yandex_sws_security_profile.security_profile.id
+                waf_profile_id: yandex_sws_waf_profile.waf.id
+              dependencies:
+                yandex_sws_security_profile.security_profile: |-
+                    {
+                      "default_action": "ALLOW",
+                      "disallow_data_processing": false,
+                      "name": "example-security-profile",
+                      "security_rule": [
+                        {
+                          "name": "waf",
+                          "priority": 1,
+                          "waf": [
+                            {
+                              "mode": "FULL",
+                              "waf_profile_id": "${yandex_sws_waf_profile.waf.id}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                yandex_sws_waf_profile.waf: |-
+                    {
+                      "analyze_request_body": [
+                        {
+                          "is_enabled": true,
+                          "size_limit": 8,
+                          "size_limit_action": "IGNORE"
+                        }
+                      ],
+                      "core_rule_set": [
+                        {
+                          "inbound_anomaly_score": 2,
+                          "paranoia_level": 4,
+                          "rule_set": [
+                            {
+                              "name": "OWASP Core Ruleset",
+                              "type": "CORE",
+                              "version": "4.0.0"
+                            }
+                          ]
+                        }
+                      ],
+                      "name": "example-waf-profile",
+                      "rule_set": [
+                        {
+                          "action": "DENY",
+                          "core_rule_set": [
+                            {
+                              "inbound_anomaly_score": 2,
+                              "paranoia_level": 4,
+                              "rule_set": [
+                                {
+                                  "id": "OWASP_CRS_4_0_0",
+                                  "name": "OWASP Core Ruleset",
+                                  "type": "CORE",
+                                  "version": "4.0.0"
+                                }
+                              ]
+                            }
+                          ],
+                          "is_enabled": true,
+                          "priority": 1
+                        }
+                      ]
+                    }
+        argumentDocs:
+            create: (String).
+            delete: (String).
+            id: (String).
+            read: (String).
+            security_profile_id: (Required)(String). ID of the Smart Web Security profile.
+            security_rule_name: (Required)(String). Name of the WAF security rule managed by yandex_sws_security_profile.
+            timeouts: '[Block].'
+            waf_profile_id: (Required)(String). ID of the WAF profile.
+        importStatements:
+            - |-
+              #!/bin/bash
+
+              terraform import yandex_sws_security_profile_waf_profile_attachment.attachment '<security_profile_id>/<waf_profile_id>/<security_rule_name>'
     yandex_sws_waf_profile:
         subCategory: Smart Web Security
         description: Manages the yandex_sws_waf_profile resource.
@@ -18426,6 +19478,9 @@ resources:
                   "coordinator": {
                     "resource_preset_id": "c8-m32"
                   },
+                  "event_listeners": {
+                    "data_catalog": {}
+                  },
                   "maintenance_window": {
                     "day": "MON",
                     "hour": 15,
@@ -18475,11 +19530,13 @@ resources:
             count: (Required)(Number). Specifies the number of worker instances.
             create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             created_at: (Read-Only) (String). The creation timestamp of the resource.
+            data_catalog: '[Block]. Enables the Data Catalog event listener. Set to an empty object to enable it.'
             day: (String). Day of week for maintenance window. One of MON, TUE, WED, THU, FRI, SAT, SUN.
             delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             deletion_protection: (Bool). The true value means that resource is protected from accidental deletion.
             description: (String). The resource description.
             enabled: (Required)(Bool). Enables delivery of logs generated by the Trino components to Cloud Logging.
+            event_listeners: '[Block]. Event listeners configuration.'
             exchange_manager: '[Block]. Configuration for exchange manager.'
             fixed_scale: '[Block]. A fixed scaling policy that specifies a fixed number of worker instances.'
             folder_id: (String). The folder identifier that resource belongs to. If it is not provided, the default provider folder-id is used.
@@ -18515,6 +19572,44 @@ resources:
             - |-
               # terraform import yandex_trino_cluster.<resource Name> <resource Id>
               terraform import yandex_tirno_cluster.my_trino_cluster c9qk5**********h6a91
+    yandex_trino_cluster_change_freeze:
+        subCategory: Managed Service for Trino
+        description: Manages the yandex_trino_cluster_change_freeze resource.
+        name: yandex_trino_cluster_change_freeze
+        title: yandex_trino_cluster_change_freeze
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_at": "2027-01-06T00:00:00Z",
+                  "reason": "New Year holidays",
+                  "resource_id": "${yandex_trino_cluster.example.id}",
+                  "start_at": "2026-12-30T00:00:00Z"
+                }
+              references:
+                resource_id: yandex_trino_cluster.example.id
+        argumentDocs:
+            change_freeze_id: (String). ID of the change freeze to retrieve.
+            create: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (Read-Only) (String). The creation time of the change freeze.
+            created_by: (Read-Only) (String). The user who created the change freeze.
+            delete: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            duration_seconds: (Read-Only) (Number). Duration of the change freeze in seconds.
+            end_at: (Required)(String). The time when the change freeze is scheduled to end.
+            id: (String). ID of the change freeze to retrieve.
+            read: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            reason: (String). Reason for the change freeze.
+            resource_id: (Required)(String). ID of the resource to create a change freeze for.
+            start_at: (Required)(String). The time when the change freeze is scheduled to start.
+            status: (Read-Only) (String). Status of the change freeze.
+            timeouts: '[Block].'
+            update: (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            updated_at: (Read-Only) (String). The time when the change freeze was last updated.
+            updated_by: (Read-Only) (String). The user who last updated the change freeze.
+        importStatements:
+            - |-
+              # terraform import yandex_trino_cluster_change_freeze.<resource Name> <resource_id>:<change_freeze_id>
+              terraform import yandex_trino_cluster_change_freeze.example c9q-resource-id:change-freeze-id
     yandex_trino_cluster_iam_binding:
         subCategory: Managed Service for Trino
         description: Manages the yandex_trino_cluster_iam_binding resource.

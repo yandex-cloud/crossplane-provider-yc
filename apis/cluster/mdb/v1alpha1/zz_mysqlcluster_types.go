@@ -485,8 +485,8 @@ type MySQLClusterInitParameters struct {
 	// Resources allocated to hosts of the MySQL cluster.
 	Resources []MySQLClusterResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// [Block]. The cluster will be created from the specified backup.
-	// The cluster will be created from the specified backup.
+	// [Block]. The cluster will be created from the specified backup or source cluster.
+	// The cluster will be created from the specified backup or source cluster.
 	Restore []MySQLClusterRestoreInitParameters `json:"restore,omitempty" tf:"restore,omitempty"`
 
 	// (Set Of String). The list of security groups applied to resource or their components.
@@ -658,8 +658,8 @@ type MySQLClusterObservation struct {
 	// Resources allocated to hosts of the MySQL cluster.
 	Resources []MySQLClusterResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// [Block]. The cluster will be created from the specified backup.
-	// The cluster will be created from the specified backup.
+	// [Block]. The cluster will be created from the specified backup or source cluster.
+	// The cluster will be created from the specified backup or source cluster.
 	Restore []MySQLClusterRestoreObservation `json:"restore,omitempty" tf:"restore,omitempty"`
 
 	// (Set Of String). The list of security groups applied to resource or their components.
@@ -805,8 +805,8 @@ type MySQLClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Resources []MySQLClusterResourcesParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// [Block]. The cluster will be created from the specified backup.
-	// The cluster will be created from the specified backup.
+	// [Block]. The cluster will be created from the specified backup or source cluster.
+	// The cluster will be created from the specified backup or source cluster.
 	// +kubebuilder:validation:Optional
 	Restore []MySQLClusterRestoreParameters `json:"restore,omitempty" tf:"restore,omitempty"`
 
@@ -934,35 +934,48 @@ type MySQLClusterResourcesParameters struct {
 
 type MySQLClusterRestoreInitParameters struct {
 
-	// (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
-	// Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups).
+	// (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups. Should not be used together with source_cluster_id.
+	// Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups). Should not be used together with `source_cluster_id`.
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
 
-	// 01-02T15:04:05 - UTC). When not set, current time is used.
-	// Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). When not set, current time is used.
+	// (String). ID of the source cluster to restore from. The latest backup suitable for time will be used for the restore. time is required. Should not be used together with backup_id.
+	// ID of the source cluster to restore from. The latest backup suitable for `time` will be used for the restore. `time` is required. Should not be used together with `backup_id`.
+	SourceClusterID *string `json:"sourceClusterId,omitempty" tf:"source_cluster_id,omitempty"`
+
+	// 01-02T15:04:05 - UTC). Required when source_cluster_id is used.
+	// Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). Required when `source_cluster_id` is used.
 	Time *string `json:"time,omitempty" tf:"time,omitempty"`
 }
 
 type MySQLClusterRestoreObservation struct {
 
-	// (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
-	// Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups).
+	// (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups. Should not be used together with source_cluster_id.
+	// Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups). Should not be used together with `source_cluster_id`.
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
 
-	// 01-02T15:04:05 - UTC). When not set, current time is used.
-	// Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). When not set, current time is used.
+	// (String). ID of the source cluster to restore from. The latest backup suitable for time will be used for the restore. time is required. Should not be used together with backup_id.
+	// ID of the source cluster to restore from. The latest backup suitable for `time` will be used for the restore. `time` is required. Should not be used together with `backup_id`.
+	SourceClusterID *string `json:"sourceClusterId,omitempty" tf:"source_cluster_id,omitempty"`
+
+	// 01-02T15:04:05 - UTC). Required when source_cluster_id is used.
+	// Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). Required when `source_cluster_id` is used.
 	Time *string `json:"time,omitempty" tf:"time,omitempty"`
 }
 
 type MySQLClusterRestoreParameters struct {
 
-	// (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
-	// Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups).
+	// (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups. Should not be used together with source_cluster_id.
+	// Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups). Should not be used together with `source_cluster_id`.
 	// +kubebuilder:validation:Optional
-	BackupID *string `json:"backupId" tf:"backup_id,omitempty"`
+	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
 
-	// 01-02T15:04:05 - UTC). When not set, current time is used.
-	// Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). When not set, current time is used.
+	// (String). ID of the source cluster to restore from. The latest backup suitable for time will be used for the restore. time is required. Should not be used together with backup_id.
+	// ID of the source cluster to restore from. The latest backup suitable for `time` will be used for the restore. `time` is required. Should not be used together with `backup_id`.
+	// +kubebuilder:validation:Optional
+	SourceClusterID *string `json:"sourceClusterId,omitempty" tf:"source_cluster_id,omitempty"`
+
+	// 01-02T15:04:05 - UTC). Required when source_cluster_id is used.
+	// Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). Required when `source_cluster_id` is used.
 	// +kubebuilder:validation:Optional
 	Time *string `json:"time,omitempty" tf:"time,omitempty"`
 }

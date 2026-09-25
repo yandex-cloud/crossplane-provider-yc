@@ -30,12 +30,14 @@ import (
 
 type RepositoryInitParameters struct {
 
-	// (String). A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+	// (String). Name of the repository.
+	// The name is unique within the registry.
 	// Name of the repository.
 	// The name is unique within the registry.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). The ID of a specific repository.
+	// (String). ID of the Repository resource to return.
+	// To get the repository ID use a [RepositoryService.List] request.
 	// ID of the Repository resource to return.
 	// To get the repository ID use a [RepositoryService.List] request.
 	RepositoryID *string `json:"repositoryId,omitempty" tf:"repository_id,omitempty"`
@@ -43,15 +45,18 @@ type RepositoryInitParameters struct {
 
 type RepositoryObservation struct {
 
-	// (String).
+	// (String). ID of the Repository resource to return.
+	// To get the repository ID use a [RepositoryService.List] request.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String). A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+	// (String). Name of the repository.
+	// The name is unique within the registry.
 	// Name of the repository.
 	// The name is unique within the registry.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). The ID of a specific repository.
+	// (String). ID of the Repository resource to return.
+	// To get the repository ID use a [RepositoryService.List] request.
 	// ID of the Repository resource to return.
 	// To get the repository ID use a [RepositoryService.List] request.
 	RepositoryID *string `json:"repositoryId,omitempty" tf:"repository_id,omitempty"`
@@ -59,13 +64,15 @@ type RepositoryObservation struct {
 
 type RepositoryParameters struct {
 
-	// (String). A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+	// (String). Name of the repository.
+	// The name is unique within the registry.
 	// Name of the repository.
 	// The name is unique within the registry.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). The ID of a specific repository.
+	// (String). ID of the Repository resource to return.
+	// To get the repository ID use a [RepositoryService.List] request.
 	// ID of the Repository resource to return.
 	// To get the repository ID use a [RepositoryService.List] request.
 	// +kubebuilder:validation:Optional

@@ -12,7 +12,8 @@ require (
 	github.com/hashicorp/terraform-plugin-go v0.28.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.37.0
 	github.com/pkg/errors v0.9.1
-	github.com/yandex-cloud/terraform-provider-yandex v0.222.0
+	github.com/yandex-cloud/terraform-provider-yandex v0.229.0
+	google.golang.org/grpc v1.82.1
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/api v0.36.4
 	k8s.io/apiextensions-apiserver v0.36.4
@@ -153,50 +154,61 @@ require (
 	github.com/wI2L/jsondiff v0.7.1 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	github.com/xhit/go-str2duration/v2 v2.1.0 // indirect
-	github.com/yandex-cloud/go-genproto v0.112.0 // indirect
-	github.com/yandex-cloud/go-sdk v0.33.0 // indirect
-	github.com/yandex-cloud/go-sdk/services/airflow v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/certificatemanager v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/clouddesktop v0.0.72 // indirect
-	github.com/yandex-cloud/go-sdk/services/cloudregistry v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/compute v1.0.94 // indirect
-	github.com/yandex-cloud/go-sdk/services/connectionmanager v0.0.85 // indirect
-	github.com/yandex-cloud/go-sdk/services/containerregistry v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/datacatalog v0.0.45 // indirect
-	github.com/yandex-cloud/go-sdk/services/dataproc v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/datasphere v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/datatransfer v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/dns v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/k8s v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/kms v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/loadbalancer v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/lockbox v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/logging v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/mdb/clickhouse v0.0.79 // indirect
-	github.com/yandex-cloud/go-sdk/services/mdb/greenplum v0.0.79 // indirect
-	github.com/yandex-cloud/go-sdk/services/mdb/kafka v0.0.79 // indirect
-	github.com/yandex-cloud/go-sdk/services/mdb/mongodb v0.0.79 // indirect
-	github.com/yandex-cloud/go-sdk/services/mdb/mysql v0.0.79 // indirect
-	github.com/yandex-cloud/go-sdk/services/mdb/opensearch v0.0.79 // indirect
-	github.com/yandex-cloud/go-sdk/services/mdb/postgresql v0.0.79 // indirect
-	github.com/yandex-cloud/go-sdk/services/mdb/redis v0.0.79 // indirect
-	github.com/yandex-cloud/go-sdk/services/mdb/spqr v0.0.79 // indirect
-	github.com/yandex-cloud/go-sdk/services/metastore v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/organizationmanager v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/resourcemanager v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/serverless/apigateway v0.0.80 // indirect
-	github.com/yandex-cloud/go-sdk/services/serverless/containers v0.0.78 // indirect
-	github.com/yandex-cloud/go-sdk/services/serverless/eventrouter v0.0.80 // indirect
-	github.com/yandex-cloud/go-sdk/services/serverless/functions v0.0.80 // indirect
-	github.com/yandex-cloud/go-sdk/services/serverless/triggers v0.0.80 // indirect
-	github.com/yandex-cloud/go-sdk/services/serverless/workflows v0.0.80 // indirect
-	github.com/yandex-cloud/go-sdk/services/smartcaptcha v0.0.88 // indirect
-	github.com/yandex-cloud/go-sdk/services/smartwebsecurity v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/spark v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/trino v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/ydb v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/services/ytsaurus v0.0.89 // indirect
-	github.com/yandex-cloud/go-sdk/v2 v2.159.0 // indirect
+	github.com/yandex-cloud/go-genproto v0.122.0 // indirect
+	github.com/yandex-cloud/go-sdk/services/airflow v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/apploadbalancer v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/audittrails v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/backup v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/billing v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/cdn v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/certificatemanager v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/clouddesktop v0.0.81 // indirect
+	github.com/yandex-cloud/go-sdk/services/cloudregistry v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/cloudrouter v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/compute v1.0.103 // indirect
+	github.com/yandex-cloud/go-sdk/services/connectionmanager v0.0.94 // indirect
+	github.com/yandex-cloud/go-sdk/services/containerregistry v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/datacatalog v0.0.54 // indirect
+	github.com/yandex-cloud/go-sdk/services/dataproc v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/datasphere v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/datatransfer v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/dns v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/gitlab v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/iot v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/k8s v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/k8s/marketplace v0.0.88 // indirect
+	github.com/yandex-cloud/go-sdk/services/kms v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/loadbalancer v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/lockbox v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/logging v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/mdb/clickhouse v0.0.88 // indirect
+	github.com/yandex-cloud/go-sdk/services/mdb/greenplum v0.0.88 // indirect
+	github.com/yandex-cloud/go-sdk/services/mdb/kafka v0.0.88 // indirect
+	github.com/yandex-cloud/go-sdk/services/mdb/mongodb v0.0.88 // indirect
+	github.com/yandex-cloud/go-sdk/services/mdb/mysql v0.0.88 // indirect
+	github.com/yandex-cloud/go-sdk/services/mdb/opensearch v0.0.88 // indirect
+	github.com/yandex-cloud/go-sdk/services/mdb/postgresql v0.0.88 // indirect
+	github.com/yandex-cloud/go-sdk/services/mdb/redis v0.0.88 // indirect
+	github.com/yandex-cloud/go-sdk/services/mdb/spqr v0.0.88 // indirect
+	github.com/yandex-cloud/go-sdk/services/metastore v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/monitoring v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/organizationmanager v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/resourcemanager v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/serverless/apigateway v0.0.89 // indirect
+	github.com/yandex-cloud/go-sdk/services/serverless/containers v0.0.87 // indirect
+	github.com/yandex-cloud/go-sdk/services/serverless/eventrouter v0.0.89 // indirect
+	github.com/yandex-cloud/go-sdk/services/serverless/functions v0.0.89 // indirect
+	github.com/yandex-cloud/go-sdk/services/serverless/triggers v0.0.89 // indirect
+	github.com/yandex-cloud/go-sdk/services/serverless/workflows v0.0.89 // indirect
+	github.com/yandex-cloud/go-sdk/services/smartcaptcha v0.0.97 // indirect
+	github.com/yandex-cloud/go-sdk/services/smartwebsecurity v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/spark v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/storage v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/trino v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/vpc v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/ydb v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/services/ytsaurus v0.0.98 // indirect
+	github.com/yandex-cloud/go-sdk/v2 v2.177.0 // indirect
 	github.com/yargevad/filepathx v1.0.0 // indirect
 	github.com/ydb-platform/terraform-provider-ydb v0.0.29 // indirect
 	github.com/ydb-platform/ydb-go-genproto v0.0.0-20250519101544-1f330d77b70f // indirect
@@ -226,7 +238,6 @@ require (
 	google.golang.org/genproto v0.0.0-20251202230838-ff82c1b0f217 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20260526163538-3dc84a4a5aaa // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260523011958-0a33c5d7ca68 // indirect
-	google.golang.org/grpc v1.82.1 // indirect
 	google.golang.org/protobuf v1.36.12-0.20260120151049-f2248ac996af // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.13.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect

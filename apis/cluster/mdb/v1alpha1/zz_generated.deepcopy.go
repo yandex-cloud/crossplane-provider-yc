@@ -5219,6 +5219,16 @@ func (in *ExternalClusterInitParameters) DeepCopyInto(out *ExternalClusterInitPa
 		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
+	if in.SaslPasswordWoSecretRef != nil {
+		in, out := &in.SaslPasswordWoSecretRef, &out.SaslPasswordWoSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.SaslPasswordWoVersion != nil {
+		in, out := &in.SaslPasswordWoVersion, &out.SaslPasswordWoVersion
+		*out = new(int64)
+		**out = **in
+	}
 	if in.SaslUsername != nil {
 		in, out := &in.SaslUsername, &out.SaslUsername
 		*out = new(string)
@@ -5252,6 +5262,11 @@ func (in *ExternalClusterObservation) DeepCopyInto(out *ExternalClusterObservati
 	if in.SaslMechanism != nil {
 		in, out := &in.SaslMechanism, &out.SaslMechanism
 		*out = new(string)
+		**out = **in
+	}
+	if in.SaslPasswordWoVersion != nil {
+		in, out := &in.SaslPasswordWoVersion, &out.SaslPasswordWoVersion
+		*out = new(int64)
 		**out = **in
 	}
 	if in.SaslUsername != nil {
@@ -5292,6 +5307,16 @@ func (in *ExternalClusterParameters) DeepCopyInto(out *ExternalClusterParameters
 	if in.SaslPasswordSecretRef != nil {
 		in, out := &in.SaslPasswordSecretRef, &out.SaslPasswordSecretRef
 		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.SaslPasswordWoSecretRef != nil {
+		in, out := &in.SaslPasswordWoSecretRef, &out.SaslPasswordWoSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.SaslPasswordWoVersion != nil {
+		in, out := &in.SaslPasswordWoVersion, &out.SaslPasswordWoVersion
+		*out = new(int64)
 		**out = **in
 	}
 	if in.SaslUsername != nil {
@@ -8910,7 +8935,21 @@ func (in *KafkaUserInitParameters) DeepCopyInto(out *KafkaUserInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	in.PasswordSecretRef.DeepCopyInto(&out.PasswordSecretRef)
+	if in.PasswordSecretRef != nil {
+		in, out := &in.PasswordSecretRef, &out.PasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.PasswordWoSecretRef != nil {
+		in, out := &in.PasswordWoSecretRef, &out.PasswordWoSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.PasswordWoVersion != nil {
+		in, out := &in.PasswordWoVersion, &out.PasswordWoVersion
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Permission != nil {
 		in, out := &in.Permission, &out.Permission
 		*out = make([]KafkaUserPermissionInitParameters, len(*in))
@@ -8980,6 +9019,11 @@ func (in *KafkaUserObservation) DeepCopyInto(out *KafkaUserObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.PasswordWoVersion != nil {
+		in, out := &in.PasswordWoVersion, &out.PasswordWoVersion
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Permission != nil {
 		in, out := &in.Permission, &out.Permission
 		*out = make([]KafkaUserPermissionObservation, len(*in))
@@ -9022,7 +9066,21 @@ func (in *KafkaUserParameters) DeepCopyInto(out *KafkaUserParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	in.PasswordSecretRef.DeepCopyInto(&out.PasswordSecretRef)
+	if in.PasswordSecretRef != nil {
+		in, out := &in.PasswordSecretRef, &out.PasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.PasswordWoSecretRef != nil {
+		in, out := &in.PasswordWoSecretRef, &out.PasswordWoSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.PasswordWoVersion != nil {
+		in, out := &in.PasswordWoVersion, &out.PasswordWoVersion
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Permission != nil {
 		in, out := &in.Permission, &out.Permission
 		*out = make([]KafkaUserPermissionParameters, len(*in))
@@ -12995,6 +13053,16 @@ func (in *MongodbUserInitParameters) DeepCopyInto(out *MongodbUserInitParameters
 		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
+	if in.PasswordWoSecretRef != nil {
+		in, out := &in.PasswordWoSecretRef, &out.PasswordWoSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.PasswordWoVersion != nil {
+		in, out := &in.PasswordWoVersion, &out.PasswordWoVersion
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Permission != nil {
 		in, out := &in.Permission, &out.Permission
 		*out = make([]MongodbUserPermissionInitParameters, len(*in))
@@ -13079,6 +13147,11 @@ func (in *MongodbUserObservation) DeepCopyInto(out *MongodbUserObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.PasswordWoVersion != nil {
+		in, out := &in.PasswordWoVersion, &out.PasswordWoVersion
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Permission != nil {
 		in, out := &in.Permission, &out.Permission
 		*out = make([]MongodbUserPermissionObservation, len(*in))
@@ -13139,6 +13212,16 @@ func (in *MongodbUserParameters) DeepCopyInto(out *MongodbUserParameters) {
 	if in.PasswordSecretRef != nil {
 		in, out := &in.PasswordSecretRef, &out.PasswordSecretRef
 		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.PasswordWoSecretRef != nil {
+		in, out := &in.PasswordWoSecretRef, &out.PasswordWoSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.PasswordWoVersion != nil {
+		in, out := &in.PasswordWoVersion, &out.PasswordWoVersion
+		*out = new(float64)
 		**out = **in
 	}
 	if in.Permission != nil {
@@ -13465,6 +13548,13 @@ func (in *MongosInitParameters) DeepCopyInto(out *MongosInitParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.OperationProfiling != nil {
+		in, out := &in.OperationProfiling, &out.OperationProfiling
+		*out = make([]MongosOperationProfilingInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
 	if in.SetParameter != nil {
 		in, out := &in.SetParameter, &out.SetParameter
 		*out = make([]MongosSetParameterInitParameters, len(*in))
@@ -13599,6 +13689,13 @@ func (in *MongosObservation) DeepCopyInto(out *MongosObservation) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.OperationProfiling != nil {
+		in, out := &in.OperationProfiling, &out.OperationProfiling
+		*out = make([]MongosOperationProfilingObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
 	if in.SetParameter != nil {
 		in, out := &in.SetParameter, &out.SetParameter
 		*out = make([]MongosSetParameterObservation, len(*in))
@@ -13614,6 +13711,81 @@ func (in *MongosObservation) DeepCopy() *MongosObservation {
 		return nil
 	}
 	out := new(MongosObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *MongosOperationProfilingInitParameters) DeepCopyInto(out *MongosOperationProfilingInitParameters) {
+	*out = *in
+	if in.SlowOpSampleRate != nil {
+		in, out := &in.SlowOpSampleRate, &out.SlowOpSampleRate
+		*out = new(float64)
+		**out = **in
+	}
+	if in.SlowOpThreshold != nil {
+		in, out := &in.SlowOpThreshold, &out.SlowOpThreshold
+		*out = new(int64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new MongosOperationProfilingInitParameters.
+func (in *MongosOperationProfilingInitParameters) DeepCopy() *MongosOperationProfilingInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(MongosOperationProfilingInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *MongosOperationProfilingObservation) DeepCopyInto(out *MongosOperationProfilingObservation) {
+	*out = *in
+	if in.SlowOpSampleRate != nil {
+		in, out := &in.SlowOpSampleRate, &out.SlowOpSampleRate
+		*out = new(float64)
+		**out = **in
+	}
+	if in.SlowOpThreshold != nil {
+		in, out := &in.SlowOpThreshold, &out.SlowOpThreshold
+		*out = new(int64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new MongosOperationProfilingObservation.
+func (in *MongosOperationProfilingObservation) DeepCopy() *MongosOperationProfilingObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(MongosOperationProfilingObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *MongosOperationProfilingParameters) DeepCopyInto(out *MongosOperationProfilingParameters) {
+	*out = *in
+	if in.SlowOpSampleRate != nil {
+		in, out := &in.SlowOpSampleRate, &out.SlowOpSampleRate
+		*out = new(float64)
+		**out = **in
+	}
+	if in.SlowOpThreshold != nil {
+		in, out := &in.SlowOpThreshold, &out.SlowOpThreshold
+		*out = new(int64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new MongosOperationProfilingParameters.
+func (in *MongosOperationProfilingParameters) DeepCopy() *MongosOperationProfilingParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(MongosOperationProfilingParameters)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -13636,6 +13808,13 @@ func (in *MongosParameters) DeepCopyInto(out *MongosParameters) {
 	if in.Net != nil {
 		in, out := &in.Net, &out.Net
 		*out = make([]MongosNetParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.OperationProfiling != nil {
+		in, out := &in.OperationProfiling, &out.OperationProfiling
+		*out = make([]MongosOperationProfilingParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -15397,6 +15576,11 @@ func (in *MySQLClusterRestoreInitParameters) DeepCopyInto(out *MySQLClusterResto
 		*out = new(string)
 		**out = **in
 	}
+	if in.SourceClusterID != nil {
+		in, out := &in.SourceClusterID, &out.SourceClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Time != nil {
 		in, out := &in.Time, &out.Time
 		*out = new(string)
@@ -15422,6 +15606,11 @@ func (in *MySQLClusterRestoreObservation) DeepCopyInto(out *MySQLClusterRestoreO
 		*out = new(string)
 		**out = **in
 	}
+	if in.SourceClusterID != nil {
+		in, out := &in.SourceClusterID, &out.SourceClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Time != nil {
 		in, out := &in.Time, &out.Time
 		*out = new(string)
@@ -15444,6 +15633,11 @@ func (in *MySQLClusterRestoreParameters) DeepCopyInto(out *MySQLClusterRestorePa
 	*out = *in
 	if in.BackupID != nil {
 		in, out := &in.BackupID, &out.BackupID
+		*out = new(string)
+		**out = **in
+	}
+	if in.SourceClusterID != nil {
+		in, out := &in.SourceClusterID, &out.SourceClusterID
 		*out = new(string)
 		**out = **in
 	}
@@ -23561,6 +23755,16 @@ func (in *TargetClusterExternalClusterInitParameters) DeepCopyInto(out *TargetCl
 		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
+	if in.SaslPasswordWoSecretRef != nil {
+		in, out := &in.SaslPasswordWoSecretRef, &out.SaslPasswordWoSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.SaslPasswordWoVersion != nil {
+		in, out := &in.SaslPasswordWoVersion, &out.SaslPasswordWoVersion
+		*out = new(int64)
+		**out = **in
+	}
 	if in.SaslUsername != nil {
 		in, out := &in.SaslUsername, &out.SaslUsername
 		*out = new(string)
@@ -23594,6 +23798,11 @@ func (in *TargetClusterExternalClusterObservation) DeepCopyInto(out *TargetClust
 	if in.SaslMechanism != nil {
 		in, out := &in.SaslMechanism, &out.SaslMechanism
 		*out = new(string)
+		**out = **in
+	}
+	if in.SaslPasswordWoVersion != nil {
+		in, out := &in.SaslPasswordWoVersion, &out.SaslPasswordWoVersion
+		*out = new(int64)
 		**out = **in
 	}
 	if in.SaslUsername != nil {
@@ -23634,6 +23843,16 @@ func (in *TargetClusterExternalClusterParameters) DeepCopyInto(out *TargetCluste
 	if in.SaslPasswordSecretRef != nil {
 		in, out := &in.SaslPasswordSecretRef, &out.SaslPasswordSecretRef
 		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.SaslPasswordWoSecretRef != nil {
+		in, out := &in.SaslPasswordWoSecretRef, &out.SaslPasswordWoSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.SaslPasswordWoVersion != nil {
+		in, out := &in.SaslPasswordWoVersion, &out.SaslPasswordWoVersion
+		*out = new(int64)
 		**out = **in
 	}
 	if in.SaslUsername != nil {

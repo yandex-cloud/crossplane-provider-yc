@@ -2755,6 +2755,11 @@ func (in *GpuClusterInitParameters) DeepCopyInto(out *GpuClusterInitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.Subnets != nil {
+		in, out := &in.Subnets, &out.Subnets
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Zone != nil {
 		in, out := &in.Zone, &out.Zone
 		*out = new(string)
@@ -2937,6 +2942,11 @@ func (in *GpuClusterParameters) DeepCopyInto(out *GpuClusterParameters) {
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
+		**out = **in
+	}
+	if in.Subnets != nil {
+		in, out := &in.Subnets, &out.Subnets
+		*out = new(float64)
 		**out = **in
 	}
 	if in.Zone != nil {

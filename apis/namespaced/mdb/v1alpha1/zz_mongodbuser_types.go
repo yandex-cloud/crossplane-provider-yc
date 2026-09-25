@@ -55,9 +55,17 @@ type MongodbUserInitParameters struct {
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). The password of the user. Required for users with PASSWORD authentication and must be omitted for users with IAM authentication.
-	// The password of the user. Required for users with `PASSWORD` authentication and must be omitted for users with `IAM` authentication.
+	// (String). The password of the user. Either password or password_wo is required for users with PASSWORD authentication and both must be omitted for users with IAM authentication.
+	// The password of the user. Either `password` or `password_wo` is required for users with `PASSWORD` authentication and both must be omitted for users with `IAM` authentication.
 	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+
+	// only and is not stored in state. Requires password_wo_version to trigger updates.11 and later. Must be omitted for users with IAM authentication.
+	// The password of the user. This attribute is write-only and is not stored in state. Requires `password_wo_version` to trigger updates.11 and later. Must be omitted for users with `IAM` authentication.
+	PasswordWoSecretRef *v1.LocalSecretKeySelector `json:"passwordWoSecretRef,omitempty" tf:"-"`
+
+	// only password. Increment this to trigger a password update.
+	// A version number for the write-only password. Increment this to trigger a password update.
+	PasswordWoVersion *float64 `json:"passwordWoVersion,omitempty" tf:"password_wo_version,omitempty"`
 
 	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
@@ -87,6 +95,10 @@ type MongodbUserObservation struct {
 	// (String). The name of the user.
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// only password. Increment this to trigger a password update.
+	// A version number for the write-only password. Increment this to trigger a password update.
+	PasswordWoVersion *float64 `json:"passwordWoVersion,omitempty" tf:"password_wo_version,omitempty"`
 
 	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
@@ -127,10 +139,20 @@ type MongodbUserParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String). The password of the user. Required for users with PASSWORD authentication and must be omitted for users with IAM authentication.
-	// The password of the user. Required for users with `PASSWORD` authentication and must be omitted for users with `IAM` authentication.
+	// (String). The password of the user. Either password or password_wo is required for users with PASSWORD authentication and both must be omitted for users with IAM authentication.
+	// The password of the user. Either `password` or `password_wo` is required for users with `PASSWORD` authentication and both must be omitted for users with `IAM` authentication.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+
+	// only and is not stored in state. Requires password_wo_version to trigger updates.11 and later. Must be omitted for users with IAM authentication.
+	// The password of the user. This attribute is write-only and is not stored in state. Requires `password_wo_version` to trigger updates.11 and later. Must be omitted for users with `IAM` authentication.
+	// +kubebuilder:validation:Optional
+	PasswordWoSecretRef *v1.LocalSecretKeySelector `json:"passwordWoSecretRef,omitempty" tf:"-"`
+
+	// only password. Increment this to trigger a password update.
+	// A version number for the write-only password. Increment this to trigger a password update.
+	// +kubebuilder:validation:Optional
+	PasswordWoVersion *float64 `json:"passwordWoVersion,omitempty" tf:"password_wo_version,omitempty"`
 
 	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.

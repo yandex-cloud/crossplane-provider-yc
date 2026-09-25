@@ -2071,6 +2071,10 @@ type MongosInitParameters struct {
 	// A set of network settings (see the [net](https://www.mongodb.com/docs/manual/reference/configuration-options/#net-options) option).
 	Net []MongosNetInitParameters `json:"net,omitempty" tf:"net,omitempty"`
 
+	// [Block]. A set of profiling settings (see the operationProfiling option).
+	// A set of profiling settings (see the [operationProfiling](https://www.mongodb.com/docs/manual/reference/configuration-options/#operationprofiling-options) option).
+	OperationProfiling []MongosOperationProfilingInitParameters `json:"operationProfiling,omitempty" tf:"operation_profiling,omitempty"`
+
 	// [Block]. A set of MongoDB Server Parameters (see the setParameter option).
 	// A set of MongoDB Server Parameters (see the [setParameter](https://www.mongodb.com/docs/manual/reference/configuration-options/#setparameter-option) option).
 	SetParameter []MongosSetParameterInitParameters `json:"setParameter,omitempty" tf:"set_parameter,omitempty"`
@@ -2125,9 +2129,48 @@ type MongosObservation struct {
 	// A set of network settings (see the [net](https://www.mongodb.com/docs/manual/reference/configuration-options/#net-options) option).
 	Net []MongosNetObservation `json:"net,omitempty" tf:"net,omitempty"`
 
+	// [Block]. A set of profiling settings (see the operationProfiling option).
+	// A set of profiling settings (see the [operationProfiling](https://www.mongodb.com/docs/manual/reference/configuration-options/#operationprofiling-options) option).
+	OperationProfiling []MongosOperationProfilingObservation `json:"operationProfiling,omitempty" tf:"operation_profiling,omitempty"`
+
 	// [Block]. A set of MongoDB Server Parameters (see the setParameter option).
 	// A set of MongoDB Server Parameters (see the [setParameter](https://www.mongodb.com/docs/manual/reference/configuration-options/#setparameter-option) option).
 	SetParameter []MongosSetParameterObservation `json:"setParameter,omitempty" tf:"set_parameter,omitempty"`
+}
+
+type MongosOperationProfilingInitParameters struct {
+
+	// (Number). The fraction of slow operations that should be profiled or logged. Accepts values between 0 and 1, inclusive. For more information, see the operationProfiling.slowOpSampleRate description in the official documentation.
+	// The fraction of slow operations that should be logged. Accepts values between 0 and 1, inclusive. For more information, see the [operationProfiling.slowOpSampleRate](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-operationProfiling.slowOpSampleRate) description in the official documentation.
+	SlowOpSampleRate *float64 `json:"slowOpSampleRate,omitempty" tf:"slow_op_sample_rate,omitempty"`
+
+	// (Number). The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow. For more information, see the operationProfiling.slowOpThresholdMs description in the official documentation.
+	// The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow, and are written to the diagnostic (slow query) log. mongos has no profiler, so only the diagnostic log is affected. For more information, see the [operationProfiling.slowOpThresholdMs](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-operationProfiling.slowOpThresholdMs) description in the official documentation.
+	SlowOpThreshold *int64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
+}
+
+type MongosOperationProfilingObservation struct {
+
+	// (Number). The fraction of slow operations that should be profiled or logged. Accepts values between 0 and 1, inclusive. For more information, see the operationProfiling.slowOpSampleRate description in the official documentation.
+	// The fraction of slow operations that should be logged. Accepts values between 0 and 1, inclusive. For more information, see the [operationProfiling.slowOpSampleRate](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-operationProfiling.slowOpSampleRate) description in the official documentation.
+	SlowOpSampleRate *float64 `json:"slowOpSampleRate,omitempty" tf:"slow_op_sample_rate,omitempty"`
+
+	// (Number). The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow. For more information, see the operationProfiling.slowOpThresholdMs description in the official documentation.
+	// The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow, and are written to the diagnostic (slow query) log. mongos has no profiler, so only the diagnostic log is affected. For more information, see the [operationProfiling.slowOpThresholdMs](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-operationProfiling.slowOpThresholdMs) description in the official documentation.
+	SlowOpThreshold *int64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
+}
+
+type MongosOperationProfilingParameters struct {
+
+	// (Number). The fraction of slow operations that should be profiled or logged. Accepts values between 0 and 1, inclusive. For more information, see the operationProfiling.slowOpSampleRate description in the official documentation.
+	// The fraction of slow operations that should be logged. Accepts values between 0 and 1, inclusive. For more information, see the [operationProfiling.slowOpSampleRate](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-operationProfiling.slowOpSampleRate) description in the official documentation.
+	// +kubebuilder:validation:Optional
+	SlowOpSampleRate *float64 `json:"slowOpSampleRate,omitempty" tf:"slow_op_sample_rate,omitempty"`
+
+	// (Number). The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow. For more information, see the operationProfiling.slowOpThresholdMs description in the official documentation.
+	// The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow, and are written to the diagnostic (slow query) log. mongos has no profiler, so only the diagnostic log is affected. For more information, see the [operationProfiling.slowOpThresholdMs](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-operationProfiling.slowOpThresholdMs) description in the official documentation.
+	// +kubebuilder:validation:Optional
+	SlowOpThreshold *int64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
 }
 
 type MongosParameters struct {
@@ -2146,6 +2189,11 @@ type MongosParameters struct {
 	// A set of network settings (see the [net](https://www.mongodb.com/docs/manual/reference/configuration-options/#net-options) option).
 	// +kubebuilder:validation:Optional
 	Net []MongosNetParameters `json:"net,omitempty" tf:"net,omitempty"`
+
+	// [Block]. A set of profiling settings (see the operationProfiling option).
+	// A set of profiling settings (see the [operationProfiling](https://www.mongodb.com/docs/manual/reference/configuration-options/#operationprofiling-options) option).
+	// +kubebuilder:validation:Optional
+	OperationProfiling []MongosOperationProfilingParameters `json:"operationProfiling,omitempty" tf:"operation_profiling,omitempty"`
 
 	// [Block]. A set of MongoDB Server Parameters (see the setParameter option).
 	// A set of MongoDB Server Parameters (see the [setParameter](https://www.mongodb.com/docs/manual/reference/configuration-options/#setparameter-option) option).

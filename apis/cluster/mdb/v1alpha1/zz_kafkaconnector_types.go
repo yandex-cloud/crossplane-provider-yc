@@ -328,8 +328,8 @@ type ControlConfigInitParameters struct {
 	// Consumer group ID prefix for control topic. Default: 'cg-control'
 	GroupIDPrefix *string `json:"groupIdPrefix,omitempty" tf:"group_id_prefix,omitempty"`
 
-	// (String). Prefix for transactional operations. Default: ”
-	// Prefix for transactional operations. Default: ”
+	// (String). Prefix for transactional operations. Default: ''
+	// Prefix for transactional operations. Default: ''
 	TransactionalPrefix *string `json:"transactionalPrefix,omitempty" tf:"transactional_prefix,omitempty"`
 }
 
@@ -351,8 +351,8 @@ type ControlConfigObservation struct {
 	// Consumer group ID prefix for control topic. Default: 'cg-control'
 	GroupIDPrefix *string `json:"groupIdPrefix,omitempty" tf:"group_id_prefix,omitempty"`
 
-	// (String). Prefix for transactional operations. Default: ”
-	// Prefix for transactional operations. Default: ”
+	// (String). Prefix for transactional operations. Default: ''
+	// Prefix for transactional operations. Default: ''
 	TransactionalPrefix *string `json:"transactionalPrefix,omitempty" tf:"transactional_prefix,omitempty"`
 }
 
@@ -378,8 +378,8 @@ type ControlConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	GroupIDPrefix *string `json:"groupIdPrefix,omitempty" tf:"group_id_prefix,omitempty"`
 
-	// (String). Prefix for transactional operations. Default: ”
-	// Prefix for transactional operations. Default: ”
+	// (String). Prefix for transactional operations. Default: ''
+	// Prefix for transactional operations. Default: ''
 	// +kubebuilder:validation:Optional
 	TransactionalPrefix *string `json:"transactionalPrefix,omitempty" tf:"transactional_prefix,omitempty"`
 }
@@ -420,6 +420,14 @@ type ExternalClusterInitParameters struct {
 	// Password to use in SASL authentification mechanism
 	SaslPasswordSecretRef *v1.SecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
 
+	// only and is not stored in state. Requires sasl_password_wo_version to trigger updates.11 or higher.
+	// Password to use in SASL authentification mechanism. This attribute is write-only and is not stored in state. Requires `sasl_password_wo_version` to trigger updates.11 or higher.
+	SaslPasswordWoSecretRef *v1.SecretKeySelector `json:"saslPasswordWoSecretRef,omitempty" tf:"-"`
+
+	// only SASL password. Increment this to trigger a password update.
+	// A version number for the write-only SASL password. Increment this to trigger a password update.
+	SaslPasswordWoVersion *int64 `json:"saslPasswordWoVersion,omitempty" tf:"sasl_password_wo_version,omitempty"`
+
 	// (String). Username to use in SASL authentification mechanism.
 	// Username to use in SASL authentification mechanism.
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
@@ -438,6 +446,10 @@ type ExternalClusterObservation struct {
 	// (String). Type of SASL authentification mechanism to use.
 	// Type of SASL authentification mechanism to use.
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
+
+	// only SASL password. Increment this to trigger a password update.
+	// A version number for the write-only SASL password. Increment this to trigger a password update.
+	SaslPasswordWoVersion *int64 `json:"saslPasswordWoVersion,omitempty" tf:"sasl_password_wo_version,omitempty"`
 
 	// (String). Username to use in SASL authentification mechanism.
 	// Username to use in SASL authentification mechanism.
@@ -464,6 +476,16 @@ type ExternalClusterParameters struct {
 	// Password to use in SASL authentification mechanism
 	// +kubebuilder:validation:Optional
 	SaslPasswordSecretRef *v1.SecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
+
+	// only and is not stored in state. Requires sasl_password_wo_version to trigger updates.11 or higher.
+	// Password to use in SASL authentification mechanism. This attribute is write-only and is not stored in state. Requires `sasl_password_wo_version` to trigger updates.11 or higher.
+	// +kubebuilder:validation:Optional
+	SaslPasswordWoSecretRef *v1.SecretKeySelector `json:"saslPasswordWoSecretRef,omitempty" tf:"-"`
+
+	// only SASL password. Increment this to trigger a password update.
+	// A version number for the write-only SASL password. Increment this to trigger a password update.
+	// +kubebuilder:validation:Optional
+	SaslPasswordWoVersion *int64 `json:"saslPasswordWoVersion,omitempty" tf:"sasl_password_wo_version,omitempty"`
 
 	// (String). Username to use in SASL authentification mechanism.
 	// Username to use in SASL authentification mechanism.
@@ -942,6 +964,14 @@ type TargetClusterExternalClusterInitParameters struct {
 	// Password to use in SASL authentification mechanism
 	SaslPasswordSecretRef *v1.SecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
 
+	// only and is not stored in state. Requires sasl_password_wo_version to trigger updates.11 or higher.
+	// Password to use in SASL authentification mechanism. This attribute is write-only and is not stored in state. Requires `sasl_password_wo_version` to trigger updates.11 or higher.
+	SaslPasswordWoSecretRef *v1.SecretKeySelector `json:"saslPasswordWoSecretRef,omitempty" tf:"-"`
+
+	// only SASL password. Increment this to trigger a password update.
+	// A version number for the write-only SASL password. Increment this to trigger a password update.
+	SaslPasswordWoVersion *int64 `json:"saslPasswordWoVersion,omitempty" tf:"sasl_password_wo_version,omitempty"`
+
 	// (String). Username to use in SASL authentification mechanism.
 	// Username to use in SASL authentification mechanism.
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
@@ -960,6 +990,10 @@ type TargetClusterExternalClusterObservation struct {
 	// (String). Type of SASL authentification mechanism to use.
 	// Type of SASL authentification mechanism to use.
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
+
+	// only SASL password. Increment this to trigger a password update.
+	// A version number for the write-only SASL password. Increment this to trigger a password update.
+	SaslPasswordWoVersion *int64 `json:"saslPasswordWoVersion,omitempty" tf:"sasl_password_wo_version,omitempty"`
 
 	// (String). Username to use in SASL authentification mechanism.
 	// Username to use in SASL authentification mechanism.
@@ -986,6 +1020,16 @@ type TargetClusterExternalClusterParameters struct {
 	// Password to use in SASL authentification mechanism
 	// +kubebuilder:validation:Optional
 	SaslPasswordSecretRef *v1.SecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
+
+	// only and is not stored in state. Requires sasl_password_wo_version to trigger updates.11 or higher.
+	// Password to use in SASL authentification mechanism. This attribute is write-only and is not stored in state. Requires `sasl_password_wo_version` to trigger updates.11 or higher.
+	// +kubebuilder:validation:Optional
+	SaslPasswordWoSecretRef *v1.SecretKeySelector `json:"saslPasswordWoSecretRef,omitempty" tf:"-"`
+
+	// only SASL password. Increment this to trigger a password update.
+	// A version number for the write-only SASL password. Increment this to trigger a password update.
+	// +kubebuilder:validation:Optional
+	SaslPasswordWoVersion *int64 `json:"saslPasswordWoVersion,omitempty" tf:"sasl_password_wo_version,omitempty"`
 
 	// (String). Username to use in SASL authentification mechanism.
 	// Username to use in SASL authentification mechanism.

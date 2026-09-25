@@ -613,6 +613,25 @@ spec:
                                       type: integer
                                   type: object
                                 type: array
+                              operationProfiling:
+                                description: |-
+                                  [Block]. A set of profiling settings (see the operationProfiling option).
+                                  A set of profiling settings (see the [operationProfiling](https://www.mongodb.com/docs/manual/reference/configuration-options/#operationprofiling-options) option).
+                                items:
+                                  properties:
+                                    slowOpSampleRate:
+                                      description: |-
+                                        (Number). The fraction of slow operations that should be profiled or logged. Accepts values between 0 and 1, inclusive. For more information, see the operationProfiling.slowOpSampleRate description in the official documentation.
+                                        The fraction of slow operations that should be logged. Accepts values between 0 and 1, inclusive. For more information, see the [operationProfiling.slowOpSampleRate](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-operationProfiling.slowOpSampleRate) description in the official documentation.
+                                      type: number
+                                    slowOpThreshold:
+                                      description: |-
+                                        (Number). The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow. For more information, see the operationProfiling.slowOpThresholdMs description in the official documentation.
+                                        The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow, and are written to the diagnostic (slow query) log. mongos has no profiler, so only the diagnostic log is affected. For more information, see the [operationProfiling.slowOpThresholdMs](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-operationProfiling.slowOpThresholdMs) description in the official documentation.
+                                      format: int64
+                                      type: integer
+                                  type: object
+                                type: array
                               setParameter:
                                 description: |-
                                   [Block]. A set of MongoDB Server Parameters (see the setParameter option).
@@ -2032,6 +2051,25 @@ spec:
                                       description: |-
                                         (Number). The maximum number of simultaneous connections that host will accept. For more information, see the net.maxIncomingConnections description in the official documentation.
                                         The maximum number of simultaneous connections that host will accept. For more information, see the [net.maxIncomingConnections](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-net.maxIncomingConnections) description in the official documentation.
+                                      format: int64
+                                      type: integer
+                                  type: object
+                                type: array
+                              operationProfiling:
+                                description: |-
+                                  [Block]. A set of profiling settings (see the operationProfiling option).
+                                  A set of profiling settings (see the [operationProfiling](https://www.mongodb.com/docs/manual/reference/configuration-options/#operationprofiling-options) option).
+                                items:
+                                  properties:
+                                    slowOpSampleRate:
+                                      description: |-
+                                        (Number). The fraction of slow operations that should be profiled or logged. Accepts values between 0 and 1, inclusive. For more information, see the operationProfiling.slowOpSampleRate description in the official documentation.
+                                        The fraction of slow operations that should be logged. Accepts values between 0 and 1, inclusive. For more information, see the [operationProfiling.slowOpSampleRate](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-operationProfiling.slowOpSampleRate) description in the official documentation.
+                                      type: number
+                                    slowOpThreshold:
+                                      description: |-
+                                        (Number). The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow. For more information, see the operationProfiling.slowOpThresholdMs description in the official documentation.
+                                        The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow, and are written to the diagnostic (slow query) log. mongos has no profiler, so only the diagnostic log is affected. For more information, see the [operationProfiling.slowOpThresholdMs](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-operationProfiling.slowOpThresholdMs) description in the official documentation.
                                       format: int64
                                       type: integer
                                   type: object
@@ -3552,6 +3590,25 @@ spec:
                                       description: |-
                                         (Number). The maximum number of simultaneous connections that host will accept. For more information, see the net.maxIncomingConnections description in the official documentation.
                                         The maximum number of simultaneous connections that host will accept. For more information, see the [net.maxIncomingConnections](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-net.maxIncomingConnections) description in the official documentation.
+                                      format: int64
+                                      type: integer
+                                  type: object
+                                type: array
+                              operationProfiling:
+                                description: |-
+                                  [Block]. A set of profiling settings (see the operationProfiling option).
+                                  A set of profiling settings (see the [operationProfiling](https://www.mongodb.com/docs/manual/reference/configuration-options/#operationprofiling-options) option).
+                                items:
+                                  properties:
+                                    slowOpSampleRate:
+                                      description: |-
+                                        (Number). The fraction of slow operations that should be profiled or logged. Accepts values between 0 and 1, inclusive. For more information, see the operationProfiling.slowOpSampleRate description in the official documentation.
+                                        The fraction of slow operations that should be logged. Accepts values between 0 and 1, inclusive. For more information, see the [operationProfiling.slowOpSampleRate](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-operationProfiling.slowOpSampleRate) description in the official documentation.
+                                      type: number
+                                    slowOpThreshold:
+                                      description: |-
+                                        (Number). The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow. For more information, see the operationProfiling.slowOpThresholdMs description in the official documentation.
+                                        The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow, and are written to the diagnostic (slow query) log. mongos has no profiler, so only the diagnostic log is affected. For more information, see the [operationProfiling.slowOpThresholdMs](https://www.mongodb.com/docs/manual/reference/configuration-options/#mongodb-setting-operationProfiling.slowOpThresholdMs) description in the official documentation.
                                       format: int64
                                       type: integer
                                   type: object

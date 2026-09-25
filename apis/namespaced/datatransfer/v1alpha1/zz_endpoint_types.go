@@ -188,6 +188,56 @@ type AuthSaslPasswordParameters struct {
 	RawSecretRef *v1.LocalSecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type AuthenticationInitParameters struct {
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	ServiceAccount []ServiceAccountInitParameters `json:"serviceAccount,omitempty" tf:"service_account,omitempty"`
+}
+
+type AuthenticationObservation struct {
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	ServiceAccount []ServiceAccountObservation `json:"serviceAccount,omitempty" tf:"service_account,omitempty"`
+}
+
+type AuthenticationParameters struct {
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// +kubebuilder:validation:Optional
+	ServiceAccount []ServiceAccountParameters `json:"serviceAccount,omitempty" tf:"service_account,omitempty"`
+}
+
+type AuthenticationServiceAccountInitParameters struct {
+
+	// (String). Service account ID which has read access to the stream
+	// Service account ID for interaction with database
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+}
+
+type AuthenticationServiceAccountObservation struct {
+
+	// (String). Service account ID which has read access to the stream
+	// Service account ID for interaction with database
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+}
+
+type AuthenticationServiceAccountParameters struct {
+
+	// (String). Service account ID which has read access to the stream
+	// Service account ID for interaction with database
+	// +kubebuilder:validation:Optional
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+}
+
 type ClickhouseSourceInitParameters struct {
 
 	// (String). Name of the ClickHouse cluster. For Managed ClickHouse that is name of
@@ -723,8 +773,8 @@ type ConnectionConnectionOptionsInitParameters struct {
 	// Identifier of the Managed ClickHouse cluster
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection settings of the on-premise ClickHouse server
 	OnPremise []ConnectionOptionsOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 
@@ -751,8 +801,8 @@ type ConnectionConnectionOptionsObservation struct {
 	// Identifier of the Managed ClickHouse cluster
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection settings of the on-premise ClickHouse server
 	OnPremise []ConnectionOptionsOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 
@@ -930,8 +980,8 @@ type ConnectionConnectionOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection settings of the on-premise ClickHouse server
 	// +kubebuilder:validation:Optional
 	OnPremise []ConnectionOptionsOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -1226,8 +1276,8 @@ type ConnectionOptionsInitParameters struct {
 	// Identifier of the Managed ClickHouse cluster
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection settings of the on-premise ClickHouse server
 	OnPremise []OnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 
@@ -1254,8 +1304,8 @@ type ConnectionOptionsObservation struct {
 	// Identifier of the Managed ClickHouse cluster
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection settings of the on-premise ClickHouse server
 	OnPremise []OnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 
@@ -1448,8 +1498,8 @@ type ConnectionOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection settings of the on-premise ClickHouse server
 	// +kubebuilder:validation:Optional
 	OnPremise []OnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -2246,8 +2296,8 @@ type KafkaSourceConnectionInitParameters struct {
 	// Set only one of: cluster_id/on_premise/connection_manager_connection
 	ConnectionManagerConnection []ConnectionConnectionManagerConnectionInitParameters `json:"connectionManagerConnection,omitempty" tf:"connection_manager_connection,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise Kafka
 	// Set only one of: cluster_id/on_premise/connection_manager_connection
 	OnPremise []ConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -2266,8 +2316,8 @@ type KafkaSourceConnectionObservation struct {
 	// Set only one of: cluster_id/on_premise/connection_manager_connection
 	ConnectionManagerConnection []ConnectionConnectionManagerConnectionObservation `json:"connectionManagerConnection,omitempty" tf:"connection_manager_connection,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise Kafka
 	// Set only one of: cluster_id/on_premise/connection_manager_connection
 	OnPremise []ConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -2288,8 +2338,8 @@ type KafkaSourceConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	ConnectionManagerConnection []ConnectionConnectionManagerConnectionParameters `json:"connectionManagerConnection,omitempty" tf:"connection_manager_connection,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise Kafka
 	// Set only one of: cluster_id/on_premise/connection_manager_connection
 	// +kubebuilder:validation:Optional
@@ -2497,8 +2547,8 @@ type KafkaTargetConnectionInitParameters struct {
 	// Set only one of: cluster_id/on_premise/connection_manager_connection
 	ConnectionManagerConnection []KafkaTargetConnectionConnectionManagerConnectionInitParameters `json:"connectionManagerConnection,omitempty" tf:"connection_manager_connection,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise Kafka
 	// Set only one of: cluster_id/on_premise/connection_manager_connection
 	OnPremise []KafkaTargetConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -2517,8 +2567,8 @@ type KafkaTargetConnectionObservation struct {
 	// Set only one of: cluster_id/on_premise/connection_manager_connection
 	ConnectionManagerConnection []KafkaTargetConnectionConnectionManagerConnectionObservation `json:"connectionManagerConnection,omitempty" tf:"connection_manager_connection,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise Kafka
 	// Set only one of: cluster_id/on_premise/connection_manager_connection
 	OnPremise []KafkaTargetConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -2637,8 +2687,8 @@ type KafkaTargetConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	ConnectionManagerConnection []KafkaTargetConnectionConnectionManagerConnectionParameters `json:"connectionManagerConnection,omitempty" tf:"connection_manager_connection,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise Kafka
 	// Set only one of: cluster_id/on_premise/connection_manager_connection
 	// +kubebuilder:validation:Optional
@@ -2723,6 +2773,41 @@ type KafkaTargetParameters struct {
 	// Target topic settings
 	// +kubebuilder:validation:Optional
 	TopicSettings []TopicSettingsParameters `json:"topicSettings,omitempty" tf:"topic_settings,omitempty"`
+}
+
+type ManagedYdsInitParameters struct {
+
+	// (String). Managed Service for YDB database ID
+	// Managed Service for YDB database ID
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// (String). Stream to write to
+	// Stream to read
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+}
+
+type ManagedYdsObservation struct {
+
+	// (String). Managed Service for YDB database ID
+	// Managed Service for YDB database ID
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// (String). Stream to write to
+	// Stream to read
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+}
+
+type ManagedYdsParameters struct {
+
+	// (String). Managed Service for YDB database ID
+	// Managed Service for YDB database ID
+	// +kubebuilder:validation:Optional
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// (String). Stream to write to
+	// Stream to read
+	// +kubebuilder:validation:Optional
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
 }
 
 type MappingInitParameters struct {
@@ -2845,8 +2930,8 @@ type MongoSourceConnectionConnectionOptionsInitParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.NamespacedSelector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection settings of the on-premise MongoDB server
 	// Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
 	OnPremise []ConnectionConnectionOptionsOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -2876,8 +2961,8 @@ type MongoSourceConnectionConnectionOptionsObservation struct {
 	// Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection settings of the on-premise MongoDB server
 	// Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
 	OnPremise []ConnectionConnectionOptionsOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -2919,8 +3004,8 @@ type MongoSourceConnectionConnectionOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.NamespacedSelector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection settings of the on-premise MongoDB server
 	// Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
 	// +kubebuilder:validation:Optional
@@ -3166,8 +3251,8 @@ type MongoTargetConnectionConnectionOptionsInitParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.NamespacedSelector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection settings of the on-premise MongoDB server
 	// Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
 	OnPremise []MongoTargetConnectionConnectionOptionsOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -3197,8 +3282,8 @@ type MongoTargetConnectionConnectionOptionsObservation struct {
 	// Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection settings of the on-premise MongoDB server
 	// Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
 	OnPremise []MongoTargetConnectionConnectionOptionsOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -3304,8 +3389,8 @@ type MongoTargetConnectionConnectionOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.NamespacedSelector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection settings of the on-premise MongoDB server
 	// Use one of:  mdb_cluster_id/on_premise/connection_manager_connection
 	// +kubebuilder:validation:Optional
@@ -3550,8 +3635,8 @@ type MySQLSourceConnectionInitParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.NamespacedSelector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise MySQL
 	OnPremise []MySQLSourceConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
@@ -3566,8 +3651,8 @@ type MySQLSourceConnectionObservation struct {
 	// Managed Service for MySQL cluster ID
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise MySQL
 	OnPremise []MySQLSourceConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
@@ -3768,8 +3853,8 @@ type MySQLSourceConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.NamespacedSelector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise MySQL
 	// +kubebuilder:validation:Optional
 	OnPremise []MySQLSourceConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -4101,8 +4186,8 @@ type MySQLTargetConnectionInitParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.NamespacedSelector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise MySQL
 	OnPremise []MySQLTargetConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
@@ -4117,8 +4202,8 @@ type MySQLTargetConnectionObservation struct {
 	// Managed Service for MySQL cluster ID
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise MySQL
 	OnPremise []MySQLTargetConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
@@ -4319,8 +4404,8 @@ type MySQLTargetConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.NamespacedSelector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise MySQL
 	// +kubebuilder:validation:Optional
 	OnPremise []MySQLTargetConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -5211,8 +5296,8 @@ type PostgresSourceConnectionInitParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.NamespacedSelector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise PostgreSQL
 	OnPremise []PostgresSourceConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
@@ -5227,8 +5312,8 @@ type PostgresSourceConnectionObservation struct {
 	// Managed Service for PostgreSQL cluster ID
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise PostgreSQL
 	OnPremise []PostgresSourceConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
@@ -5429,8 +5514,8 @@ type PostgresSourceConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.NamespacedSelector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise PostgreSQL
 	// +kubebuilder:validation:Optional
 	OnPremise []PostgresSourceConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -6090,8 +6175,8 @@ type PostgresTargetConnectionInitParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.NamespacedSelector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise PostgreSQL
 	OnPremise []PostgresTargetConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
@@ -6106,8 +6191,8 @@ type PostgresTargetConnectionObservation struct {
 	// Managed Service for PostgreSQL cluster ID
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise PostgreSQL
 	OnPremise []PostgresTargetConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
@@ -6308,8 +6393,8 @@ type PostgresTargetConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.NamespacedSelector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// premise Kafka
-	// Set only one of: cluster_id/on_premise/connection_manager_connection
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
 	// Connection options for on-premise PostgreSQL
 	// +kubebuilder:validation:Optional
 	OnPremise []PostgresTargetConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
@@ -6792,6 +6877,28 @@ type SerializerSerializerJSONObservation struct {
 }
 
 type SerializerSerializerJSONParameters struct {
+}
+
+type ServiceAccountInitParameters struct {
+
+	// (String). Service account ID which has read access to the stream
+	// Service account ID for interaction with database
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+}
+
+type ServiceAccountObservation struct {
+
+	// (String). Service account ID which has read access to the stream
+	// Service account ID for interaction with database
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+}
+
+type ServiceAccountParameters struct {
+
+	// (String). Service account ID which has read access to the stream
+	// Service account ID for interaction with database
+	// +kubebuilder:validation:Optional
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 }
 
 type SettingsInitParameters struct {
@@ -7803,7 +7910,245 @@ type TskvParserParameters struct {
 	UnescapeStringValues *bool `json:"unescapeStringValues,omitempty" tf:"unescape_string_values,omitempty"`
 }
 
+type YdbConnectionInitParameters struct {
+
+	// (String). Managed Service for YDB database ID
+	// Managed Service for YDB database ID
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	OnPremise []YdbConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type YdbConnectionManagedYdsInitParameters struct {
+
+	// (String). Managed Service for YDB database ID
+	// Managed Service for YDB database ID
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// (String). Stream to write to
+	// Stream to read
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+}
+
+type YdbConnectionManagedYdsObservation struct {
+
+	// (String). Managed Service for YDB database ID
+	// Managed Service for YDB database ID
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// (String). Stream to write to
+	// Stream to read
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+}
+
+type YdbConnectionManagedYdsParameters struct {
+
+	// (String). Managed Service for YDB database ID
+	// Managed Service for YDB database ID
+	// +kubebuilder:validation:Optional
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// (String). Stream to write to
+	// Stream to read
+	// +kubebuilder:validation:Optional
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+}
+
+type YdbConnectionObservation struct {
+
+	// (String). Managed Service for YDB database ID
+	// Managed Service for YDB database ID
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	OnPremise []YdbConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type YdbConnectionOnPremiseInitParameters struct {
+
+	// transfer
+	// Database path in YDB where tables are stored.
+	// Example: `/ru/transfer_manager/prod/data-transfer`
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// ru-prestable.yandex.net:2135.
+	// If not specified, will be determined by database
+	// Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+	// database. If omitted, the server has to be accessible via Internet
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+	// If omitted, the server has to be accessible via Internet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. TLS settings for server connection. Disabled by default
+	// TLS settings for server connection. Disabled by default.
+	TLSMode []YdbConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
+type YdbConnectionOnPremiseObservation struct {
+
+	// transfer
+	// Database path in YDB where tables are stored.
+	// Example: `/ru/transfer_manager/prod/data-transfer`
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// ru-prestable.yandex.net:2135.
+	// If not specified, will be determined by database
+	// Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+	// database. If omitted, the server has to be accessible via Internet
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+	// If omitted, the server has to be accessible via Internet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. TLS settings for server connection. Disabled by default
+	// TLS settings for server connection. Disabled by default.
+	TLSMode []YdbConnectionOnPremiseTLSModeObservation `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
+type YdbConnectionOnPremiseParameters struct {
+
+	// transfer
+	// Database path in YDB where tables are stored.
+	// Example: `/ru/transfer_manager/prod/data-transfer`
+	// +kubebuilder:validation:Optional
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// ru-prestable.yandex.net:2135.
+	// If not specified, will be determined by database
+	// Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+	// +kubebuilder:validation:Optional
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+	// database. If omitted, the server has to be accessible via Internet
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+	// If omitted, the server has to be accessible via Internet
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. TLS settings for server connection. Disabled by default
+	// TLS settings for server connection. Disabled by default.
+	// +kubebuilder:validation:Optional
+	TLSMode []YdbConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
+type YdbConnectionOnPremiseTLSModeDisabledInitParameters struct {
+}
+
+type YdbConnectionOnPremiseTLSModeDisabledObservation struct {
+}
+
+type YdbConnectionOnPremiseTLSModeDisabledParameters struct {
+}
+
+type YdbConnectionOnPremiseTLSModeEnabledInitParameters struct {
+
+	// known CA
+	// CA certificate
+	// X.509 certificate of the certificate authority which issued the server's
+	// certificate, in PEM format. When CA certificate is specified, TLS is used to
+	// connect to the server. If CA certificate is empty, the server's certificate must
+	// be signed by a well-known CA
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type YdbConnectionOnPremiseTLSModeEnabledObservation struct {
+
+	// known CA
+	// CA certificate
+	// X.509 certificate of the certificate authority which issued the server's
+	// certificate, in PEM format. When CA certificate is specified, TLS is used to
+	// connect to the server. If CA certificate is empty, the server's certificate must
+	// be signed by a well-known CA
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type YdbConnectionOnPremiseTLSModeEnabledParameters struct {
+
+	// known CA
+	// CA certificate
+	// X.509 certificate of the certificate authority which issued the server's
+	// certificate, in PEM format. When CA certificate is specified, TLS is used to
+	// connect to the server. If CA certificate is empty, the server's certificate must
+	// be signed by a well-known CA
+	// +kubebuilder:validation:Optional
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type YdbConnectionOnPremiseTLSModeInitParameters struct {
+
+	// [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	Disabled []YdbConnectionOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// [Block]. TLS is used for the server connection
+	// TLS is used for the server connection
+	Enabled []YdbConnectionOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type YdbConnectionOnPremiseTLSModeObservation struct {
+
+	// [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	Disabled []YdbConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// [Block]. TLS is used for the server connection
+	// TLS is used for the server connection
+	Enabled []YdbConnectionOnPremiseTLSModeEnabledObservation `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type YdbConnectionOnPremiseTLSModeParameters struct {
+
+	// [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// +kubebuilder:validation:Optional
+	Disabled []YdbConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// [Block]. TLS is used for the server connection
+	// TLS is used for the server connection
+	// +kubebuilder:validation:Optional
+	Enabled []YdbConnectionOnPremiseTLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type YdbConnectionParameters struct {
+
+	// (String). Managed Service for YDB database ID
+	// Managed Service for YDB database ID
+	// +kubebuilder:validation:Optional
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// +kubebuilder:validation:Optional
+	OnPremise []YdbConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
 type YdbSourceInitParameters struct {
+
+	// [Block]. Choose one of authentication methods, right now only service account is avaiable
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	Authentication []AuthenticationInitParameters `json:"authentication,omitempty" tf:"authentication,omitempty"`
 
 	// created change feed if any
 	// Consumer for pre-created change feed if any
@@ -7849,10 +8194,20 @@ type YdbSourceInitParameters struct {
 	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
 	// database. If omitted, the server has to be accessible via Internet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. Connection settings for managed YDB or for on premise
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	YdbConnection []YdbConnectionInitParameters `json:"ydbConnection,omitempty" tf:"ydb_connection,omitempty"`
 }
 
 type YdbSourceObservation struct {
 
+	// [Block]. Choose one of authentication methods, right now only service account is avaiable
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	Authentication []AuthenticationObservation `json:"authentication,omitempty" tf:"authentication,omitempty"`
+
 	// created change feed if any
 	// Consumer for pre-created change feed if any
 	ChangefeedCustomConsumerName *string `json:"changefeedCustomConsumerName,omitempty" tf:"changefeed_custom_consumer_name,omitempty"`
@@ -7893,9 +8248,20 @@ type YdbSourceObservation struct {
 	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
 	// database. If omitted, the server has to be accessible via Internet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. Connection settings for managed YDB or for on premise
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	YdbConnection []YdbConnectionObservation `json:"ydbConnection,omitempty" tf:"ydb_connection,omitempty"`
 }
 
 type YdbSourceParameters struct {
+
+	// [Block]. Choose one of authentication methods, right now only service account is avaiable
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// +kubebuilder:validation:Optional
+	Authentication []AuthenticationParameters `json:"authentication,omitempty" tf:"authentication,omitempty"`
 
 	// created change feed if any
 	// Consumer for pre-created change feed if any
@@ -7950,10 +8316,49 @@ type YdbSourceParameters struct {
 	// database. If omitted, the server has to be accessible via Internet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. Connection settings for managed YDB or for on premise
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// +kubebuilder:validation:Optional
+	YdbConnection []YdbConnectionParameters `json:"ydbConnection,omitempty" tf:"ydb_connection,omitempty"`
+}
+
+type YdbTargetAuthenticationInitParameters struct {
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	ServiceAccount []AuthenticationServiceAccountInitParameters `json:"serviceAccount,omitempty" tf:"service_account,omitempty"`
+}
+
+type YdbTargetAuthenticationObservation struct {
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	ServiceAccount []AuthenticationServiceAccountObservation `json:"serviceAccount,omitempty" tf:"service_account,omitempty"`
+}
+
+type YdbTargetAuthenticationParameters struct {
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// +kubebuilder:validation:Optional
+	ServiceAccount []AuthenticationServiceAccountParameters `json:"serviceAccount,omitempty" tf:"service_account,omitempty"`
 }
 
 type YdbTargetInitParameters struct {
 
+	// [Block]. Choose one of authentication methods, right now only service account is avaiable
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	Authentication []YdbTargetAuthenticationInitParameters `json:"authentication,omitempty" tf:"authentication,omitempty"`
+
 	// (String). Cleanup policy determine how to clean collections when activating the transfer.
 	// One of YDB_CLEANUP_POLICY_DISABLED or YDB_CLEANUP_POLICY_DROP
 	// Cleanup policy determine how to clean collections when activating the transfer.
@@ -8013,10 +8418,20 @@ type YdbTargetInitParameters struct {
 	// database.
 	// If omitted, the server has to be accessible via Internet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. Connection settings for managed YDB or for on premise
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	YdbConnection []YdbTargetYdbConnectionInitParameters `json:"ydbConnection,omitempty" tf:"ydb_connection,omitempty"`
 }
 
 type YdbTargetObservation struct {
 
+	// [Block]. Choose one of authentication methods, right now only service account is avaiable
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	Authentication []YdbTargetAuthenticationObservation `json:"authentication,omitempty" tf:"authentication,omitempty"`
+
 	// (String). Cleanup policy determine how to clean collections when activating the transfer.
 	// One of YDB_CLEANUP_POLICY_DISABLED or YDB_CLEANUP_POLICY_DROP
 	// Cleanup policy determine how to clean collections when activating the transfer.
@@ -8072,9 +8487,20 @@ type YdbTargetObservation struct {
 	// database.
 	// If omitted, the server has to be accessible via Internet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. Connection settings for managed YDB or for on premise
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	YdbConnection []YdbTargetYdbConnectionObservation `json:"ydbConnection,omitempty" tf:"ydb_connection,omitempty"`
 }
 
 type YdbTargetParameters struct {
+
+	// [Block]. Choose one of authentication methods, right now only service account is avaiable
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// +kubebuilder:validation:Optional
+	Authentication []YdbTargetAuthenticationParameters `json:"authentication,omitempty" tf:"authentication,omitempty"`
 
 	// (String). Cleanup policy determine how to clean collections when activating the transfer.
 	// One of YDB_CLEANUP_POLICY_DISABLED or YDB_CLEANUP_POLICY_DROP
@@ -8146,6 +8572,232 @@ type YdbTargetParameters struct {
 	// If omitted, the server has to be accessible via Internet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. Connection settings for managed YDB or for on premise
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// +kubebuilder:validation:Optional
+	YdbConnection []YdbTargetYdbConnectionParameters `json:"ydbConnection,omitempty" tf:"ydb_connection,omitempty"`
+}
+
+type YdbTargetYdbConnectionInitParameters struct {
+
+	// (String). Managed Service for YDB database ID
+	// Managed Service for YDB database ID
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	OnPremise []YdbTargetYdbConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type YdbTargetYdbConnectionObservation struct {
+
+	// (String). Managed Service for YDB database ID
+	// Managed Service for YDB database ID
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	OnPremise []YdbTargetYdbConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type YdbTargetYdbConnectionOnPremiseInitParameters struct {
+
+	// transfer
+	// Database path in YDB where tables are stored.
+	// Example: `/ru/transfer_manager/prod/data-transfer`
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// ru-prestable.yandex.net:2135.
+	// If not specified, will be determined by database
+	// Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+	// database. If omitted, the server has to be accessible via Internet
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+	// If omitted, the server has to be accessible via Internet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. TLS settings for server connection. Disabled by default
+	// TLS settings for server connection. Disabled by default.
+	TLSMode []YdbTargetYdbConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
+type YdbTargetYdbConnectionOnPremiseObservation struct {
+
+	// transfer
+	// Database path in YDB where tables are stored.
+	// Example: `/ru/transfer_manager/prod/data-transfer`
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// ru-prestable.yandex.net:2135.
+	// If not specified, will be determined by database
+	// Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+	// database. If omitted, the server has to be accessible via Internet
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+	// If omitted, the server has to be accessible via Internet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. TLS settings for server connection. Disabled by default
+	// TLS settings for server connection. Disabled by default.
+	TLSMode []YdbTargetYdbConnectionOnPremiseTLSModeObservation `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
+type YdbTargetYdbConnectionOnPremiseParameters struct {
+
+	// transfer
+	// Database path in YDB where tables are stored.
+	// Example: `/ru/transfer_manager/prod/data-transfer`
+	// +kubebuilder:validation:Optional
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// ru-prestable.yandex.net:2135.
+	// If not specified, will be determined by database
+	// Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+	// +kubebuilder:validation:Optional
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+	// database. If omitted, the server has to be accessible via Internet
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+	// If omitted, the server has to be accessible via Internet
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. TLS settings for server connection. Disabled by default
+	// TLS settings for server connection. Disabled by default.
+	// +kubebuilder:validation:Optional
+	TLSMode []YdbTargetYdbConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
+type YdbTargetYdbConnectionOnPremiseTLSModeDisabledInitParameters struct {
+}
+
+type YdbTargetYdbConnectionOnPremiseTLSModeDisabledObservation struct {
+}
+
+type YdbTargetYdbConnectionOnPremiseTLSModeDisabledParameters struct {
+}
+
+type YdbTargetYdbConnectionOnPremiseTLSModeEnabledInitParameters struct {
+
+	// known CA
+	// CA certificate
+	// X.509 certificate of the certificate authority which issued the server's
+	// certificate, in PEM format. When CA certificate is specified, TLS is used to
+	// connect to the server. If CA certificate is empty, the server's certificate must
+	// be signed by a well-known CA
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type YdbTargetYdbConnectionOnPremiseTLSModeEnabledObservation struct {
+
+	// known CA
+	// CA certificate
+	// X.509 certificate of the certificate authority which issued the server's
+	// certificate, in PEM format. When CA certificate is specified, TLS is used to
+	// connect to the server. If CA certificate is empty, the server's certificate must
+	// be signed by a well-known CA
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type YdbTargetYdbConnectionOnPremiseTLSModeEnabledParameters struct {
+
+	// known CA
+	// CA certificate
+	// X.509 certificate of the certificate authority which issued the server's
+	// certificate, in PEM format. When CA certificate is specified, TLS is used to
+	// connect to the server. If CA certificate is empty, the server's certificate must
+	// be signed by a well-known CA
+	// +kubebuilder:validation:Optional
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type YdbTargetYdbConnectionOnPremiseTLSModeInitParameters struct {
+
+	// [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	Disabled []YdbTargetYdbConnectionOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// [Block]. TLS is used for the server connection
+	// TLS is used for the server connection
+	Enabled []YdbTargetYdbConnectionOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type YdbTargetYdbConnectionOnPremiseTLSModeObservation struct {
+
+	// [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	Disabled []YdbTargetYdbConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// [Block]. TLS is used for the server connection
+	// TLS is used for the server connection
+	Enabled []YdbTargetYdbConnectionOnPremiseTLSModeEnabledObservation `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type YdbTargetYdbConnectionOnPremiseTLSModeParameters struct {
+
+	// [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// +kubebuilder:validation:Optional
+	Disabled []YdbTargetYdbConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// [Block]. TLS is used for the server connection
+	// TLS is used for the server connection
+	// +kubebuilder:validation:Optional
+	Enabled []YdbTargetYdbConnectionOnPremiseTLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type YdbTargetYdbConnectionParameters struct {
+
+	// (String). Managed Service for YDB database ID
+	// Managed Service for YDB database ID
+	// +kubebuilder:validation:Optional
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// +kubebuilder:validation:Optional
+	OnPremise []YdbTargetYdbConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type YdsSourceAuthenticationInitParameters struct {
+
+	// (String). Service account ID which has read access to the stream
+	// Service account ID for interaction with database
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+}
+
+type YdsSourceAuthenticationObservation struct {
+
+	// (String). Service account ID which has read access to the stream
+	// Service account ID for interaction with database
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+}
+
+type YdsSourceAuthenticationParameters struct {
+
+	// (String). Service account ID which has read access to the stream
+	// Service account ID for interaction with database
+	// +kubebuilder:validation:Optional
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 }
 
 type YdsSourceInitParameters struct {
@@ -8157,6 +8809,10 @@ type YdsSourceInitParameters struct {
 	// False: stop the transfer in error state, if detected lost data. True: continue
 	// working with losing part of data
 	AllowTTLRewind *bool `json:"allowTtlRewind,omitempty" tf:"allow_ttl_rewind,omitempty"`
+
+	// [Block]. Choose one of authentication methods, right now only service account is avaiable
+	// Choose one of authentication methods, right now only service account is avaiable
+	Authentication []YdsSourceAuthenticationInitParameters `json:"authentication,omitempty" tf:"authentication,omitempty"`
 
 	// for important streams
 	// Custom consumer - for important streams
@@ -8202,6 +8858,10 @@ type YdsSourceInitParameters struct {
 	// Options: YDS_COMPRESSION_CODEC_RAW, YDS_COMPRESSION_CODEC_ZSTD,
 	// YDS_COMPRESSION_CODEC_GZIP
 	SupportedCodecs []*string `json:"supportedCodecs,omitempty" tf:"supported_codecs,omitempty"`
+
+	// [Block]. Connection settings for managed YDB or for on premise
+	// Connection settings for managed YDB or for on premise
+	YdbConnection []YdsSourceYdbConnectionInitParameters `json:"ydbConnection,omitempty" tf:"ydb_connection,omitempty"`
 }
 
 type YdsSourceObservation struct {
@@ -8213,6 +8873,10 @@ type YdsSourceObservation struct {
 	// False: stop the transfer in error state, if detected lost data. True: continue
 	// working with losing part of data
 	AllowTTLRewind *bool `json:"allowTtlRewind,omitempty" tf:"allow_ttl_rewind,omitempty"`
+
+	// [Block]. Choose one of authentication methods, right now only service account is avaiable
+	// Choose one of authentication methods, right now only service account is avaiable
+	Authentication []YdsSourceAuthenticationObservation `json:"authentication,omitempty" tf:"authentication,omitempty"`
 
 	// for important streams
 	// Custom consumer - for important streams
@@ -8258,6 +8922,10 @@ type YdsSourceObservation struct {
 	// Options: YDS_COMPRESSION_CODEC_RAW, YDS_COMPRESSION_CODEC_ZSTD,
 	// YDS_COMPRESSION_CODEC_GZIP
 	SupportedCodecs []*string `json:"supportedCodecs,omitempty" tf:"supported_codecs,omitempty"`
+
+	// [Block]. Connection settings for managed YDB or for on premise
+	// Connection settings for managed YDB or for on premise
+	YdbConnection []YdsSourceYdbConnectionObservation `json:"ydbConnection,omitempty" tf:"ydb_connection,omitempty"`
 }
 
 type YdsSourceParameters struct {
@@ -8270,6 +8938,11 @@ type YdsSourceParameters struct {
 	// working with losing part of data
 	// +kubebuilder:validation:Optional
 	AllowTTLRewind *bool `json:"allowTtlRewind,omitempty" tf:"allow_ttl_rewind,omitempty"`
+
+	// [Block]. Choose one of authentication methods, right now only service account is avaiable
+	// Choose one of authentication methods, right now only service account is avaiable
+	// +kubebuilder:validation:Optional
+	Authentication []YdsSourceAuthenticationParameters `json:"authentication,omitempty" tf:"authentication,omitempty"`
 
 	// for important streams
 	// Custom consumer - for important streams
@@ -8324,6 +8997,11 @@ type YdsSourceParameters struct {
 	// YDS_COMPRESSION_CODEC_GZIP
 	// +kubebuilder:validation:Optional
 	SupportedCodecs []*string `json:"supportedCodecs,omitempty" tf:"supported_codecs,omitempty"`
+
+	// [Block]. Connection settings for managed YDB or for on premise
+	// Connection settings for managed YDB or for on premise
+	// +kubebuilder:validation:Optional
+	YdbConnection []YdsSourceYdbConnectionParameters `json:"ydbConnection,omitempty" tf:"ydb_connection,omitempty"`
 }
 
 type YdsSourceParserInitParameters struct {
@@ -8387,7 +9065,250 @@ type YdsSourceParserParameters struct {
 	TskvParser []ParserTskvParserParameters `json:"tskvParser,omitempty" tf:"tskv_parser,omitempty"`
 }
 
+type YdsSourceYdbConnectionInitParameters struct {
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	ManagedYds []ManagedYdsInitParameters `json:"managedYds,omitempty" tf:"managed_yds,omitempty"`
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	OnPremise []YdsSourceYdbConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type YdsSourceYdbConnectionObservation struct {
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	ManagedYds []ManagedYdsObservation `json:"managedYds,omitempty" tf:"managed_yds,omitempty"`
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	OnPremise []YdsSourceYdbConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type YdsSourceYdbConnectionOnPremiseInitParameters struct {
+
+	// transfer
+	// Database path in YDB where tables are stored.
+	// Example: `/ru/transfer_manager/prod/data-transfer`
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// ru-prestable.yandex.net:2135.
+	// If not specified, will be determined by database
+	// Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// (String). Stream to write to
+	// Stream to read
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
+	// (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+	// database. If omitted, the server has to be accessible via Internet
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+	// If omitted, the server has to be accessible via Internet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. TLS settings for server connection. Disabled by default
+	// TLS settings for server connection. Disabled by default.
+	TLSMode []YdsSourceYdbConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
+type YdsSourceYdbConnectionOnPremiseObservation struct {
+
+	// transfer
+	// Database path in YDB where tables are stored.
+	// Example: `/ru/transfer_manager/prod/data-transfer`
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// ru-prestable.yandex.net:2135.
+	// If not specified, will be determined by database
+	// Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// (String). Stream to write to
+	// Stream to read
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
+	// (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+	// database. If omitted, the server has to be accessible via Internet
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+	// If omitted, the server has to be accessible via Internet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. TLS settings for server connection. Disabled by default
+	// TLS settings for server connection. Disabled by default.
+	TLSMode []YdsSourceYdbConnectionOnPremiseTLSModeObservation `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
+type YdsSourceYdbConnectionOnPremiseParameters struct {
+
+	// transfer
+	// Database path in YDB where tables are stored.
+	// Example: `/ru/transfer_manager/prod/data-transfer`
+	// +kubebuilder:validation:Optional
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// ru-prestable.yandex.net:2135.
+	// If not specified, will be determined by database
+	// Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+	// +kubebuilder:validation:Optional
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// (String). Stream to write to
+	// Stream to read
+	// +kubebuilder:validation:Optional
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
+	// (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+	// database. If omitted, the server has to be accessible via Internet
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+	// If omitted, the server has to be accessible via Internet
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. TLS settings for server connection. Disabled by default
+	// TLS settings for server connection. Disabled by default.
+	// +kubebuilder:validation:Optional
+	TLSMode []YdsSourceYdbConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
+type YdsSourceYdbConnectionOnPremiseTLSModeDisabledInitParameters struct {
+}
+
+type YdsSourceYdbConnectionOnPremiseTLSModeDisabledObservation struct {
+}
+
+type YdsSourceYdbConnectionOnPremiseTLSModeDisabledParameters struct {
+}
+
+type YdsSourceYdbConnectionOnPremiseTLSModeEnabledInitParameters struct {
+
+	// known CA
+	// CA certificate
+	// X.509 certificate of the certificate authority which issued the server's
+	// certificate, in PEM format. When CA certificate is specified, TLS is used to
+	// connect to the server. If CA certificate is empty, the server's certificate must
+	// be signed by a well-known CA
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type YdsSourceYdbConnectionOnPremiseTLSModeEnabledObservation struct {
+
+	// known CA
+	// CA certificate
+	// X.509 certificate of the certificate authority which issued the server's
+	// certificate, in PEM format. When CA certificate is specified, TLS is used to
+	// connect to the server. If CA certificate is empty, the server's certificate must
+	// be signed by a well-known CA
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type YdsSourceYdbConnectionOnPremiseTLSModeEnabledParameters struct {
+
+	// known CA
+	// CA certificate
+	// X.509 certificate of the certificate authority which issued the server's
+	// certificate, in PEM format. When CA certificate is specified, TLS is used to
+	// connect to the server. If CA certificate is empty, the server's certificate must
+	// be signed by a well-known CA
+	// +kubebuilder:validation:Optional
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type YdsSourceYdbConnectionOnPremiseTLSModeInitParameters struct {
+
+	// [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	Disabled []YdsSourceYdbConnectionOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// [Block]. TLS is used for the server connection
+	// TLS is used for the server connection
+	Enabled []YdsSourceYdbConnectionOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type YdsSourceYdbConnectionOnPremiseTLSModeObservation struct {
+
+	// [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	Disabled []YdsSourceYdbConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// [Block]. TLS is used for the server connection
+	// TLS is used for the server connection
+	Enabled []YdsSourceYdbConnectionOnPremiseTLSModeEnabledObservation `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type YdsSourceYdbConnectionOnPremiseTLSModeParameters struct {
+
+	// [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// +kubebuilder:validation:Optional
+	Disabled []YdsSourceYdbConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// [Block]. TLS is used for the server connection
+	// TLS is used for the server connection
+	// +kubebuilder:validation:Optional
+	Enabled []YdsSourceYdbConnectionOnPremiseTLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type YdsSourceYdbConnectionParameters struct {
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	// +kubebuilder:validation:Optional
+	ManagedYds []ManagedYdsParameters `json:"managedYds,omitempty" tf:"managed_yds,omitempty"`
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	// +kubebuilder:validation:Optional
+	OnPremise []YdsSourceYdbConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type YdsTargetAuthenticationInitParameters struct {
+
+	// (String). Service account ID which has read access to the stream
+	// Service account ID for interaction with database
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+}
+
+type YdsTargetAuthenticationObservation struct {
+
+	// (String). Service account ID which has read access to the stream
+	// Service account ID for interaction with database
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+}
+
+type YdsTargetAuthenticationParameters struct {
+
+	// (String). Service account ID which has read access to the stream
+	// Service account ID for interaction with database
+	// +kubebuilder:validation:Optional
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+}
+
 type YdsTargetInitParameters struct {
+
+	// [Block]. Choose one of authentication methods, right now only service account is avaiable
+	// Choose one of authentication methods, right now only service account is avaiable
+	Authentication []YdsTargetAuthenticationInitParameters `json:"authentication,omitempty" tf:"authentication,omitempty"`
 
 	// (String). Codec to use for output data compression. If not specified, no compression will
 	// be done
@@ -8438,9 +9359,17 @@ type YdsTargetInitParameters struct {
 	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
 	// database. If omitted, the server has to be accessible via Internet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. Connection settings for managed YDB or for on premise
+	// Connection settings for managed YDB or for on premise
+	YdbConnection []YdsTargetYdbConnectionInitParameters `json:"ydbConnection,omitempty" tf:"ydb_connection,omitempty"`
 }
 
 type YdsTargetObservation struct {
+
+	// [Block]. Choose one of authentication methods, right now only service account is avaiable
+	// Choose one of authentication methods, right now only service account is avaiable
+	Authentication []YdsTargetAuthenticationObservation `json:"authentication,omitempty" tf:"authentication,omitempty"`
 
 	// (String). Codec to use for output data compression. If not specified, no compression will
 	// be done
@@ -8491,9 +9420,18 @@ type YdsTargetObservation struct {
 	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
 	// database. If omitted, the server has to be accessible via Internet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. Connection settings for managed YDB or for on premise
+	// Connection settings for managed YDB or for on premise
+	YdbConnection []YdsTargetYdbConnectionObservation `json:"ydbConnection,omitempty" tf:"ydb_connection,omitempty"`
 }
 
 type YdsTargetParameters struct {
+
+	// [Block]. Choose one of authentication methods, right now only service account is avaiable
+	// Choose one of authentication methods, right now only service account is avaiable
+	// +kubebuilder:validation:Optional
+	Authentication []YdsTargetAuthenticationParameters `json:"authentication,omitempty" tf:"authentication,omitempty"`
 
 	// (String). Codec to use for output data compression. If not specified, no compression will
 	// be done
@@ -8553,6 +9491,11 @@ type YdsTargetParameters struct {
 	// database. If omitted, the server has to be accessible via Internet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. Connection settings for managed YDB or for on premise
+	// Connection settings for managed YDB or for on premise
+	// +kubebuilder:validation:Optional
+	YdbConnection []YdsTargetYdbConnectionParameters `json:"ydbConnection,omitempty" tf:"ydb_connection,omitempty"`
 }
 
 type YdsTargetSerializerInitParameters struct {
@@ -8601,6 +9544,223 @@ type YdsTargetSerializerParameters struct {
 	// Empty block. Serialize data in json format
 	// +kubebuilder:validation:Optional
 	SerializerJSON []SerializerSerializerJSONParameters `json:"serializerJson,omitempty" tf:"serializer_json,omitempty"`
+}
+
+type YdsTargetYdbConnectionInitParameters struct {
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	ManagedYds []YdbConnectionManagedYdsInitParameters `json:"managedYds,omitempty" tf:"managed_yds,omitempty"`
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	OnPremise []YdsTargetYdbConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type YdsTargetYdbConnectionObservation struct {
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	ManagedYds []YdbConnectionManagedYdsObservation `json:"managedYds,omitempty" tf:"managed_yds,omitempty"`
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	OnPremise []YdsTargetYdbConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type YdsTargetYdbConnectionOnPremiseInitParameters struct {
+
+	// transfer
+	// Database path in YDB where tables are stored.
+	// Example: `/ru/transfer_manager/prod/data-transfer`
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// ru-prestable.yandex.net:2135.
+	// If not specified, will be determined by database
+	// Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// (String). Stream to write to
+	// Stream to read
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
+	// (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+	// database. If omitted, the server has to be accessible via Internet
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+	// If omitted, the server has to be accessible via Internet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. TLS settings for server connection. Disabled by default
+	// TLS settings for server connection. Disabled by default.
+	TLSMode []YdsTargetYdbConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
+type YdsTargetYdbConnectionOnPremiseObservation struct {
+
+	// transfer
+	// Database path in YDB where tables are stored.
+	// Example: `/ru/transfer_manager/prod/data-transfer`
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// ru-prestable.yandex.net:2135.
+	// If not specified, will be determined by database
+	// Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// (String). Stream to write to
+	// Stream to read
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
+	// (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+	// database. If omitted, the server has to be accessible via Internet
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+	// If omitted, the server has to be accessible via Internet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. TLS settings for server connection. Disabled by default
+	// TLS settings for server connection. Disabled by default.
+	TLSMode []YdsTargetYdbConnectionOnPremiseTLSModeObservation `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
+type YdsTargetYdbConnectionOnPremiseParameters struct {
+
+	// transfer
+	// Database path in YDB where tables are stored.
+	// Example: `/ru/transfer_manager/prod/data-transfer`
+	// +kubebuilder:validation:Optional
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// ru-prestable.yandex.net:2135.
+	// If not specified, will be determined by database
+	// Instance of YDB. example: ydb-ru-prestable.yandex.net:2135.
+	// +kubebuilder:validation:Optional
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// (String). Stream to write to
+	// Stream to read
+	// +kubebuilder:validation:Optional
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
+	// (String). Identifier of the Yandex Cloud VPC subnetwork to user for accessing the
+	// database. If omitted, the server has to be accessible via Internet
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database.
+	// If omitted, the server has to be accessible via Internet
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// [Block]. TLS settings for server connection. Disabled by default
+	// TLS settings for server connection. Disabled by default.
+	// +kubebuilder:validation:Optional
+	TLSMode []YdsTargetYdbConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
+type YdsTargetYdbConnectionOnPremiseTLSModeDisabledInitParameters struct {
+}
+
+type YdsTargetYdbConnectionOnPremiseTLSModeDisabledObservation struct {
+}
+
+type YdsTargetYdbConnectionOnPremiseTLSModeDisabledParameters struct {
+}
+
+type YdsTargetYdbConnectionOnPremiseTLSModeEnabledInitParameters struct {
+
+	// known CA
+	// CA certificate
+	// X.509 certificate of the certificate authority which issued the server's
+	// certificate, in PEM format. When CA certificate is specified, TLS is used to
+	// connect to the server. If CA certificate is empty, the server's certificate must
+	// be signed by a well-known CA
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type YdsTargetYdbConnectionOnPremiseTLSModeEnabledObservation struct {
+
+	// known CA
+	// CA certificate
+	// X.509 certificate of the certificate authority which issued the server's
+	// certificate, in PEM format. When CA certificate is specified, TLS is used to
+	// connect to the server. If CA certificate is empty, the server's certificate must
+	// be signed by a well-known CA
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type YdsTargetYdbConnectionOnPremiseTLSModeEnabledParameters struct {
+
+	// known CA
+	// CA certificate
+	// X.509 certificate of the certificate authority which issued the server's
+	// certificate, in PEM format. When CA certificate is specified, TLS is used to
+	// connect to the server. If CA certificate is empty, the server's certificate must
+	// be signed by a well-known CA
+	// +kubebuilder:validation:Optional
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type YdsTargetYdbConnectionOnPremiseTLSModeInitParameters struct {
+
+	// [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	Disabled []YdsTargetYdbConnectionOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// [Block]. TLS is used for the server connection
+	// TLS is used for the server connection
+	Enabled []YdsTargetYdbConnectionOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type YdsTargetYdbConnectionOnPremiseTLSModeObservation struct {
+
+	// [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	Disabled []YdsTargetYdbConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// [Block]. TLS is used for the server connection
+	// TLS is used for the server connection
+	Enabled []YdsTargetYdbConnectionOnPremiseTLSModeEnabledObservation `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type YdsTargetYdbConnectionOnPremiseTLSModeParameters struct {
+
+	// [Block]. Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// Empty block designating that the connection is not secured, i.e. plaintext
+	// connection
+	// +kubebuilder:validation:Optional
+	Disabled []YdsTargetYdbConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// [Block]. TLS is used for the server connection
+	// TLS is used for the server connection
+	// +kubebuilder:validation:Optional
+	Enabled []YdsTargetYdbConnectionOnPremiseTLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type YdsTargetYdbConnectionParameters struct {
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	// +kubebuilder:validation:Optional
+	ManagedYds []YdbConnectionManagedYdsParameters `json:"managedYds,omitempty" tf:"managed_yds,omitempty"`
+
+	// [Block]. package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/ydb.proto
+	// package: yandex.cloud.datatransfer.v1.endpoint
+	// filename: yandex/cloud/datatransfer/v1/endpoint/yds.proto
+	// +kubebuilder:validation:Optional
+	OnPremise []YdsTargetYdbConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
 // EndpointSpec defines the desired state of Endpoint

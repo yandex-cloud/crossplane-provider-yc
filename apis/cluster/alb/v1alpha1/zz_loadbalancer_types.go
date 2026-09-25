@@ -134,6 +134,14 @@ type AutoScalePolicyParameters struct {
 
 type ClientCertificatesVerificationInitParameters struct {
 
+	// (Bool). If true, ALB will not check certification chain and will allow expired client certificates.
+	// If true, ALB will not check certification chain and will allow expired client certificates.
+	AcceptUntrusted *bool `json:"acceptUntrusted,omitempty" tf:"accept_untrusted,omitempty"`
+
+	// (Bool). If true, ALB will allow expired client certificates even if accept_untrusted is set to false.
+	// If true, ALB will allow expired client certificates even if accept_untrusted is set to false.
+	AllowExpired *bool `json:"allowExpired,omitempty" tf:"allow_expired,omitempty"`
+
 	// (String). Trusted certificate authority certificates bundle (PEM text).
 	// Trusted certificate authority certificates bundle (PEM text).
 	Bytes *string `json:"bytes,omitempty" tf:"bytes,omitempty"`
@@ -145,6 +153,14 @@ type ClientCertificatesVerificationInitParameters struct {
 
 type ClientCertificatesVerificationObservation struct {
 
+	// (Bool). If true, ALB will not check certification chain and will allow expired client certificates.
+	// If true, ALB will not check certification chain and will allow expired client certificates.
+	AcceptUntrusted *bool `json:"acceptUntrusted,omitempty" tf:"accept_untrusted,omitempty"`
+
+	// (Bool). If true, ALB will allow expired client certificates even if accept_untrusted is set to false.
+	// If true, ALB will allow expired client certificates even if accept_untrusted is set to false.
+	AllowExpired *bool `json:"allowExpired,omitempty" tf:"allow_expired,omitempty"`
+
 	// (String). Trusted certificate authority certificates bundle (PEM text).
 	// Trusted certificate authority certificates bundle (PEM text).
 	Bytes *string `json:"bytes,omitempty" tf:"bytes,omitempty"`
@@ -155,6 +171,16 @@ type ClientCertificatesVerificationObservation struct {
 }
 
 type ClientCertificatesVerificationParameters struct {
+
+	// (Bool). If true, ALB will not check certification chain and will allow expired client certificates.
+	// If true, ALB will not check certification chain and will allow expired client certificates.
+	// +kubebuilder:validation:Optional
+	AcceptUntrusted *bool `json:"acceptUntrusted,omitempty" tf:"accept_untrusted,omitempty"`
+
+	// (Bool). If true, ALB will allow expired client certificates even if accept_untrusted is set to false.
+	// If true, ALB will allow expired client certificates even if accept_untrusted is set to false.
+	// +kubebuilder:validation:Optional
+	AllowExpired *bool `json:"allowExpired,omitempty" tf:"allow_expired,omitempty"`
 
 	// (String). Trusted certificate authority certificates bundle (PEM text).
 	// Trusted certificate authority certificates bundle (PEM text).
@@ -539,6 +565,14 @@ type HTTPParameters struct {
 
 type HandlerClientCertificatesVerificationInitParameters struct {
 
+	// (Bool). If true, ALB will not check certification chain and will allow expired client certificates.
+	// If true, ALB will not check certification chain and will allow expired client certificates.
+	AcceptUntrusted *bool `json:"acceptUntrusted,omitempty" tf:"accept_untrusted,omitempty"`
+
+	// (Bool). If true, ALB will allow expired client certificates even if accept_untrusted is set to false.
+	// If true, ALB will allow expired client certificates even if accept_untrusted is set to false.
+	AllowExpired *bool `json:"allowExpired,omitempty" tf:"allow_expired,omitempty"`
+
 	// (String). Trusted certificate authority certificates bundle (PEM text).
 	// Trusted certificate authority certificates bundle (PEM text).
 	Bytes *string `json:"bytes,omitempty" tf:"bytes,omitempty"`
@@ -550,6 +584,14 @@ type HandlerClientCertificatesVerificationInitParameters struct {
 
 type HandlerClientCertificatesVerificationObservation struct {
 
+	// (Bool). If true, ALB will not check certification chain and will allow expired client certificates.
+	// If true, ALB will not check certification chain and will allow expired client certificates.
+	AcceptUntrusted *bool `json:"acceptUntrusted,omitempty" tf:"accept_untrusted,omitempty"`
+
+	// (Bool). If true, ALB will allow expired client certificates even if accept_untrusted is set to false.
+	// If true, ALB will allow expired client certificates even if accept_untrusted is set to false.
+	AllowExpired *bool `json:"allowExpired,omitempty" tf:"allow_expired,omitempty"`
+
 	// (String). Trusted certificate authority certificates bundle (PEM text).
 	// Trusted certificate authority certificates bundle (PEM text).
 	Bytes *string `json:"bytes,omitempty" tf:"bytes,omitempty"`
@@ -560,6 +602,16 @@ type HandlerClientCertificatesVerificationObservation struct {
 }
 
 type HandlerClientCertificatesVerificationParameters struct {
+
+	// (Bool). If true, ALB will not check certification chain and will allow expired client certificates.
+	// If true, ALB will not check certification chain and will allow expired client certificates.
+	// +kubebuilder:validation:Optional
+	AcceptUntrusted *bool `json:"acceptUntrusted,omitempty" tf:"accept_untrusted,omitempty"`
+
+	// (Bool). If true, ALB will allow expired client certificates even if accept_untrusted is set to false.
+	// If true, ALB will allow expired client certificates even if accept_untrusted is set to false.
+	// +kubebuilder:validation:Optional
+	AllowExpired *bool `json:"allowExpired,omitempty" tf:"allow_expired,omitempty"`
 
 	// (String). Trusted certificate authority certificates bundle (PEM text).
 	// Trusted certificate authority certificates bundle (PEM text).
