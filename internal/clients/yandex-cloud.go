@@ -27,6 +27,7 @@ import (
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	"github.com/crossplane/upjet/v2/pkg/config"
 	"github.com/crossplane/upjet/v2/pkg/terraform"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	sdk "github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/types"
@@ -62,9 +63,10 @@ const (
 	errNotManagedResource   = "resource is not a managed resource"
 )
 
-// TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
-// returns Terraform provider setup configuration
-func TerraformSetupBuilder(version, providerSource, providerVersion string, ujprovider *config.Provider) terraform.SetupFn {
+// TerraformSetupBuilder returns Terraform provider setup configuration.
+// providerCtx must remain active until the provider shuts down, including while
+// asynchronous operations run after their originating reconciliation returns.
+func TerraformSetupBuilder(providerCtx context.Context, version, providerSource, providerVersion string, ujprovider *config.Provider) terraform.SetupFn {
 	return func(ctx context.Context, client client.Client, mg resource.Managed) (terraform.Setup, error) {
 		ps := terraform.Setup{
 			Version: version,
@@ -167,7 +169,11 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 			}
 		}
 
-		diag := ujprovider.TerraformProvider.Configure(ctx, &sdk.ResourceConfig{
+		// The SDK provider saves StopContext in its metadata for legacy CRUD
+		// handlers. Async operations outlive this reconciliation, so that context
+		// must follow provider shutdown instead of reconciliation cancellation.
+		configureCtx := context.WithValue(ctx, schema.StopContextKey, providerCtx)
+		diag := ujprovider.TerraformProvider.Configure(configureCtx, &sdk.ResourceConfig{
 			Config: ps.Configuration,
 		})
 		if diag != nil && diag.HasError() {

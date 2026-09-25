@@ -285,6 +285,8 @@ UPTEST_CLOUD_CREDENTIALS ?= $(shell cat ${SA_KEY_FILE})
 #   The associated `ProviderConfig`s will be named as `default` and `peer`.
 UPTEST_DATASOURCE_PATH ?= $(shell ./hack/uptest_data.sh)
 UPTEST_DEFAULT_TIMEOUT ?= 3600s
+UPTEST_LOG ?= uptest.log
+UPTEST_ARGS ?=
 # - UPTEST_DATASOURCE_PATH (optional), see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
 # - UPTEST_DEFAULT_TIMEOUT must accommodate Kubernetes cluster and node group provisioning.
 # - CLOUD_ID and FOLDER_ID need to be the IDs of YC cloud and folder, respectively, where tests will be run.
@@ -294,11 +296,12 @@ UPTEST_DEFAULT_TIMEOUT ?= 3600s
 uptest: $(CROSSPLANE_UPTEST) $(KUBECTL) $(CHAINSAW) $(CROSSPLANE_CLI)
 	@echo "##teamcity[blockOpened name='uptest' description='run automated e2e tests']"
 	@$(INFO) running automated tests
-	@rm -f uptest.log
+	@mkdir -p $(dir $(UPTEST_LOG))
+	@rm -f $(UPTEST_LOG)
 	@set -o pipefail; \
-	(KUBECTL=$(KUBECTL) CHAINSAW=$(CHAINSAW) CROSSPLANE_CLI=$(CROSSPLANE_CLI) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) CREDENTIALS='$(UPTEST_CLOUD_CREDENTIALS)' $(CROSSPLANE_UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" --default-timeout="$(UPTEST_DEFAULT_TIMEOUT)") 2>&1 | tee uptest.log; \
+	(KUBECTL=$(KUBECTL) CHAINSAW=$(CHAINSAW) CROSSPLANE_CLI=$(CROSSPLANE_CLI) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) CREDENTIALS='$(UPTEST_CLOUD_CREDENTIALS)' $(CROSSPLANE_UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" --default-timeout="$(UPTEST_DEFAULT_TIMEOUT)" $(UPTEST_ARGS)) 2>&1 | tee $(UPTEST_LOG); \
 	exitcode=$${PIPESTATUS[0]}; \
-	if [ $$exitcode -ne 0 ] || grep -qE 'Failed\s+tests\s+[1-9][0-9]*' uptest.log; then \
+	if [ $$exitcode -ne 0 ] || grep -qE 'Failed\s+tests\s+[1-9][0-9]*' $(UPTEST_LOG); then \
 	  echo "Tests failed"; \
 	  $(FAIL) \
 	else \
@@ -307,6 +310,23 @@ uptest: $(CROSSPLANE_UPTEST) $(KUBECTL) $(CHAINSAW) $(CROSSPLANE_CLI)
 	fi
 	@echo "##teamcity[blockClosed name='uptest']"
 
+# These runs bypass the general MDB exclusion in examples.sh. The post-create
+# hook tests updates without UpTest 2.2's broken JSON quoting in its update step.
+uptest-redis:
+	@$(MAKE) uptest \
+		UPTEST_EXAMPLE_LIST=examples/vpc/network.yaml,examples/vpc/subnet.yaml,examples/mdb/rediscluster.yaml \
+		UPTEST_REDIS_RESOURCE=rediscluster.mdb.yandex-cloud.jet.crossplane.io/example-redis \
+		UPTEST_LOG=$(OUTPUT_DIR)/uptest-redis-legacy.log \
+		UPTEST_TEST_DIR=$(abspath $(WORK_DIR)/uptest-redis-legacy) \
+		UPTEST_ARGS="$(UPTEST_ARGS) --only-clean-uptest-resources"
+	@$(MAKE) uptest \
+		UPTEST_EXAMPLE_LIST=examples/mdb/rediscluster-namespaced.yaml \
+		UPTEST_REDIS_RESOURCE=rediscluster.mdb.yandex-cloud.m.jet.crossplane.io/example-redis-namespaced \
+		UPTEST_LOG=$(OUTPUT_DIR)/uptest-redis-namespaced.log \
+		UPTEST_TEST_DIR=$(abspath $(WORK_DIR)/uptest-redis-namespaced) \
+		UPTEST_ARGS="$(UPTEST_ARGS) --only-clean-uptest-resources"
+
+.PHONY: uptest uptest-redis
 
 
 controlplane.up-cloud: $(KUBECTL) $(HELM) $(YQ)
@@ -387,8 +407,10 @@ publish.init: $(UP)
 
 
 e2e: local-deploy uptest
+	@$(MAKE) uptest-redis
 
 e2e-cloud: cloud-reg cloud-deploy uptest
+	@$(MAKE) uptest-redis
 
 crddiff: $(CROSSPLANE_UPTEST)
 	@$(INFO) Checking breaking CRD schema changes

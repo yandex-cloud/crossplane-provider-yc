@@ -105,6 +105,7 @@ func main() {
 	// Get both cluster and namespaced providers
 	clusterProvider := config.GetProvider()
 	namespacedProvider := config.GetProviderNamespaced()
+	providerCtx := ctrl.SetupSignalHandler()
 
 	// Create controller options for cluster-scoped resources
 	clusterOpts := tjcontroller.Options{
@@ -117,7 +118,7 @@ func main() {
 		},
 		Provider:              clusterProvider,
 		WorkspaceStore:        terraform.NewWorkspaceStore(log),
-		SetupFn:               clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion, clusterProvider),
+		SetupFn:               clients.TerraformSetupBuilder(providerCtx, *terraformVersion, *providerSource, *providerVersion, clusterProvider),
 		OperationTrackerStore: tjcontroller.NewOperationStore(log),
 	}
 
@@ -132,7 +133,7 @@ func main() {
 		},
 		Provider:              namespacedProvider,
 		WorkspaceStore:        terraform.NewWorkspaceStore(log),
-		SetupFn:               clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion, namespacedProvider),
+		SetupFn:               clients.TerraformSetupBuilder(providerCtx, *terraformVersion, *providerSource, *providerVersion, namespacedProvider),
 		OperationTrackerStore: tjcontroller.NewOperationStore(log),
 	}
 
@@ -177,7 +178,7 @@ func main() {
 			"Cannot setup namespaced controllers")
 	}
 
-	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
+	kingpin.FatalIfError(mgr.Start(providerCtx), "Cannot start controller manager")
 }
 
 // canWatchCRD checks if the provider has RBAC permissions to watch CRDs

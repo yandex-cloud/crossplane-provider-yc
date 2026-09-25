@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: redis-namespaced
+  namespace: default
+type: Opaque
+data:
+  # 12345678
+  password: MTIzNDU2Nzg=
+---
+apiVersion: vpc.yandex-cloud.m.jet.crossplane.io/v1alpha1
+kind: Network
+metadata:
+  name: redis-namespaced-net
+  namespace: default
+spec:
+  forProvider:
+    name: redis-namespaced-net
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: default
+---
+apiVersion: vpc.yandex-cloud.m.jet.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  name: redis-namespaced-subnet
+  namespace: default
+spec:
+  forProvider:
+    name: redis-namespaced-subnet
+    networkIdRef:
+      name: redis-namespaced-net
+    v4CidrBlocks:
+      - 10.59.75.0/24
+    zone: ru-central1-a
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: default
+---
+apiVersion: mdb.yandex-cloud.m.jet.crossplane.io/v1alpha1
+kind: RedisCluster
+metadata:
+  name: example-redis-namespaced
+  namespace: default
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/rediscluster
+    uptest.upbound.io/post-assert-hook: ../../cluster/test/redis-update.sh
+    uptest.upbound.io/conditions: Ready,Synced,LastAsyncOperation,Test
+spec:
+  forProvider:
+    name: example-redis-namespaced
+    description: Redis update regression
+    environment: PRODUCTION
+    networkIdRef:
+      name: redis-namespaced-net
+    config:
+      - passwordSecretRef:
+          name: redis-namespaced
+          key: password
+        version: "9.1-valkey"
+    resources:
+      - resourcePresetId: "b3-c1-m4"
+        diskSize: 16
+        diskTypeId: network-ssd
+    maintenanceWindow:
+      - type: ANYTIME
+    host:
+      - zone: ru-central1-a
+        subnetIdRef:
+          name: redis-namespaced-subnet
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: default
+  writeConnectionSecretToRef:
+    name: redis-namespaced-conn

@@ -12,10 +12,15 @@ apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: RedisCluster
 metadata:
   name: example-redis
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/rediscluster
+    uptest.upbound.io/post-assert-hook: ../../cluster/test/redis-update.sh
+    uptest.upbound.io/conditions: Ready,Synced,LastAsyncOperation,Test
 spec:
   forProvider:
     name: example-redis
-    environment: PRESTABLE
+    description: Redis update regression
+    environment: PRODUCTION
     networkIdRef:
       name: example-net
     config:
@@ -23,10 +28,11 @@ spec:
           name: redis
           key: password
           namespace: default
-        version: "7.0"
+        version: "9.1-valkey"
     resources:
-    - resourcePresetId: "hm1.nano"
+    - resourcePresetId: "b3-c1-m4"
       diskSize: 16
+      diskTypeId: network-ssd
     maintenanceWindow:
       - type: ANYTIME
     host:
