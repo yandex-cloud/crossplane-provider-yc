@@ -7,6 +7,25 @@ type: Opaque
 data:
   credentials: {{ .Values.providerJetYc.creds | default "" | b64enc }}
 ---
+{{- if .Value.provider.config.new_api }}
+apiVersion: yandex-cloud.m.jet.crossplane.io/v1beta1
+kind: ProviderConfig
+metadata:
+  annotations:
+    upjet.upbound.io/manual-intervention: Namespaced ProviderConfig for Crossplane v2 with local secret references.
+    "helm.sh/resource-policy": keep
+  name: {{ .Values.providerJetYc.providerName }}-v2
+spec:
+  credentials:
+    cloudId: {{ .Values.providerJetYc.cloudId }}
+    folderId: {{ .Values.providerJetYc.folderId }}
+    endpoint: {{ .Values.providerJetYc.endpoint }}
+    secretRef:
+      key: credentials
+      name: {{ .Values.providerJetYc.secretName }}
+      namespace: {{ .Release.Namespace }}
+    source: Secret
+{{ else }}
 apiVersion: yandex-cloud.jet.crossplane.io/v1alpha1
 kind: ProviderConfig
 metadata:
@@ -21,18 +40,8 @@ spec:
       namespace: {{ .Release.Namespace }}
       key: credentials
     endpoint: {{ .Values.providerJetYc.endpoint }}
----
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: provider-jet-yc
-  namespace: {{ .Release.Namespace }}
-  annotations:
-    "helm.sh/resource-policy": keep
-spec:
-  package: {{ .Values.providerJetYc.package }}
-  runtimeConfigRef:
-    name: yc-pod-security
+{{- end }}
+# ! Delete provider because value .Values.provider.packages can install it
 ---
 apiVersion: pkg.crossplane.io/v1beta1
 kind: DeploymentRuntimeConfig
@@ -63,10 +72,9 @@ spec:
           volumes:
             - name: internal-root-ca
               secret:
-              defaultMode: 420
-              secretName: {{ .Values.internalRootCaSecretName }}
-              items:
-                - key: internal-root-ca
-                  path: ca-certificates.crt
+                defaultMode: 420
+                secretName: {{ .Values.internalRootCaSecretName }}
+                items:
+                  - key: internal-root-ca
+                    path: ca-certificates.crt
             {{ end }}
-
