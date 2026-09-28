@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.15.1 - September 25, 2026
+### Changed
+* Upgrade the Yandex Cloud Terraform provider to v0.229.0.
+### Fixed
+* Keep the Terraform SDK provider context alive until provider shutdown so asynchronous Redis updates do not fail with context canceled after reconciliation returns.
+
 ## 0.15.0 - August 27, 2026
 ### Added
 * Add DiskIAMBinding and CertificateIAMMember managed resources.
