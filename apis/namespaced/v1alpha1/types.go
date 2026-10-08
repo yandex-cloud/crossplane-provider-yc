@@ -71,6 +71,11 @@ type ProviderCredentials struct {
 
 	// +kubebuilder:validation:Optional
 	YQEndpoint string `json:"yq_endpoint,omitempty"`
+
+	// StorageEndpoint is the S3 API endpoint for Yandex Cloud Object Storage.
+	// If omitted, the Terraform provider uses storage.yandexcloud.net.
+	// +optional
+	StorageEndpoint string `json:"storageEndpoint,omitempty"`
 }
 
 // A ProviderConfigStatus reflects the observed state of a ProviderConfig.

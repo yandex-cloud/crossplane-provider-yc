@@ -73,6 +73,24 @@ Apply example ProviderConfig:
 kubectl apply -f examples/providerconfig/providerconfig.yaml
 ```
 
+For Yandex Cloud Kazakhstan, set both endpoints under `spec.credentials`:
+
+```yaml
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: crossplane-system
+      name: yc-creds
+      key: credentials
+    endpoint: api.yandexcloud.kz:443
+    storageEndpoint: s3.yandexcloud.kz
+```
+
+`storageEndpoint` is supported by legacy and namespaced `ProviderConfig` and
+`ClusterProviderConfig`, in both `v1alpha1` and `v1beta1`. If omitted, the
+Terraform provider keeps its default `storage.yandexcloud.net` endpoint.
+
 ### Update crossplane-provider-yc
 
 Update provider version on new tag (e.g. v0.4.1):

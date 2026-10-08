@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.15.2 - October 7, 2026
+### Fixed
+* Support Object Storage in Kazakhstan with the ProviderConfig storageEndpoint setting.
+
 ## 0.15.1 - September 25, 2026
 ### Changed
 * Upgrade the Yandex Cloud Terraform provider to v0.229.0.

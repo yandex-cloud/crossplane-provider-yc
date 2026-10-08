@@ -122,6 +122,11 @@ spec:
                     description: StorageAccessKey is the Yandex Cloud Object Storage
                       access key.
                     type: string
+                  storageEndpoint:
+                    description: |-
+                      StorageEndpoint is the S3 API endpoint for Yandex Cloud Object Storage.
+                      If omitted, the Terraform provider uses storage.yandexcloud.net.
+                    type: string
                   storageSecretKey:
                     description: StorageSecretKey is the Yandex Cloud Object Storage
                       secret key.
@@ -344,6 +349,11 @@ spec:
                     - name
                     - namespace
                     type: object
+                  storageEndpoint:
+                    description: |-
+                      StorageEndpoint is the S3 API endpoint for Yandex Cloud Object Storage.
+                      If omitted, the Terraform provider uses storage.yandexcloud.net.
+                    type: string
                   storageSecretKey:
                     description: StorageSecretKey is the Yandex Cloud Object Storage
                       secret key.

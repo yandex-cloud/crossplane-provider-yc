@@ -42,6 +42,7 @@ const (
 	cloudID               = "cloud_id"
 	endpoint              = "endpoint"
 	yqEndpoint            = "yq_endpoint"
+	storageEndpoint       = "storage_endpoint"
 	serviceAccountKeyFile = "service_account_key_file"
 	token                 = "token"
 	storageAccessKey      = "storage_access_key"
@@ -93,6 +94,9 @@ func TerraformSetupBuilder(providerCtx context.Context, version, providerSource,
 		ps.Configuration[cloudID] = pcSpec.Credentials.CloudID
 		ps.Configuration[endpoint] = pcSpec.Credentials.Endpoint
 		ps.Configuration[yqEndpoint] = pcSpec.Credentials.YQEndpoint
+		if pcSpec.Credentials.StorageEndpoint != "" {
+			ps.Configuration[storageEndpoint] = pcSpec.Credentials.StorageEndpoint
+		}
 
 		// Handle storage credentials - direct specification
 		if pcSpec.Credentials.StorageAccessKey != nil {
