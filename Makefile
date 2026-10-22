@@ -336,6 +336,11 @@ controlplane.up-cloud: $(KUBECTL) $(HELM) $(YQ)
 	@$(HELM) repo update
 	@# Deliberately omit --version: cloud E2E is a compatibility canary for the latest stable Crossplane chart.
 	@./hack/mirror_crossplane_image.sh "$(HELM)" "$(YQ)" "$(CROSSPLANE_CHART)" "$(REGISTRY)" "$(CROSSPLANE_MIRROR_VALUES)"
+	@$(KUBECTL) create namespace $(CROSSPLANE_NAMESPACE) --dry-run=client -o yaml | $(KUBECTL) apply -f -
+	@iam_token=$$(yc iam create-token) && \
+		$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) create secret docker-registry registry-creds \
+			--docker-server=cr.yandex --docker-username=iam --docker-password="$$iam_token" \
+			--dry-run=client -o yaml | $(KUBECTL) apply -f -
 ifndef CROSSPLANE_ARGS
 	@$(INFO) setting up crossplane core without args
 	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) --values "$(CROSSPLANE_MIRROR_VALUES)" "$(CROSSPLANE_CHART)"
@@ -374,7 +379,7 @@ cloud.xpkg.deploy.provider: xpkg.push
 	@$(KUBECTL) wait --for condition=established --timeout=120s crd/providers.pkg.crossplane.io || $(FAIL)
 	@$(OK) Crossplane CRDs are ready
 	@echo '{"apiVersion":"pkg.crossplane.io/v1beta1","kind":"DeploymentRuntimeConfig","metadata":{"name":"runtimeconfig"},"spec":{"deploymentTemplate":{"spec":{"selector":{},"strategy":{},"template":{"spec":{"containers":[{"args":["--debug"],"image":"$(REGISTRY)/$(PROJECT_NAME):$(VERSION)","name":"package-runtime"}]}}}}}}' | $(KUBECTL) apply -f -
-	@echo '{"apiVersion":"pkg.crossplane.io/v1","kind":"Provider","metadata":{"name":"$(PROJECT_NAME)"},"spec":{"package":"$(REGISTRY)/$(PROJECT_NAME):$(VERSION)","skipDependencyResolution": $(XPKG_SKIP_DEP_RESOLUTION), "runtimeConfigRef":{"name":"runtimeconfig"}}}' | $(KUBECTL) apply -f -
+	@echo '{"apiVersion":"pkg.crossplane.io/v1","kind":"Provider","metadata":{"name":"$(PROJECT_NAME)"},"spec":{"package":"$(REGISTRY)/$(PROJECT_NAME):$(VERSION)","packagePullSecrets":[{"name":"registry-creds"}],"skipDependencyResolution": $(XPKG_SKIP_DEP_RESOLUTION), "runtimeConfigRef":{"name":"runtimeconfig"}}}' | $(KUBECTL) apply -f -
 	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
 	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) wait --for=condition=Available deployment --all --timeout=5m
 	@$(OK) deploying provider package $(PROJECT_NAME) $(VERSION)

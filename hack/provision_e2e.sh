@@ -89,7 +89,7 @@ yc managed-kubernetes cluster get-credentials --external-ipv6 --name e2e-control
 
 echo "Creating CR..."
 yc container registry list | grep crossplane-e2e-cr || yc container registry create crossplane-e2e-cr
-yc container registry add-access-binding crossplane-e2e-cr --subject system:allUsers --role viewer
+yc container registry add-access-binding crossplane-e2e-cr --subject serviceAccount:${SA_ID} --role container-registry.images.puller
 yc container registry configure-docker
 
 echo "Done!"
