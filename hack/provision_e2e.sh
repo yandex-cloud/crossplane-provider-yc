@@ -1,6 +1,7 @@
 #!/bin/bash
 
-NODEGROUP_ZONE=${COMPUTE_DEFAULT_ZONE:-"ru-central1-d"}
+SUBNET_INFO=$(yc vpc subnet get --id "${SUBNET_ID}" --format json) || exit 1
+NODEGROUP_ZONE=$(jq -er .zone_id <<< "${SUBNET_INFO}") || exit 1
 
 # Find a free 10.X.0.0/16 IPv4 CIDR not overlapping any in the used list.
 # Usage: find_free_ipv4 <used_cidrs_newline_separated>
