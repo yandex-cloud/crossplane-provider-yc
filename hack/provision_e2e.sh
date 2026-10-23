@@ -79,6 +79,7 @@ echo "Creating node group..."
 yc managed-kubernetes node-group create --name e2e-ng \
     --cluster-name e2e-controlplane --platform-id standard-v2 \
     --cores 2 --memory 4 --core-fraction 50 \
+    --disk-type network-hdd --disk-size 32GB \
     --fixed-size 1 \
     --location zone=${NODEGROUP_ZONE} \
     --network-interface "ipv4-address=nat,ipv6-address=auto,subnets=${SUBNET_ID}"
