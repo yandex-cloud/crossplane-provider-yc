@@ -27,7 +27,7 @@ spec:
   forProvider:
     name: example-instance2
     platformId: standard-v1
-    zone: ru-central1-a
+    zone: ${data.zone}
     resources:
       - cores: 2
         memory: 4

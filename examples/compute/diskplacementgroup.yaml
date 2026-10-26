@@ -11,3 +11,4 @@ spec:
     description: my description
     folderId: ${data.folderId}
     name: example-disk-pg
+    zone: ${data.zone}

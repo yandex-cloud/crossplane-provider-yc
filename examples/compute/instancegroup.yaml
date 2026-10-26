@@ -12,7 +12,7 @@ spec:
       name: ig-sa
     allocationPolicy:
       - zones:
-          - ru-central1-a
+          - ${data.zone}
     deployPolicy:
       - maxCreating: 2
         maxDeleting: 2

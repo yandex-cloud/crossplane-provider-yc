@@ -13,7 +13,7 @@ spec:
     master:
       - version: "1.32"
         zonal:
-          - zone: ru-central1-a
+          - zone: ${data.zone}
             subnetIdRef:
               name: example-subnet-a
         publicIp: true

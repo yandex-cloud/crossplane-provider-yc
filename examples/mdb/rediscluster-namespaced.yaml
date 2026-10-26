@@ -32,7 +32,7 @@ spec:
       name: redis-namespaced-net
     v4CidrBlocks:
       - 10.59.75.0/24
-    zone: ru-central1-a
+    zone: ${data.zone}
   providerConfigRef:
     kind: ClusterProviderConfig
     name: default
@@ -65,7 +65,7 @@ spec:
     maintenanceWindow:
       - type: ANYTIME
     host:
-      - zone: ru-central1-a
+      - zone: ${data.zone}
         subnetIdRef:
           name: redis-namespaced-subnet
   providerConfigRef:

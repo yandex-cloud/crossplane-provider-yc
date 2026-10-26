@@ -36,7 +36,7 @@ spec:
         day: SAT
         hour: 12
     host:
-      - zone: ru-central1-a
+      - zone: ${data.zone}
         subnetIdRef:
           name: example-subnet-a
   providerConfigRef:

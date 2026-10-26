@@ -13,4 +13,4 @@ spec:
     name: example-fs
     size: 10
     type: network-ssd
-    zone: ru-central1-a
+    zone: ${data.zone}

@@ -23,7 +23,7 @@ spec:
                 resourcePresetId: s2.micro
         version: "2.8"
         zones:
-          - ru-central1-a
+          - ${data.zone}
     name: kafka-conn-cluster
     networkIdRef:
       name: example-net

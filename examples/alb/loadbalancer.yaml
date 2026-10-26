@@ -12,7 +12,7 @@ spec:
     - location:
       - subnetIdRef:
           name: example-subnet-a
-        zoneId: ru-central1-a
+        zoneId: ${data.zone}
     listener:
     - endpoint:
       - address:

@@ -149,7 +149,7 @@ spec:
         schemaRegistry: false
         version: "2.8"
         zones:
-          - ru-central1-a
+          - ${data.zone}
     environment: PRESTABLE
     name: kafka-cluster
     networkIdRef:

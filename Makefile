@@ -288,6 +288,7 @@ UPTEST_DEFAULT_TIMEOUT ?= 3600s
 UPTEST_LOG ?= uptest.log
 UPTEST_ARGS ?=
 # - UPTEST_DATASOURCE_PATH (optional), see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
+# - UPTEST_ZONE, availability zone for test resources.
 # - UPTEST_DEFAULT_TIMEOUT must accommodate Kubernetes cluster and node group provisioning.
 # - CLOUD_ID and FOLDER_ID need to be the IDs of YC cloud and folder, respectively, where tests will be run.
 

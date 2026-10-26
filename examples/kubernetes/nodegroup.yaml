@@ -28,7 +28,7 @@ spec:
           - size: 1
     allocationPolicy:
       - location:
-          - zone: "ru-central1-a"
+          - zone: "${data.zone}"
     maintenancePolicy:
       - autoUpgrade: true
         autoRepair: true

@@ -36,7 +36,7 @@ spec:
     maintenanceWindow:
       - type: ANYTIME
     host:
-      - zone: ru-central1-a
+      - zone: ${data.zone}
         subnetIdRef:
           name: example-subnet-a
   providerConfigRef:

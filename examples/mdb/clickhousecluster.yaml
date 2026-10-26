@@ -79,7 +79,7 @@ spec:
       - subnetIdRef:
           name: example-subnet-a
         type: CLICKHOUSE
-        zone: ru-central1-a
+        zone: ${data.zone}
     maintenanceWindow:
       - type: ANYTIME
     name: test

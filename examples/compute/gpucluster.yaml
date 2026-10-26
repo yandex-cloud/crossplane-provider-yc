@@ -6,6 +6,6 @@ spec:
   forProvider:
     name: crossplane-provider-yc-e2e-gpu-cluster
     description: crossplane-provider-yc E2E GPU cluster
-    zone: ru-central1-a
+    zone: ${data.zone}
   providerConfigRef:
     name: default
