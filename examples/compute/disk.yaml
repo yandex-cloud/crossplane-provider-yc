@@ -12,5 +12,6 @@ spec:
     labels:
       environment: test
     name: example-disk
+    size: 10
     type: network-ssd
     zone: ru-central1-a
